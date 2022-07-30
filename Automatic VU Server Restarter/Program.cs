@@ -31,6 +31,7 @@ namespace VU
                 Settings.SettingsManager.OpenSettings.Write("Settings", "WritePerfProfile", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "SaveLoggingOutput", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "ProConCutDownVersion", "false");
+                Settings.SettingsManager.OpenSettings.Write("Settings", "UseProCon", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "ServerFrequency", "1");
                 Settings.SettingsManager.LoadSettings();
                 Application.Run(new FrmSettings());

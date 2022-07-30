@@ -1,4 +1,4 @@
-﻿namespace VU
+﻿namespace VU.Forms
 {
     partial class frmAbout
     {

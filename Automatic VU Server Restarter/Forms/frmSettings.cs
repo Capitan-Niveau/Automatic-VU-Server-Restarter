@@ -16,9 +16,12 @@ namespace VU.Forms
         {
             InitializeComponent();
 
+            SettingsManager.LoadSettings();
+
             VuInstancePathTBox.Text = SettingsManager.GetVuInstancePath();
             BattlefieldInstallDirTBox.Text = SettingsManager.GetGamePath();
             VuPathTBox.Text = SettingsManager.GetVuPath();
+            ProConPathTBox.Text = SettingsManager.ProConPath;
             UseCustomGamePathCBox.Checked = SettingsManager.UseCustomGamePath;
             UseMiniProConCBox.Checked = SettingsManager.UseCutDownProCon;
 
@@ -45,6 +48,7 @@ namespace VU.Forms
             UnlistedCBox.Checked = SettingsManager.MakeUnlisted;
             WritePerfProfileCBox.Checked = SettingsManager.UseWritePerfProfile;
             SaveLoggingOutputCBox.Checked = SettingsManager.UseSaveLoggingOutput;
+            ProconWithServerStartupCBox.Checked = SettingsManager.UseProCon;
 
         }
 
@@ -108,7 +112,6 @@ namespace VU.Forms
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
-            SettingsManager.LoadSettings();
             SearchVuPathBtn.Enabled = false;
         }
 
@@ -298,6 +301,26 @@ namespace VU.Forms
                     SettingsManager.OpenSettings.Write("Settings", "SaveLoggingOutput", "false");
                     break;
             }
+        }
+
+        private void ProconWithServerStartupCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (ProconWithServerStartupCBox.Checked)
+            {
+                case true:
+                    SettingsManager.OpenSettings.Write("Settings", "UseProCon", "true");
+                    UseMiniProConCBox.Enabled = true;   
+                    break;
+                default:
+                    SettingsManager.OpenSettings.Write("Settings", "UseProCon", "false");
+                    UseMiniProConCBox.Enabled = false;
+                    break;
+            }
+        }
+
+        private void ProConPathTBox_TextChanged(object sender, EventArgs e)
+        {
+            SettingsManager.OpenSettings.Write("Settings", "ProConPath", ProConPathTBox.Text);
         }
     }
 }

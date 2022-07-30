@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using VU.Settings;
 
 namespace VU.Server
 {
@@ -19,6 +22,8 @@ namespace VU.Server
         private static readonly NetworkInterface[] Interfaces = NetworkInterface.GetAllNetworkInterfaces();
         internal static string ServerVersion { get; set; }
         internal static bool ServerKeyIsUsed { get; set; }
+        internal static Process ProConProcess;   
+
 
         [DllImport("user32.dll", EntryPoint = "HideCaret")]
         internal static extern long HideCaret(IntPtr hWnd);
@@ -122,6 +127,39 @@ namespace VU.Server
             {
                 var attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 return attributes.Length == 0 ? "" : ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+            }
+        }
+
+        internal static void StartProCon(bool useCutDownVersion = false)
+        {
+            if (ProConProcess != null && !ProConProcess.HasExited)
+            {
+                MessageBox.Show(@"ProCon is already running", @"ProCon", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (useCutDownVersion)
+                {
+                    if (File.Exists(SettingsManager.ProConPath + "\\PRoCon.Console.exe"))
+                    {
+                        ProConProcess = new Process();
+                        ProConProcess.StartInfo.FileName = SettingsManager.ProConPath + "\\PRoCon.Console.exe";
+                        ProConProcess.StartInfo.WorkingDirectory = SettingsManager.ProConPath;
+                        ProConProcess.StartInfo.CreateNoWindow = true;
+                        ProConProcess.StartInfo.UseShellExecute = false;
+                        ProConProcess.Start();
+                    }
+                }
+                else
+                {
+                    if (File.Exists(SettingsManager.ProConPath + "\\PRoCon.exe"))
+                    {
+                        ProConProcess = new Process();
+                        ProConProcess.StartInfo.FileName = SettingsManager.ProConPath + "PRoCon.exe";
+                        ProConProcess.StartInfo.WorkingDirectory = SettingsManager.ProConPath;
+                        ProConProcess.Start();
+                    }
+                }
             }
         }
     }

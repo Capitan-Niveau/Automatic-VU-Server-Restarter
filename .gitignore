@@ -4,3 +4,6 @@
 *.dll
 *.so
 *.dylib
+Automatic VU Server Restarter/bin/Debug/settings.ini
+Automatic VU Server Restarter/bin/Debug/avusr.exe
+Automatic VU Server Restarter/obj/Debug/avusr.exe

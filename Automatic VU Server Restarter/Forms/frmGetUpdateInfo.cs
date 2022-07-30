@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace VU
+namespace VU.Forms
 {
     public partial class frmGetUpdateInfo : Form
     {
