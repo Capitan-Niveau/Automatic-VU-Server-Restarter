@@ -1,4 +1,4 @@
-﻿namespace VU.Forms
+﻿namespace VU
 {
     partial class frmUpdateInfo
     {
@@ -65,7 +65,7 @@
             this.UpdateInfoRBox.TabIndex = 2;
             this.UpdateInfoRBox.Text = "";
             // 
-            // frmUpdateInfo
+            // frmUpdater
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,9 +73,8 @@
             this.Controls.Add(this.UpdateInfoRBox);
             this.Controls.Add(this.UpdateNowBtn);
             this.Controls.Add(this.CloseBtn);
-            this.Name = "frmUpdateInfo";
+            this.Name = "frmUpdater";
             this.Text = "Updater";
-            this.Load += new System.EventHandler(this.frmUpdateInfo_Load);
             this.ResumeLayout(false);
 
         }

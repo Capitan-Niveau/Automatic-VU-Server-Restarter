@@ -44,7 +44,7 @@ namespace VU.Forms
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            ProcessInfoLbl.Text = @"Server is not running - Restarts since first execution: 0";
+            ProcessInfoLbl.Text = @"Server is not running";
             ServerCpuUsageLbl.Text = @"CPU usage: -";
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
@@ -143,7 +143,6 @@ namespace VU.Forms
         {
             Stop();
             ServerInfoUpdater.Start();
-
             if (StartVuServerBtn.Visible)
             {
                 StartVuServerBtn.Visible = false;
@@ -155,9 +154,6 @@ namespace VU.Forms
                 Name = "Server::Logging::Thread"
             };
             _serverThread.Start();
-
-            if (SettingsManager.UseProCon)
-                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
         }
 
         private async void ServerProcess_DataReceived(object sender, DataReceivedEventArgs e)
@@ -176,6 +172,7 @@ namespace VU.Forms
                 {
                     ServerLogOutput.Text += Environment.NewLine + line;
                 }
+
                 ServerLogOutput.Invoke((Action)WriteLog);
             }
 
@@ -196,19 +193,16 @@ namespace VU.Forms
             if (Utilitys.ServerKeyIsUsed)
                 Utilitys.ServerKeyIsUsed = false;
 
-            if (Utilitys.ProConProcess != null && !Utilitys.ProConProcess.HasExited)
-                Utilitys.ProConProcess.Kill();
-
             if (_rconClient != null && _rconClient.IsOpen)
                 _rconClient.Close();
 
-            if (_serverProcess != null && !_serverProcess.HasExited)
+            if(_serverProcess != null && !_serverProcess.HasExited)
                _serverProcess.Kill();
 
-            if (_serverThread != null && _serverThread.IsAlive)
+            if(_serverThread != null && _serverThread.IsAlive)
                 _serverThread.Abort();
 
-            ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
+            ProcessInfoLbl.Text = @"Server is not running";
             ServerCpuUsageLbl.Text = @"CPU usage: -";
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
@@ -219,7 +213,6 @@ namespace VU.Forms
             StopVuServerBtn.Visible = false;
             _serverThread = null;  
             _serverProcess = null;
-            Utilitys.ProConProcess = null;
             _rconClient = null;
             PlayerCount = 0;
         }
@@ -275,6 +268,7 @@ namespace VU.Forms
 
                 }
             }
+
             Map = _firstMapMode[0];
             Mode = _firstMapMode[1];
         }
@@ -290,10 +284,6 @@ namespace VU.Forms
                 Name = "Server::Logging::Thread"
             };
             _serverThread.Start();
-
-            if(SettingsManager.UseProCon)
-                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
-
             StartVuServerBtn.Visible = false;
             StopVuServerBtn.Visible = true;
         }

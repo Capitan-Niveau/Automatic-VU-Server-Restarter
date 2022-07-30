@@ -141,7 +141,7 @@
             // UpdateTStrip
             // 
             this.UpdateTStrip.Name = "UpdateTStrip";
-            this.UpdateTStrip.Size = new System.Drawing.Size(117, 22);
+            this.UpdateTStrip.Size = new System.Drawing.Size(180, 22);
             this.UpdateTStrip.Text = "Updates";
             this.UpdateTStrip.Visible = false;
             this.UpdateTStrip.Click += new System.EventHandler(this.UpdateTStrip_Click);
