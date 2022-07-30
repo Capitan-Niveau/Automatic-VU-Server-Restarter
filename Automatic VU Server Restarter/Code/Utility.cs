@@ -165,5 +165,119 @@ namespace VU.Server
                 }
             }
         }
+
+        internal static string RealMapName(string map)
+        {
+            switch (map)
+            {
+                //BF3 Default Maps
+                case "MP_001":
+                    return "Grand Bazar";
+                case "MP_003":
+                    return "Teheran Highway";
+                case "MP_007":
+                    return "Caspian Border";
+                case "MP_011":
+                    return "Seine Crossing";
+                case "MP_012":
+                    return "Operation Firestorm";
+                case "MP_013":
+                    return "Damavand Peak";
+                case "MP_017":
+                    return "Noshahr Canals";
+                case "MP_018":
+                    return "Kharg Island";
+                case "MP_Subway":
+                    return "Operation Metro";
+                //Back to Karkand Maps
+                case "XP1_001":
+                    return "Strike at Karkand";
+                case "XP1_002":
+                    return "Gulf of Oman";
+                case "XP1_003":
+                    return "Sharqi Peninsula";
+                case "XP1_004":
+                    return "Wake Island";
+                //Close Quarters Maps
+                case "XP2_Factory":
+                    return "Scrapmetal";
+                case "XP2_Office":
+                    return "Operation 925";
+                case "XP2_Palace":
+                    return "Donya Fortress";
+                case "XP2_Skybar":
+                    return "Ziba Tower";
+                //Armored Kill Maps
+                case "XP3_Desert":
+                    return "Bandar Desert";
+                case "XP3_Alborz":
+                    return "Alborz Mountains";
+                case "XP3_Shield":
+                    return "Armored Shield";
+                case "XP3_Valley":
+                    return "Death Valley";
+                //Aftermath Maps
+                case "XP4_FD":
+                    return "Markaz Monolith";
+                case "XP4_Parl":
+                    return "Azadi Palace";
+                case "XP4_Quake":
+                    return "Epicenter";
+                case "XP4_Rubbel":
+                    return "Talah Market";
+                //End Game
+                case "XP5_01":
+                    return "Operation Riverside";
+                case "XP5_02":
+                    return "Nebandan Flats";
+                case "XP5_03":
+                    return "Kiasar Railroad";
+                case "XP5_04":
+                    return "Sabalan Pipeline";
+                default:
+                    return null;
+            }
+        }
+
+        internal static string RealModeName(string mode)
+        {
+            switch (mode)
+            {
+                case "ConquestLarge0":
+                    return "Conquest Large";
+                case "ConquestAssaultLarge0":
+                    return "Conquest Assault Large";
+                case "ConquestSmall0":
+                    return "Conquest Small";
+                case "ConquestAssaultSmall0":
+                    return "Conquest Assault Small";
+                case "ConquestAssaultSmall1":
+                    return "Conquest Assault Small #2";
+                case "RushLarge0":
+                    return "Rush Large";
+                case "SquadRush0":
+                    return "Squad Rush";
+                case "SquadDeathMatch0":
+                    return "Squad Death Match";
+                case "TeamDeathMatch0":
+                    return "Team Death Match";
+                case "TeamDeathMatchC0":
+                    return "Team Death Match Close Quarters";
+                case "GunMaster0":
+                    return "Gun master";
+                case "Domination0":
+                    return "Domination";
+                case "TankSuperiority0":
+                    return "Tank Superiority";
+                case "Scavenger0":
+                    return "Scavenger";
+                case "CaptureTheFlag0":
+                    return "Capture The Flag";
+                case "AirSuperiority0":
+                    return "Air Superiority";
+                default:
+                    return null;
+            }
+        }
     }
 }

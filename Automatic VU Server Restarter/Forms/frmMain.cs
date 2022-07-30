@@ -365,8 +365,8 @@ namespace VU.Forms
                             // ignored
                         }
                         SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
-                        MapNameLbl.Text = $@"Map: {Map}";
-                        ModeNameLbl.Text = $@"Mode: {Mode}";
+                        MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
+                        ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
                     }
                     break;
                 }
