@@ -31,6 +31,7 @@
             this.CloseBtn = new System.Windows.Forms.Button();
             this.ServerSettingsTControl = new System.Windows.Forms.TabControl();
             this.VuGamePathTab = new System.Windows.Forms.TabPage();
+            this.ProconWithServerStartupCBox = new System.Windows.Forms.CheckBox();
             this.UseMiniProConCBox = new System.Windows.Forms.CheckBox();
             this.ProConPathTBox = new System.Windows.Forms.TextBox();
             this.ProconPathLbl = new System.Windows.Forms.Label();
@@ -43,6 +44,7 @@
             this.VuPathLbl = new System.Windows.Forms.Label();
             this.VuServerArgsTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ModsGBox = new System.Windows.Forms.GroupBox();
             this.MiscGBox = new System.Windows.Forms.GroupBox();
             this.SaveLoggingOutputCBox = new System.Windows.Forms.CheckBox();
             this.WritePerfProfileCBox = new System.Windows.Forms.CheckBox();
@@ -57,7 +59,6 @@
             this.HighResTerrainCBox = new System.Windows.Forms.CheckBox();
             this.DisableTerrainInterpCBox = new System.Windows.Forms.CheckBox();
             this.AvusrSettingsTab = new System.Windows.Forms.TabPage();
-            this.ModsGBox = new System.Windows.Forms.GroupBox();
             this.ServerSettingsTControl.SuspendLayout();
             this.VuGamePathTab.SuspendLayout();
             this.VuServerArgsTab.SuspendLayout();
@@ -97,6 +98,7 @@
             // VuGamePathTab
             // 
             this.VuGamePathTab.AccessibleDescription = "+";
+            this.VuGamePathTab.Controls.Add(this.ProconWithServerStartupCBox);
             this.VuGamePathTab.Controls.Add(this.UseMiniProConCBox);
             this.VuGamePathTab.Controls.Add(this.ProConPathTBox);
             this.VuGamePathTab.Controls.Add(this.ProconPathLbl);
@@ -110,16 +112,28 @@
             this.VuGamePathTab.Location = new System.Drawing.Point(4, 22);
             this.VuGamePathTab.Name = "VuGamePathTab";
             this.VuGamePathTab.Padding = new System.Windows.Forms.Padding(3);
-            this.VuGamePathTab.Size = new System.Drawing.Size(412, 406);
+            this.VuGamePathTab.Size = new System.Drawing.Size(412, 407);
             this.VuGamePathTab.TabIndex = 0;
             this.VuGamePathTab.Text = "VU/Game path";
             this.VuGamePathTab.UseVisualStyleBackColor = true;
+            // 
+            // ProconWithServerStartupCBox
+            // 
+            this.ProconWithServerStartupCBox.AutoSize = true;
+            this.ProconWithServerStartupCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.ProconWithServerStartupCBox.Location = new System.Drawing.Point(19, 290);
+            this.ProconWithServerStartupCBox.Name = "ProconWithServerStartupCBox";
+            this.ProconWithServerStartupCBox.Size = new System.Drawing.Size(211, 18);
+            this.ProconWithServerStartupCBox.TabIndex = 10;
+            this.ProconWithServerStartupCBox.Text = "Start Procon together with the server?";
+            this.ProconWithServerStartupCBox.UseVisualStyleBackColor = true;
+            this.ProconWithServerStartupCBox.CheckedChanged += new System.EventHandler(this.ProconWithServerStartupCBox_CheckedChanged);
             // 
             // UseMiniProConCBox
             // 
             this.UseMiniProConCBox.AutoSize = true;
             this.UseMiniProConCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.UseMiniProConCBox.Location = new System.Drawing.Point(19, 290);
+            this.UseMiniProConCBox.Location = new System.Drawing.Point(19, 314);
             this.UseMiniProConCBox.Name = "UseMiniProConCBox";
             this.UseMiniProConCBox.Size = new System.Drawing.Size(228, 18);
             this.UseMiniProConCBox.TabIndex = 9;
@@ -134,6 +148,7 @@
             this.ProConPathTBox.ReadOnly = true;
             this.ProConPathTBox.Size = new System.Drawing.Size(370, 20);
             this.ProConPathTBox.TabIndex = 8;
+            this.ProConPathTBox.TextChanged += new System.EventHandler(this.ProConPathTBox_TextChanged);
             // 
             // ProconPathLbl
             // 
@@ -233,6 +248,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(412, 407);
             this.panel1.TabIndex = 4;
+            // 
+            // ModsGBox
+            // 
+            this.ModsGBox.Location = new System.Drawing.Point(9, 415);
+            this.ModsGBox.Margin = new System.Windows.Forms.Padding(6);
+            this.ModsGBox.Name = "ModsGBox";
+            this.ModsGBox.Size = new System.Drawing.Size(375, 219);
+            this.ModsGBox.TabIndex = 9;
+            this.ModsGBox.TabStop = false;
+            this.ModsGBox.Text = "Mods";
             // 
             // MiscGBox
             // 
@@ -396,20 +421,10 @@
             this.AvusrSettingsTab.Location = new System.Drawing.Point(4, 22);
             this.AvusrSettingsTab.Name = "AvusrSettingsTab";
             this.AvusrSettingsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.AvusrSettingsTab.Size = new System.Drawing.Size(412, 406);
+            this.AvusrSettingsTab.Size = new System.Drawing.Size(412, 407);
             this.AvusrSettingsTab.TabIndex = 2;
             this.AvusrSettingsTab.Text = "Settings";
             this.AvusrSettingsTab.UseVisualStyleBackColor = true;
-            // 
-            // ModsGBox
-            // 
-            this.ModsGBox.Location = new System.Drawing.Point(9, 415);
-            this.ModsGBox.Margin = new System.Windows.Forms.Padding(6);
-            this.ModsGBox.Name = "ModsGBox";
-            this.ModsGBox.Size = new System.Drawing.Size(375, 219);
-            this.ModsGBox.TabIndex = 9;
-            this.ModsGBox.TabStop = false;
-            this.ModsGBox.Text = "Mods";
             // 
             // FrmSettings
             // 
@@ -471,5 +486,6 @@
         private System.Windows.Forms.RadioButton ServerFrequency30HzRBtn;
         private System.Windows.Forms.GroupBox ModsGBox;
         private System.Windows.Forms.TabPage AvusrSettingsTab;
+        private System.Windows.Forms.CheckBox ProconWithServerStartupCBox;
     }
 }

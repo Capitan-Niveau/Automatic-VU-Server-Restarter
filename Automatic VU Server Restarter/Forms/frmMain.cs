@@ -154,6 +154,9 @@ namespace VU.Forms
                 Name = "Server::Logging::Thread"
             };
             _serverThread.Start();
+
+            if (SettingsManager.UseProCon)
+                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
         }
 
         private async void ServerProcess_DataReceived(object sender, DataReceivedEventArgs e)
@@ -193,6 +196,9 @@ namespace VU.Forms
             if (Utilitys.ServerKeyIsUsed)
                 Utilitys.ServerKeyIsUsed = false;
 
+            if (Utilitys.ProConProcess != null && !Utilitys.ProConProcess.HasExited)
+                Utilitys.ProConProcess.Kill();
+
             if (_rconClient != null && _rconClient.IsOpen)
                 _rconClient.Close();
 
@@ -209,6 +215,7 @@ namespace VU.Forms
             ModeNameLbl.Text = @"Mode: -";
             ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
 
+            Utilitys.ProConProcess = null;
             StartVuServerBtn.Visible = true;
             StopVuServerBtn.Visible = false;
             _serverThread = null;  
@@ -286,6 +293,9 @@ namespace VU.Forms
             _serverThread.Start();
             StartVuServerBtn.Visible = false;
             StopVuServerBtn.Visible = true;
+
+            if (SettingsManager.UseProCon)
+                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
         }
 
         private void StopVuServerBtn_Click(object sender, EventArgs e)

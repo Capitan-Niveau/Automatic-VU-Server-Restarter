@@ -23,6 +23,7 @@ namespace VU.Settings
         internal static bool UseAutomaticUpdates = true;
         internal static bool UseWritePerfProfile;
         internal static bool UseSaveLoggingOutput;
+        internal static bool UseProCon;
         internal static int ServerFrequency;
 
         internal static void LoadSettings()
@@ -39,6 +40,7 @@ namespace VU.Settings
             MakeUnlisted = Convert.ToBoolean(OpenSettings.Read("Settings", "MakeUnlisted"));
             UseHighResTerrain = Convert.ToBoolean(OpenSettings.Read("Settings", "HighResTerrain"));
             UseDisableTerrainInterp = Convert.ToBoolean(OpenSettings.Read("Settings", "DisableTerrainInterp"));
+            UseProCon = Convert.ToBoolean(OpenSettings.Read("Settings", "UseProCon"));
             ServerFrequency = Convert.ToInt32(OpenSettings.Read("Settings", "ServerFrequency"));
         }
 
