@@ -33,8 +33,8 @@ namespace VU
                 Settings.SettingsManager.OpenSettings.Write("Settings", "ProConCutDownVersion", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "UseProCon", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "ServerFrequency", "1");
-                Settings.SettingsManager.OpenSettings.Write("Settings", "UseCustomRemoteAdress", "false");
-                Settings.SettingsManager.OpenSettings.Write("Settings", "UseCustomServerAdress", "false");
+                Settings.SettingsManager.OpenSettings.Write("Settings", "UseCustomRemotePort", "false");
+                Settings.SettingsManager.OpenSettings.Write("Settings", "UseCustomServerPort", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "UseCustomHarmonyPort", "false");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "ServerPort", "25200");
                 Settings.SettingsManager.OpenSettings.Write("Settings", "HarmonyPort", "7948");

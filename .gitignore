@@ -13,3 +13,4 @@ Automatic VU Server Restarter/bin/Debug/ini.xml
 *.pdb
 Automatic VU Server Restarter/obj/Debug/avusr.pdb
 Automatic VU Server Restarter/obj/Debug/avusr.exe
+*.exe

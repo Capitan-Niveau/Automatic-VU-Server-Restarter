@@ -342,11 +342,11 @@ namespace VU.Forms
             switch (ServerPortCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerAdress", "true");
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerPort", "true");
                     ServerPortTBox.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerAdress", "false");
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerPort", "false");
                     ServerPortTBox.Enabled = false;
                     break;
             }
@@ -372,11 +372,11 @@ namespace VU.Forms
             switch (RemoteAdminPortCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemoteAdress", "true");
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemotePort", "true");
                     RemotePortTBox.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemoteAdress", "false");
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemotePort", "false");
                     RemotePortTBox.Enabled = false;
                     break;
             }

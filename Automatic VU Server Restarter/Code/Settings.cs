@@ -49,8 +49,8 @@ namespace VU.Settings
             UseDisableTerrainInterp = Convert.ToBoolean(OpenSettings.Read("Settings", "DisableTerrainInterp"));
             UseProCon = Convert.ToBoolean(OpenSettings.Read("Settings", "UseProCon"));
             ServerFrequency = Convert.ToInt32(OpenSettings.Read("Settings", "ServerFrequency"));
-            UseCustomRemoteAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomRemoteAdress"));
-            UseCustomServerAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomServerAdress"));
+            UseCustomRemoteAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomRemotePort"));
+            UseCustomServerAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomServerPort"));
             UseCustomHarmonyPort = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomHarmonyPort"));
             CustomGamePath = OpenSettings.Read("Settings", "CustomGamePath");
             VuInstancePath = OpenSettings.Read("Settings", "InstancePath");

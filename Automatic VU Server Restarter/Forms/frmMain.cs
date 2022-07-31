@@ -22,11 +22,13 @@ namespace VU.Forms
         private Thread _serverThread;
         private string _rconPassword;
         private string _maxPlayerCount;
-        private string line;
+        private string _serverName;
+        private string _line;
         private string[] _firstMapMode;
         private Client _rconClient;
         private Dictionary<string, string> _serverPassword;
         private Dictionary<string, string> _serverMaxPlayerCount;
+        private Dictionary<string, string> _gameServerName;
         public int PlayerCount { get; private set; }
         public int PlayerLimit { get; private set; }
         public string Map { get; private set; }
@@ -50,6 +52,7 @@ namespace VU.Forms
             MapNameLbl.Text = @"Map: -";
             ModeNameLbl.Text = @"Mode: -";
             ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
+            ServerNameLbl.Text = $@"Server name: -";
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -71,6 +74,7 @@ namespace VU.Forms
                 _rconClient.WordsReceived += RconClient_WordsReceived;
                 _rconPassword = _serverPassword["admin.password"];
                 _maxPlayerCount = _serverMaxPlayerCount["vars.maxPlayers"];
+                _serverName = _gameServerName["vars.serverName"];
                 _serverProcess = new Process();
                 _serverProcess.StartInfo.FileName = SettingsManager.VuPath + "\\vu.exe";
                 _serverProcess.StartInfo.WorkingDirectory = SettingsManager.VuPath;
@@ -79,6 +83,10 @@ namespace VU.Forms
                 _serverProcess.StartInfo.RedirectStandardError = true;
                 _serverProcess.StartInfo.UseShellExecute = false;   
                 _serverProcess.StartInfo.Arguments = "-server -dedicated -headless";
+
+                _serverProcess.StartInfo.Arguments += $" -listen 0.0.0.0:{SettingsManager.ServerPort}";
+                _serverProcess.StartInfo.Arguments += $" -mHarmonyPort {SettingsManager.HarmonyPort}";
+                _serverProcess.StartInfo.Arguments += $" -RemoteAdminPort 0.0.0.0:{SettingsManager.RemoteAdminPort}";
 
                 if (!string.IsNullOrEmpty(SettingsManager.VuInstancePath))
                 {
@@ -161,25 +169,25 @@ namespace VU.Forms
 
         private async void ServerProcess_DataReceived(object sender, DataReceivedEventArgs e)
         {
-            line = e.Data;
+            _line = e.Data;
 
-            if (string.IsNullOrWhiteSpace(line))
+            if (string.IsNullOrWhiteSpace(_line))
                 return;
 
-            Utilitys.GetServerBuild(line);
-            Utilitys.CheckIfKeyIsInUse(line);
+            Utilitys.GetServerBuild(_line);
+            Utilitys.CheckIfKeyIsInUse(_line);
 
             if (ServerLogOutput.InvokeRequired)
             {
                 void WriteLog()
                 {
-                    ServerLogOutput.Text += Environment.NewLine + line;
+                    ServerLogOutput.Text += Environment.NewLine + _line;
                 }
 
                 ServerLogOutput.Invoke((Action)WriteLog);
             }
 
-            if (!Regex.Match(line, @"\[.+\] \[.+\] Monitored Harmony server listening on 0.0.0.0:\d+").Success) return;
+            if (!Regex.Match(_line, @"\[.+\] \[.+\] Monitored Harmony server listening on 0.0.0.0:\d+").Success) return;
             _rconClient.Open(IPAddress.Loopback, Convert.ToInt32(SettingsManager.RemoteAdminPort));
 
             await _rconClient.SendMessageAsync("login.plainText", _rconPassword);
@@ -208,7 +216,8 @@ namespace VU.Forms
             if(_serverThread != null && _serverThread.IsAlive)
                 _serverThread.Abort();
 
-            ProcessInfoLbl.Text = @"Server is not running";
+            ServerNameLbl.Text = $@"Server name:{_serverName}";
+            ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
             ServerCpuUsageLbl.Text = @"CPU usage: -";
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
@@ -253,6 +262,7 @@ namespace VU.Forms
         {
             _serverPassword = new Dictionary<string, string>();
             _serverMaxPlayerCount = new Dictionary<string, string>();
+            _gameServerName = new Dictionary<string, string>();
 
             var configLines = File.ReadAllLines(SettingsManager.VuInstancePath + "\\Admin\\Startup.txt");
             var mapLines = File.ReadAllLines(SettingsManager.VuInstancePath + "\\Admin\\Maplist.txt");
@@ -270,12 +280,12 @@ namespace VU.Forms
                         case true:
                             _serverPassword.Add(configParts[0], configParts[1].Replace("\"", string.Empty));
                             _serverMaxPlayerCount.Add(configParts[0], configParts[1].Replace(" ", string.Empty));
+                            _gameServerName.Add(configParts[0], configParts[1].Replace("\"", string.Empty));
                             break;
                     }
 
                 }
             }
-
             Map = _firstMapMode[0];
             Mode = _firstMapMode[1];
         }
@@ -353,20 +363,22 @@ namespace VU.Forms
                     if (_serverPid > 0)
                     {
                         _serverProcess.Refresh();
-                       
+
                         ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
                         ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
+                        ServerNameLbl.Text = $@"Server name:{_serverName}";
+                        SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
+                        MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
+                        ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
                         try
                         {
-                            ServerMemUsageLbl.Text = $@"Physical memory usage: {Utilitys.SizeSuffix(_serverProcess.WorkingSet64, 1)} / Peak: {Utilitys.SizeSuffix(_serverProcess.PeakWorkingSet64, 1)}";
+                            ServerMemUsageLbl.Text =
+                                $@"Physical memory usage: {Utilitys.SizeSuffix(_serverProcess.WorkingSet64, 1)} / Peak: {Utilitys.SizeSuffix(_serverProcess.PeakWorkingSet64, 1)}";
                         }
                         catch (Exception)
                         {
                             // ignored
                         }
-                        SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
-                        MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
-                        ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
                     }
                     break;
                 }
