@@ -6,3 +6,10 @@
 *.dylib
 *.ini
 *.exe
+*.pdb
+Automatic VU Server Restarter/bin/Debug/avusr.exe.config
+Automatic VU Server Restarter/bin/Debug/ini.xml
+*.exe
+*.pdb
+Automatic VU Server Restarter/obj/Debug/avusr.pdb
+Automatic VU Server Restarter/obj/Debug/avusr.exe

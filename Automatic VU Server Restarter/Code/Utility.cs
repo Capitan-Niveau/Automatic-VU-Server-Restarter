@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -23,7 +22,6 @@ namespace VU.Server
         internal static bool ServerKeyIsUsed { get; set; }
 
         internal static Process ProConProcess;
-
 
         [DllImport("user32.dll", EntryPoint = "HideCaret")]
         internal static extern long HideCaret(IntPtr hWnd);

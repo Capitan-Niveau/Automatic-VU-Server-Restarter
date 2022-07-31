@@ -46,7 +46,7 @@
             this.MapNameLbl = new System.Windows.Forms.Label();
             this.ServerMemUsageLbl = new System.Windows.Forms.Label();
             this.ServerCpuUsageLbl = new System.Windows.Forms.Label();
-            this.HostNetworkUsageLbl = new System.Windows.Forms.Label();
+            this.ServerNameLbl = new System.Windows.Forms.Label();
             this.SlotUsageLbl = new System.Windows.Forms.Label();
             this.ProcessInfoLbl = new System.Windows.Forms.Label();
             this.StopVuServerBtn = new System.Windows.Forms.Button();
@@ -141,7 +141,7 @@
             // UpdateTStrip
             // 
             this.UpdateTStrip.Name = "UpdateTStrip";
-            this.UpdateTStrip.Size = new System.Drawing.Size(180, 22);
+            this.UpdateTStrip.Size = new System.Drawing.Size(117, 22);
             this.UpdateTStrip.Text = "Updates";
             this.UpdateTStrip.Visible = false;
             this.UpdateTStrip.Click += new System.EventHandler(this.UpdateTStrip_Click);
@@ -166,7 +166,7 @@
             this.groupBox1.Controls.Add(this.MapNameLbl);
             this.groupBox1.Controls.Add(this.ServerMemUsageLbl);
             this.groupBox1.Controls.Add(this.ServerCpuUsageLbl);
-            this.groupBox1.Controls.Add(this.HostNetworkUsageLbl);
+            this.groupBox1.Controls.Add(this.ServerNameLbl);
             this.groupBox1.Controls.Add(this.SlotUsageLbl);
             this.groupBox1.Controls.Add(this.ProcessInfoLbl);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -217,15 +217,15 @@
             this.ServerCpuUsageLbl.TabIndex = 13;
             this.ServerCpuUsageLbl.Text = "NaN";
             // 
-            // HostNetworkUsageLbl
+            // ServerNameLbl
             // 
-            this.HostNetworkUsageLbl.AutoSize = true;
-            this.HostNetworkUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HostNetworkUsageLbl.Location = new System.Drawing.Point(17, 48);
-            this.HostNetworkUsageLbl.Name = "HostNetworkUsageLbl";
-            this.HostNetworkUsageLbl.Size = new System.Drawing.Size(32, 15);
-            this.HostNetworkUsageLbl.TabIndex = 2;
-            this.HostNetworkUsageLbl.Text = "NaN";
+            this.ServerNameLbl.AutoSize = true;
+            this.ServerNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerNameLbl.Location = new System.Drawing.Point(17, 48);
+            this.ServerNameLbl.Name = "ServerNameLbl";
+            this.ServerNameLbl.Size = new System.Drawing.Size(32, 15);
+            this.ServerNameLbl.TabIndex = 2;
+            this.ServerNameLbl.Text = "NaN";
             // 
             // SlotUsageLbl
             // 
@@ -372,7 +372,7 @@
         private System.Windows.Forms.Label ProcessInfoLbl;
         private System.Windows.Forms.Label ServerMemUsageLbl;
         private System.Windows.Forms.Label ServerCpuUsageLbl;
-        private System.Windows.Forms.Label HostNetworkUsageLbl;
+        private System.Windows.Forms.Label ServerNameLbl;
         private System.Windows.Forms.Label ModeNameLbl;
         private System.Windows.Forms.Label MapNameLbl;
         private System.Windows.Forms.Button StopVuServerBtn;

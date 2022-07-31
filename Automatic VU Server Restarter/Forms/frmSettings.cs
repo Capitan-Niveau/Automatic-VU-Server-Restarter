@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using VU.Settings;
 
@@ -23,6 +19,7 @@ namespace VU.Forms
             VuPathTBox.Text = SettingsManager.GetVuPath();
             UseCustomGamePathCBox.Checked = SettingsManager.UseCustomGamePath;
             UseMiniProConCBox.Checked = SettingsManager.UseCutDownProCon;
+            ProConPathTBox.Text = SettingsManager.ProConPath;
 
             switch (SettingsManager.ServerFrequency)
             {
@@ -48,6 +45,12 @@ namespace VU.Forms
             WritePerfProfileCBox.Checked = SettingsManager.UseWritePerfProfile;
             SaveLoggingOutputCBox.Checked = SettingsManager.UseSaveLoggingOutput;
             ProconWithServerStartupCBox.Checked = SettingsManager.UseProCon;
+            ServerPortCBox.Checked = SettingsManager.UseCustomServerAdress;
+            MonitoredHarmonyCBox.Checked = SettingsManager.UseCustomHarmonyPort;
+            RemoteAdminPortCBox.Checked = SettingsManager.UseCustomRemoteAdress;
+            RemotePortTBox.Text = SettingsManager.RemoteAdminPort;
+            HarmonyPortTBox.Text = SettingsManager.HarmonyPort;
+            ServerPortTBox.Text = SettingsManager.ServerPort;
         }
 
         internal Button SearchVuPathBtn = new Button();
@@ -111,6 +114,7 @@ namespace VU.Forms
         private void frmSettings_Load(object sender, EventArgs e)
         {
             SearchVuPathBtn.Enabled = false;
+            SearchProConPathBtn.Enabled = false;
         }
 
         private void SearchVuPath_Click(object sender, EventArgs e)
@@ -143,6 +147,11 @@ namespace VU.Forms
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
+            SettingsManager.OpenSettings.Write("Settings", "ProConPath", ProConPathTBox.Text);
+            SettingsManager.OpenSettings.Write("Settings", "InstancePath", VuInstancePathTBox.Text);
+            SettingsManager.OpenSettings.Write("Settings", "ServerPort", ServerPortTBox.Text);
+            SettingsManager.OpenSettings.Write("Settings", "HarmonyPort", HarmonyPortTBox.Text);
+            SettingsManager.OpenSettings.Write("Settings", "RemotePort", RemotePortTBox.Text);
             Close();
         }
 
@@ -172,11 +181,6 @@ namespace VU.Forms
                     SettingsManager.OpenSettings.Write("Settings", "ProConCutDownVersion", "false");
                     break;
             }
-        }
-
-        private void VuInstancePathTBox_TextChanged(object sender, EventArgs e)
-        {
-            SettingsManager.OpenSettings.Write("Settings", "InstancePath", VuInstancePathTBox.Text);
         }
 
         private void ServerFrequency30HzRBtn_CheckedChanged(object sender, EventArgs e)
@@ -308,17 +312,74 @@ namespace VU.Forms
                 case true:
                     SettingsManager.OpenSettings.Write("Settings", "UseProCon", "true");
                     UseMiniProConCBox.Enabled = true;
+                    SearchProConPathBtn.Enabled = true;
                     break;
                 default:
                     SettingsManager.OpenSettings.Write("Settings", "UseProCon", "false");
                     UseMiniProConCBox.Enabled = false;
+                    SearchProConPathBtn.Enabled = false;
                     break;
             }
         }
 
-        private void ProConPathTBox_TextChanged(object sender, EventArgs e)
+        private void ServerPortTBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            SettingsManager.OpenSettings.Write("Settings", "ProConPath", ProConPathTBox.Text);
+            e.Handled = !(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+
+        private void HarmonyPortTBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+
+        private void RemotePortTBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+        }
+
+        private void ServerPortCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (ServerPortCBox.Checked)
+            {
+                case true:
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerAdress", "true");
+                    ServerPortTBox.Enabled = true;
+                    break;
+                default:
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerAdress", "false");
+                    ServerPortTBox.Enabled = false;
+                    break;
+            }
+        }
+
+        private void MonitoredHarmonyCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (MonitoredHarmonyCBox.Checked)
+            {
+                case true:
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomHarmonyPort", "true");
+                    HarmonyPortTBox.Enabled = true;
+                    break;
+                default:
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomHarmonyPort", "false");
+                    HarmonyPortTBox.Enabled = false;
+                    break;
+            }
+        }
+
+        private void RemoteAdminPortCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (RemoteAdminPortCBox.Checked)
+            {
+                case true:
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemoteAdress", "true");
+                    RemotePortTBox.Enabled = true;
+                    break;
+                default:
+                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemoteAdress", "false");
+                    RemotePortTBox.Enabled = false;
+                    break;
+            }
         }
     }
 }

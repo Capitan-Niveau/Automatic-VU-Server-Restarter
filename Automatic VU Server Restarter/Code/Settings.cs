@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using INIReader;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace VU.Settings
 {
@@ -20,11 +21,17 @@ namespace VU.Settings
         internal static bool UseDisableTerrainInterp;
         internal static bool UseHighResTerrain;
         internal static bool MakeUnlisted;
-        internal static bool UseAutomaticUpdates = true;
+        internal static bool UseAutomaticUpdates;
         internal static bool UseWritePerfProfile;
         internal static bool UseSaveLoggingOutput;
         internal static bool UseProCon;
+        internal static bool UseCustomRemoteAdress;
+        internal static bool UseCustomServerAdress;
+        internal static bool UseCustomHarmonyPort;
         internal static int ServerFrequency;
+        internal static string HarmonyPort;
+        internal static string ServerPort;
+        internal static string RemoteAdminPort;
 
         internal static void LoadSettings()
         {
@@ -42,6 +49,15 @@ namespace VU.Settings
             UseDisableTerrainInterp = Convert.ToBoolean(OpenSettings.Read("Settings", "DisableTerrainInterp"));
             UseProCon = Convert.ToBoolean(OpenSettings.Read("Settings", "UseProCon"));
             ServerFrequency = Convert.ToInt32(OpenSettings.Read("Settings", "ServerFrequency"));
+            UseCustomRemoteAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomRemoteAdress"));
+            UseCustomServerAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomServerAdress"));
+            UseCustomHarmonyPort = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomHarmonyPort"));
+            CustomGamePath = OpenSettings.Read("Settings", "CustomGamePath");
+            VuInstancePath = OpenSettings.Read("Settings", "InstancePath");
+            ProConPath = OpenSettings.Read("Settings", "ProConPath");
+            HarmonyPort = OpenSettings.Read("Settings", "HarmonyPort");
+            ServerPort = OpenSettings.Read("Settings", "ServerPort");
+            RemoteAdminPort = OpenSettings.Read("Settings", "RemoteAdminPort");
         }
 
 

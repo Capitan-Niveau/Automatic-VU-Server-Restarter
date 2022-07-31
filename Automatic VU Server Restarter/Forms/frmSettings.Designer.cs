@@ -44,6 +44,13 @@
             this.VuPathLbl = new System.Windows.Forms.Label();
             this.VuServerArgsTab = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.NetworkSettingsGBox = new System.Windows.Forms.GroupBox();
+            this.RemotePortTBox = new System.Windows.Forms.TextBox();
+            this.ServerPortTBox = new System.Windows.Forms.TextBox();
+            this.HarmonyPortTBox = new System.Windows.Forms.TextBox();
+            this.RemoteAdminPortCBox = new System.Windows.Forms.CheckBox();
+            this.MonitoredHarmonyCBox = new System.Windows.Forms.CheckBox();
+            this.ServerPortCBox = new System.Windows.Forms.CheckBox();
             this.ModsGBox = new System.Windows.Forms.GroupBox();
             this.MiscGBox = new System.Windows.Forms.GroupBox();
             this.SaveLoggingOutputCBox = new System.Windows.Forms.CheckBox();
@@ -63,6 +70,7 @@
             this.VuGamePathTab.SuspendLayout();
             this.VuServerArgsTab.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.NetworkSettingsGBox.SuspendLayout();
             this.MiscGBox.SuspendLayout();
             this.ServerFreqGBox.SuspendLayout();
             this.TerrainOptionsGBox.SuspendLayout();
@@ -132,6 +140,7 @@
             // UseMiniProConCBox
             // 
             this.UseMiniProConCBox.AutoSize = true;
+            this.UseMiniProConCBox.Enabled = false;
             this.UseMiniProConCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.UseMiniProConCBox.Location = new System.Drawing.Point(19, 314);
             this.UseMiniProConCBox.Name = "UseMiniProConCBox";
@@ -148,7 +157,6 @@
             this.ProConPathTBox.ReadOnly = true;
             this.ProConPathTBox.Size = new System.Drawing.Size(370, 20);
             this.ProConPathTBox.TabIndex = 8;
-            this.ProConPathTBox.TextChanged += new System.EventHandler(this.ProConPathTBox_TextChanged);
             // 
             // ProconPathLbl
             // 
@@ -195,7 +203,6 @@
             this.VuInstancePathTBox.ReadOnly = true;
             this.VuInstancePathTBox.Size = new System.Drawing.Size(370, 20);
             this.VuInstancePathTBox.TabIndex = 3;
-            this.VuInstancePathTBox.TextChanged += new System.EventHandler(this.VuInstancePathTBox_TextChanged);
             // 
             // VuPathTBox
             // 
@@ -240,6 +247,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.NetworkSettingsGBox);
             this.panel1.Controls.Add(this.ModsGBox);
             this.panel1.Controls.Add(this.MiscGBox);
             this.panel1.Controls.Add(this.ServerFreqGBox);
@@ -249,12 +257,96 @@
             this.panel1.Size = new System.Drawing.Size(412, 407);
             this.panel1.TabIndex = 4;
             // 
+            // NetworkSettingsGBox
+            // 
+            this.NetworkSettingsGBox.Controls.Add(this.RemotePortTBox);
+            this.NetworkSettingsGBox.Controls.Add(this.ServerPortTBox);
+            this.NetworkSettingsGBox.Controls.Add(this.HarmonyPortTBox);
+            this.NetworkSettingsGBox.Controls.Add(this.RemoteAdminPortCBox);
+            this.NetworkSettingsGBox.Controls.Add(this.MonitoredHarmonyCBox);
+            this.NetworkSettingsGBox.Controls.Add(this.ServerPortCBox);
+            this.NetworkSettingsGBox.Location = new System.Drawing.Point(9, 412);
+            this.NetworkSettingsGBox.Name = "NetworkSettingsGBox";
+            this.NetworkSettingsGBox.Size = new System.Drawing.Size(375, 121);
+            this.NetworkSettingsGBox.TabIndex = 10;
+            this.NetworkSettingsGBox.TabStop = false;
+            this.NetworkSettingsGBox.Text = "Network and ports";
+            // 
+            // RemotePortTBox
+            // 
+            this.RemotePortTBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.RemotePortTBox.Enabled = false;
+            this.RemotePortTBox.Location = new System.Drawing.Point(219, 83);
+            this.RemotePortTBox.Name = "RemotePortTBox";
+            this.RemotePortTBox.Size = new System.Drawing.Size(67, 20);
+            this.RemotePortTBox.TabIndex = 10;
+            this.RemotePortTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.RemotePortTBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.RemotePortTBox_KeyPress);
+            // 
+            // ServerPortTBox
+            // 
+            this.ServerPortTBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ServerPortTBox.Enabled = false;
+            this.ServerPortTBox.Location = new System.Drawing.Point(219, 26);
+            this.ServerPortTBox.Name = "ServerPortTBox";
+            this.ServerPortTBox.Size = new System.Drawing.Size(67, 20);
+            this.ServerPortTBox.TabIndex = 9;
+            this.ServerPortTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ServerPortTBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ServerPortTBox_KeyPress);
+            // 
+            // HarmonyPortTBox
+            // 
+            this.HarmonyPortTBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HarmonyPortTBox.Enabled = false;
+            this.HarmonyPortTBox.Location = new System.Drawing.Point(219, 54);
+            this.HarmonyPortTBox.Name = "HarmonyPortTBox";
+            this.HarmonyPortTBox.Size = new System.Drawing.Size(67, 20);
+            this.HarmonyPortTBox.TabIndex = 4;
+            this.HarmonyPortTBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.HarmonyPortTBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.HarmonyPortTBox_KeyPress);
+            // 
+            // RemoteAdminPortCBox
+            // 
+            this.RemoteAdminPortCBox.AutoSize = true;
+            this.RemoteAdminPortCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.RemoteAdminPortCBox.Location = new System.Drawing.Point(16, 84);
+            this.RemoteAdminPortCBox.Name = "RemoteAdminPortCBox";
+            this.RemoteAdminPortCBox.Size = new System.Drawing.Size(178, 18);
+            this.RemoteAdminPortCBox.TabIndex = 2;
+            this.RemoteAdminPortCBox.Text = "Use custom remote admin port:";
+            this.RemoteAdminPortCBox.UseVisualStyleBackColor = true;
+            this.RemoteAdminPortCBox.CheckedChanged += new System.EventHandler(this.RemoteAdminPortCBox_CheckedChanged);
+            // 
+            // MonitoredHarmonyCBox
+            // 
+            this.MonitoredHarmonyCBox.AutoSize = true;
+            this.MonitoredHarmonyCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.MonitoredHarmonyCBox.Location = new System.Drawing.Point(16, 56);
+            this.MonitoredHarmonyCBox.Name = "MonitoredHarmonyCBox";
+            this.MonitoredHarmonyCBox.Size = new System.Drawing.Size(204, 18);
+            this.MonitoredHarmonyCBox.TabIndex = 1;
+            this.MonitoredHarmonyCBox.Text = "Use custom MonitoredHarmony port:";
+            this.MonitoredHarmonyCBox.UseVisualStyleBackColor = true;
+            this.MonitoredHarmonyCBox.CheckedChanged += new System.EventHandler(this.MonitoredHarmonyCBox_CheckedChanged);
+            // 
+            // ServerPortCBox
+            // 
+            this.ServerPortCBox.AutoSize = true;
+            this.ServerPortCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.ServerPortCBox.Location = new System.Drawing.Point(16, 28);
+            this.ServerPortCBox.Name = "ServerPortCBox";
+            this.ServerPortCBox.Size = new System.Drawing.Size(146, 18);
+            this.ServerPortCBox.TabIndex = 0;
+            this.ServerPortCBox.Text = "Use custom Server port:";
+            this.ServerPortCBox.UseVisualStyleBackColor = true;
+            this.ServerPortCBox.CheckedChanged += new System.EventHandler(this.ServerPortCBox_CheckedChanged);
+            // 
             // ModsGBox
             // 
-            this.ModsGBox.Location = new System.Drawing.Point(9, 415);
+            this.ModsGBox.Location = new System.Drawing.Point(9, 550);
             this.ModsGBox.Margin = new System.Windows.Forms.Padding(6);
             this.ModsGBox.Name = "ModsGBox";
-            this.ModsGBox.Size = new System.Drawing.Size(375, 219);
+            this.ModsGBox.Size = new System.Drawing.Size(375, 154);
             this.ModsGBox.TabIndex = 9;
             this.ModsGBox.TabStop = false;
             this.ModsGBox.Text = "Mods";
@@ -266,7 +358,7 @@
             this.MiscGBox.Controls.Add(this.DisableAutomaticUpdatesCBox);
             this.MiscGBox.Controls.Add(this.UnlistedCBox);
             this.MiscGBox.Controls.Add(this.SkipChecksumCBox);
-            this.MiscGBox.Location = new System.Drawing.Point(9, 238);
+            this.MiscGBox.Location = new System.Drawing.Point(9, 236);
             this.MiscGBox.Name = "MiscGBox";
             this.MiscGBox.Size = new System.Drawing.Size(375, 156);
             this.MiscGBox.TabIndex = 8;
@@ -444,6 +536,8 @@
             this.VuGamePathTab.PerformLayout();
             this.VuServerArgsTab.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.NetworkSettingsGBox.ResumeLayout(false);
+            this.NetworkSettingsGBox.PerformLayout();
             this.MiscGBox.ResumeLayout(false);
             this.MiscGBox.PerformLayout();
             this.ServerFreqGBox.ResumeLayout(false);
@@ -487,5 +581,12 @@
         private System.Windows.Forms.GroupBox ModsGBox;
         private System.Windows.Forms.TabPage AvusrSettingsTab;
         private System.Windows.Forms.CheckBox ProconWithServerStartupCBox;
+        private System.Windows.Forms.GroupBox NetworkSettingsGBox;
+        private System.Windows.Forms.TextBox HarmonyPortTBox;
+        private System.Windows.Forms.CheckBox RemoteAdminPortCBox;
+        private System.Windows.Forms.CheckBox MonitoredHarmonyCBox;
+        private System.Windows.Forms.CheckBox ServerPortCBox;
+        private System.Windows.Forms.TextBox ServerPortTBox;
+        private System.Windows.Forms.TextBox RemotePortTBox;
     }
 }

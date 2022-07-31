@@ -4,3 +4,9 @@ D:\Visual Studio\Open Source\Server\German\obj\Debug\German.csproj.AssemblyRefer
 D:\Visual Studio\Open Source\Server\German\obj\Debug\German.csproj.CoreCompileInputs.cache
 D:\Visual Studio\Open Source\Server\German\obj\Debug\German.dll
 D:\Visual Studio\Open Source\Server\German\obj\Debug\German.pdb
+D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\bin\Debug\German.dll
+D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\bin\Debug\German.pdb
+D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Debug\German.csproj.AssemblyReference.cache
+D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Debug\German.csproj.CoreCompileInputs.cache
+D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Debug\German.dll
+D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Debug\German.pdb

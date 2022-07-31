@@ -180,7 +180,7 @@ namespace VU.Forms
             }
 
             if (!Regex.Match(line, @"\[.+\] \[.+\] Monitored Harmony server listening on 0.0.0.0:\d+").Success) return;
-            _rconClient.Open(IPAddress.Loopback, 47200);
+            _rconClient.Open(IPAddress.Loopback, Convert.ToInt32(SettingsManager.RemoteAdminPort));
 
             await _rconClient.SendMessageAsync("login.plainText", _rconPassword);
         }
