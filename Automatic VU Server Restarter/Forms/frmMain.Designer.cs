@@ -54,6 +54,7 @@
             this.SendCommandBtn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.ServerLogOutput = new System.Windows.Forms.TextBox();
+            this.ServerFpsLbl = new System.Windows.Forms.Label();
             this.MainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -162,6 +163,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.ServerFpsLbl);
             this.groupBox1.Controls.Add(this.ModeNameLbl);
             this.groupBox1.Controls.Add(this.MapNameLbl);
             this.groupBox1.Controls.Add(this.ServerMemUsageLbl);
@@ -280,7 +282,6 @@
             this.SendCommandBtn.TabIndex = 14;
             this.SendCommandBtn.Text = "Send";
             this.SendCommandBtn.UseVisualStyleBackColor = true;
-            this.SendCommandBtn.Visible = false;
             this.SendCommandBtn.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
@@ -306,7 +307,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(463, 20);
             this.textBox1.TabIndex = 15;
-            this.textBox1.Visible = false;
             // 
             // ServerLogOutput
             // 
@@ -326,6 +326,16 @@
             this.ServerLogOutput.TabStop = false;
             this.ServerLogOutput.TextChanged += new System.EventHandler(this.ServerLogOutput_TextChanged);
             this.ServerLogOutput.GotFocus += new System.EventHandler(this.ServerLogOutput_GotFocus);
+            // 
+            // ServerFpsLbl
+            // 
+            this.ServerFpsLbl.AutoSize = true;
+            this.ServerFpsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerFpsLbl.Location = new System.Drawing.Point(528, 94);
+            this.ServerFpsLbl.Name = "ServerFpsLbl";
+            this.ServerFpsLbl.Size = new System.Drawing.Size(51, 15);
+            this.ServerFpsLbl.TabIndex = 16;
+            this.ServerFpsLbl.Text = "FPS: {0}";
             // 
             // FrmMain
             // 
@@ -382,6 +392,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem UpdateTStrip;
         private System.Windows.Forms.TextBox ServerLogOutput;
+        private System.Windows.Forms.Label ServerFpsLbl;
     }
 }
 
