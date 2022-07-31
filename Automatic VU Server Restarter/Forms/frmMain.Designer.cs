@@ -343,6 +343,7 @@
             this.Controls.Add(this.StopVuServerBtn);
             this.MinimumSize = new System.Drawing.Size(840, 710);
             this.Name = "FrmMain";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "{0} - {1}";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);

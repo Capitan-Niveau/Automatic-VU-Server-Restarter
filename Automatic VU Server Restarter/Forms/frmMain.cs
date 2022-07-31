@@ -34,8 +34,6 @@ namespace VU.Forms
         public string Map { get; private set; }
         public string Mode { get; private set; }
         public bool CanSendCommands => _rconClient != null && _rconClient.IsOpen;
-        private event ActionDelegate<IList<string>> DataReceived;
-        private delegate void ActionDelegate<in T>(T args);
 
         public FrmMain()
         {
@@ -57,8 +55,26 @@ namespace VU.Forms
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Stop();
-            Environment.Exit(0);
+            if (_serverProcess != null && !_serverProcess.HasExited)
+            {
+                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?", @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                switch (stopServer)
+                {
+                    case DialogResult.Yes:
+                        Stop();
+                        Environment.Exit(0);
+                        break;
+                    case DialogResult.No:
+                        e.Cancel = true;
+                        break;
+                }
+            }
+            else
+            {
+                Stop();
+                Environment.Exit(0);
+            }
         }
 
         private void Start()
@@ -254,8 +270,6 @@ namespace VU.Forms
                 default:
                     break;
             }
-            // Pass event args
-            DataReceived?.Invoke(words);
         }
 
         private void LoadConfig()
@@ -291,7 +305,28 @@ namespace VU.Forms
         }
 
 
+        private void Exit()
+        {
+            if (_serverProcess != null && !_serverProcess.HasExited)
+            {
+                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?", @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+                switch (stopServer)
+                {
+                    case DialogResult.Yes:
+                        Stop();
+                        Environment.Exit(0);
+                        break;
+                    case DialogResult.No:
+                        return;
+                }
+            }
+            else
+            {
+                Stop();
+                Environment.Exit(0);
+            }
+        }
 
         private void StartServer_Click(object sender, EventArgs e)
         {
@@ -318,8 +353,12 @@ namespace VU.Forms
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
-            Stop();
-            Environment.Exit(0);
+            Exit();
+        }
+
+        private void ExitTStrip_Click(object sender, EventArgs e)
+        {
+            Exit();
         }
 
         private void SettingsTStrip_Click(object sender, EventArgs e)
@@ -329,12 +368,6 @@ namespace VU.Forms
             {
                 SettingsManager.LoadSettings();
             }
-        }
-
-        private void ExitTStrip_Click(object sender, EventArgs e)
-        {
-            Stop();
-            Environment.Exit(0);
         }
 
         private void ServerInfoUpdater_Tick(object sender, EventArgs e)
