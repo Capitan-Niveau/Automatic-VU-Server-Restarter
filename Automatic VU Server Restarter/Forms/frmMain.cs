@@ -399,7 +399,7 @@ namespace VU.Forms
 
                         ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
                         ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
-                        ServerNameLbl.Text = $@"Server name:{_serverName}";
+                        ServerNameLbl.Text = $@"Server name: {_serverName}";
                         SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
                         MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
                         ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
