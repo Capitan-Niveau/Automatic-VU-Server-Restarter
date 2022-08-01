@@ -63,15 +63,25 @@ namespace VU.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
-        internal static System.Drawing.Icon AVURS {
+        internal static System.Drawing.Icon About {
             get {
-                object obj = ResourceManager.GetObject("AVURS", resourceCulture);
+                object obj = ResourceManager.GetObject("About", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Automatic server restarter ähnelt.
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
+        /// </summary>
+        internal static System.Drawing.Icon AVUSR {
+            get {
+                object obj = ResourceManager.GetObject("AVUSR", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Automatic VU server restarter ähnelt.
         /// </summary>
         internal static string ProcName {
             get {

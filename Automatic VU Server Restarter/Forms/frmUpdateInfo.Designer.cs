@@ -28,26 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.CloseBtn = new System.Windows.Forms.Button();
+            this.AbortBtn = new System.Windows.Forms.Button();
             this.UpdateNowBtn = new System.Windows.Forms.Button();
             this.UpdateInfoRBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // CloseBtn
+            // AbortBtn
             // 
-            this.CloseBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.CloseBtn.Location = new System.Drawing.Point(476, 455);
-            this.CloseBtn.Name = "CloseBtn";
-            this.CloseBtn.Size = new System.Drawing.Size(75, 23);
-            this.CloseBtn.TabIndex = 0;
-            this.CloseBtn.Text = "Close";
-            this.CloseBtn.UseVisualStyleBackColor = true;
+            this.AbortBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.AbortBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.AbortBtn.Location = new System.Drawing.Point(411, 232);
+            this.AbortBtn.Name = "AbortBtn";
+            this.AbortBtn.Size = new System.Drawing.Size(75, 23);
+            this.AbortBtn.TabIndex = 0;
+            this.AbortBtn.Text = "Abort";
+            this.AbortBtn.UseVisualStyleBackColor = true;
+            this.AbortBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // UpdateNowBtn
             // 
             this.UpdateNowBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.UpdateNowBtn.Location = new System.Drawing.Point(365, 455);
+            this.UpdateNowBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.UpdateNowBtn.Location = new System.Drawing.Point(300, 232);
             this.UpdateNowBtn.Name = "UpdateNowBtn";
             this.UpdateNowBtn.Size = new System.Drawing.Size(75, 23);
             this.UpdateNowBtn.TabIndex = 1;
@@ -61,27 +63,31 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.UpdateInfoRBox.Location = new System.Drawing.Point(12, 12);
             this.UpdateInfoRBox.Name = "UpdateInfoRBox";
-            this.UpdateInfoRBox.Size = new System.Drawing.Size(539, 421);
+            this.UpdateInfoRBox.ReadOnly = true;
+            this.UpdateInfoRBox.Size = new System.Drawing.Size(474, 178);
             this.UpdateInfoRBox.TabIndex = 2;
             this.UpdateInfoRBox.Text = "";
+            this.UpdateInfoRBox.TextChanged += new System.EventHandler(this.UpdateInfoRBox_TextChanged);
             // 
-            // frmUpdater
+            // frmUpdateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(563, 490);
+            this.ClientSize = new System.Drawing.Size(498, 267);
             this.Controls.Add(this.UpdateInfoRBox);
             this.Controls.Add(this.UpdateNowBtn);
-            this.Controls.Add(this.CloseBtn);
-            this.Name = "frmUpdater";
+            this.Controls.Add(this.AbortBtn);
+            this.Name = "frmUpdateInfo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updater";
+            this.Load += new System.EventHandler(this.frmUpdateInfo_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button CloseBtn;
+        private System.Windows.Forms.Button AbortBtn;
         private System.Windows.Forms.Button UpdateNowBtn;
         private System.Windows.Forms.RichTextBox UpdateInfoRBox;
     }

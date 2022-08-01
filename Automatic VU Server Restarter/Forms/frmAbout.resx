@@ -117,4 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="InfoOLbl.Text" xml:space="preserve">
+    <value>This tool helps the server hosters to restart and (basically) manage the 
+server.
+
+Warning this application is still under development, so there are still bugs, 
+feel free to report this bugs or if you have the source code fix it self and 
+upload it to the Main Github Repo to help other hosters and me.</value>
+  </data>
 </root>

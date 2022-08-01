@@ -1,6 +1,6 @@
 ﻿namespace VU.Forms
 {
-    partial class FrmSettings
+    partial class frmSettings
     {
         /// <summary>
         /// Required designer variable.

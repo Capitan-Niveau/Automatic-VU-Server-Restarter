@@ -32,7 +32,6 @@ namespace VU.Forms
         private Dictionary<string, string> _serverMaxPlayerCount;
         private Dictionary<string, string> _gameServerName;
         public int PlayerCount { get; private set; }
-        public int PlayerLimit { get; private set; }
         public string Map { get; private set; }
         public string Mode { get; private set; }
         public bool CanSendCommands => _rconClient != null && _rconClient.IsOpen;
@@ -41,7 +40,7 @@ namespace VU.Forms
         {
             InitializeComponent();
             Text = Properties.Resources.ProcName;
-            Icon = Properties.Resources.AVURS;
+            Icon = Properties.Resources.AVUSR;
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -53,6 +52,7 @@ namespace VU.Forms
             ModeNameLbl.Text = @"Mode: -";
             ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
             ServerNameLbl.Text = $@"Server name: -";
+            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -88,6 +88,30 @@ namespace VU.Forms
             }
             else
             {
+                if (!string.IsNullOrEmpty(SettingsManager.VuInstancePath))
+                {
+                    if (!File.Exists(SettingsManager.VuInstancePath + "\\server.key"))
+                    {
+                        if (DialogResult.OK == MessageBox.Show(
+                                $@"The server key file could not be found in the specified path:" +
+                                Environment.NewLine + $@"{SettingsManager.VuInstancePath}\server.key",
+                                @"File not fount", MessageBoxButtons.OK, MessageBoxIcon.Error))
+                        {
+                            if (StartVuServerBtn.InvokeRequired && StopVuServerBtn.InvokeRequired)
+                            {
+                                void ShowHideBtn()
+                                {
+                                    StartVuServerBtn.Visible = true;
+                                    StopVuServerBtn.Visible = false;
+                                }
+                                StartVuServerBtn.Invoke((Action)ShowHideBtn);
+                                StopVuServerBtn.Invoke((Action)ShowHideBtn);
+                            }
+                            return;
+                        }
+                    }
+                }
+                
                 LoadConfig();
                 _rconClient = new Client();
                 _rconClient.WordsReceived += RconClient_WordsReceived;
@@ -107,10 +131,7 @@ namespace VU.Forms
                 _serverProcess.StartInfo.Arguments += $" -mHarmonyPort {SettingsManager.HarmonyPort}";
                 _serverProcess.StartInfo.Arguments += $" -RemoteAdminPort 0.0.0.0:{SettingsManager.RemoteAdminPort}";
 
-                if (!string.IsNullOrEmpty(SettingsManager.VuInstancePath))
-                {
-                    _serverProcess.StartInfo.Arguments += $" -serverInstancePath \"{SettingsManager.VuInstancePath}\"";
-                }
+                _serverProcess.StartInfo.Arguments += $" -serverInstancePath \"{SettingsManager.VuInstancePath}\"";
 
                 switch (SettingsManager.ServerFrequency)
                 {
@@ -145,17 +166,6 @@ namespace VU.Forms
                 if (SettingsManager.UseWritePerfProfile)
                     _serverProcess.StartInfo.Arguments += " -perftrace ";
 
-                //{
-                //    StartInfo = new ProcessStartInfo(SettingsManager.VuPath + "\\vu.exe", "-server -dedicated -headless")
-                //    {
-                //        RedirectStandardOutput = true,
-                //        RedirectStandardError = true,
-                //        CreateNoWindow = true,
-                //        UseShellExecute = false
-                //    },
-                //    EnableRaisingEvents = true
-                //};
-                //_serverProcess.ErrorDataReceived += ServerProcessError_DataReceived;
                 _serverProcess.OutputDataReceived += ServerProcess_DataReceived;
                 _serverProcess.Start();
                 _serverProcess.BeginErrorReadLine();
@@ -202,7 +212,6 @@ namespace VU.Forms
                 {
                     ServerLogOutput.Text += Environment.NewLine + _line;
                 }
-
                 ServerLogOutput.Invoke((Action)WriteLog);
             }
 
@@ -242,8 +251,11 @@ namespace VU.Forms
             MapNameLbl.Text = @"Map: -";
             ModeNameLbl.Text = @"Mode: -";
             ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
+            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
 
             Utilitys.ProConProcess = null;
+            _serverFps = 0;
+            _serverFps30SecMa = 0;
             StartVuServerBtn.Visible = true;
             StopVuServerBtn.Visible = false;
             _serverThread = null;
@@ -262,9 +274,6 @@ namespace VU.Forms
                     break;
                 case "player.onLeave":
                     PlayerCount--;
-                    break;
-                case "server.onMaxPlayerCountChange":
-                    PlayerLimit = int.Parse(words[1]);
                     break;
                 case "server.onLevelLoaded":
                     Map = words[1];
@@ -341,18 +350,16 @@ namespace VU.Forms
                 Name = "Server::Logging::Thread"
             };
             _serverThread.Start();
-            StartVuServerBtn.Visible = false;
-            StopVuServerBtn.Visible = true;
 
             if (SettingsManager.UseProCon)
                 Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
+            StartVuServerBtn.Visible = false;
+            StopVuServerBtn.Visible = true;
         }
 
         private void StopVuServerBtn_Click(object sender, EventArgs e)
         {
             Stop();
-            StartVuServerBtn.Visible = true;
-            StopVuServerBtn.Visible = false;
             ServerLogOutput.AppendText(Environment.NewLine + "[Local] Server has been stopped...");
         }
 
@@ -368,8 +375,7 @@ namespace VU.Forms
 
         private void SettingsTStrip_Click(object sender, EventArgs e)
         {
-            FrmSettings showSetting = new FrmSettings();
-            if (DialogResult.OK == showSetting.ShowDialog())
+            if (DialogResult.OK == FormCollection.SettingsForm.ShowDialog())
             {
                 SettingsManager.LoadSettings();
             }
@@ -441,7 +447,7 @@ namespace VU.Forms
                         ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
                         GetServerFps(Utilitys.SplitStringBySpace("vu.Fps"));
                         GetServerFps30SecMa(Utilitys.SplitStringBySpace("vu.FpsMa")); 
-                        ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s) {_serverFps30SecMa}";
+                        ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s): {_serverFps30SecMa}";
                         try
                         {
                             ServerMemUsageLbl.Text =
@@ -501,14 +507,12 @@ namespace VU.Forms
 
         private void UpdateTStrip_Click(object sender, EventArgs e)
         {
-            frmGetUpdateInfo UpdateForm = new frmGetUpdateInfo();
-            UpdateForm.ShowDialog();
+            FormCollection.GetUpdateInfo.ShowDialog();
         }
 
         private void AboutBtn_Click(object sender, EventArgs e)
         {
-            frmAbout AboutForm = new frmAbout();
-            AboutForm.ShowDialog();
+            FormCollection.AboutForm.ShowDialog();
         }
 
         private void ServerLogOutput_TextChanged(object sender, EventArgs e)
@@ -524,6 +528,11 @@ namespace VU.Forms
         private void ServerLogOutput_GotFocus(object sender, EventArgs e)
         {
             Utilitys.HideCaret(ServerLogOutput.Handle);
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

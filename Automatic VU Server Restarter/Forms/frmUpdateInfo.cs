@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VU.Forms;
+using VU.Updater;
+using FormCollection = VU.Forms.FormCollection;
 
 namespace VU
 {
@@ -15,6 +18,22 @@ namespace VU
         public frmUpdateInfo()
         {
             InitializeComponent();
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Dispose();
+            Close();
+        }
+
+        private void UpdateInfoRBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmUpdateInfo_Load(object sender, EventArgs e)
+        {
+            UpdateInfoRBox.LoadFile(CheckUpdate.InfoPath, RichTextBoxStreamType.RichText);
         }
     }
 }

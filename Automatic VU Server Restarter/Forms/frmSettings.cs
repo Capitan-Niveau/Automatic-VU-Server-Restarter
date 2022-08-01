@@ -6,9 +6,9 @@ using VU.Settings;
 
 namespace VU.Forms
 {
-    public partial class FrmSettings : Form
+    public partial class frmSettings : Form
     {
-        public FrmSettings()
+        public frmSettings()
         {
             InitializeComponent();
 
@@ -58,6 +58,7 @@ namespace VU.Forms
         internal Button SearchGamePathBtn = new Button();
         internal Button SearchProConPathBtn = new Button();
 
+        internal readonly FolderBrowserDialog _browseFolder = new FolderBrowserDialog();
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
@@ -119,39 +120,39 @@ namespace VU.Forms
 
         private void SearchVuPath_Click(object sender, EventArgs e)
         {
-            FolderBrowser.SelectedPath = SettingsManager.VuPath;
-            if (DialogResult.OK == FolderBrowser.ShowDialog())
-                VuPathTBox.Text = FolderBrowser.SelectedPath;
+            _browseFolder.SelectedPath = SettingsManager.VuPath;
+            if (DialogResult.OK == _browseFolder.ShowDialog())
+                VuPathTBox.Text = _browseFolder.SelectedPath;
         }
 
         private void SearchVuInsatncePath_Click(object sender, EventArgs e)
         {
-            FolderBrowser.SelectedPath = SettingsManager.VuInstancePath;
-            if (DialogResult.OK == FolderBrowser.ShowDialog())
-                VuInstancePathTBox.Text = FolderBrowser.SelectedPath;
+            _browseFolder.SelectedPath = SettingsManager.VuInstancePath;
+            if (DialogResult.OK == _browseFolder.ShowDialog())
+                VuInstancePathTBox.Text = _browseFolder.SelectedPath;
         }
 
         private void SearchGamePath_Click(object sender, EventArgs e)
         {
-            FolderBrowser.SelectedPath = SettingsManager.BattlefieldInstallDir;
-            if (DialogResult.OK == FolderBrowser.ShowDialog())
-                BattlefieldInstallDirTBox.Text = FolderBrowser.SelectedPath;
+            _browseFolder.SelectedPath = SettingsManager.BattlefieldInstallDir;
+            if (DialogResult.OK == _browseFolder.ShowDialog())
+                BattlefieldInstallDirTBox.Text = _browseFolder.SelectedPath;
         }
 
         private void SearchProConPat_Click(object sender, EventArgs e)
         {
-            FolderBrowser.SelectedPath = SettingsManager.ProConPath;
-            if (DialogResult.OK == FolderBrowser.ShowDialog())
-                ProConPathTBox.Text = FolderBrowser.SelectedPath;
+            _browseFolder.SelectedPath = SettingsManager.ProConPath;
+            if (DialogResult.OK == _browseFolder.ShowDialog())
+                ProConPathTBox.Text = _browseFolder.SelectedPath;
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-            SettingsManager.OpenSettings.Write("Settings", "ProConPath", ProConPathTBox.Text);
-            SettingsManager.OpenSettings.Write("Settings", "InstancePath", VuInstancePathTBox.Text);
-            SettingsManager.OpenSettings.Write("Settings", "ServerPort", ServerPortTBox.Text);
-            SettingsManager.OpenSettings.Write("Settings", "HarmonyPort", HarmonyPortTBox.Text);
-            SettingsManager.OpenSettings.Write("Settings", "RemotePort", RemotePortTBox.Text);
+            SettingsManager.OpenIni.Write("Settings", "ProConPath", ProConPathTBox.Text);
+            SettingsManager.OpenIni.Write("Settings", "InstancePath", VuInstancePathTBox.Text);
+            SettingsManager.OpenIni.Write("Settings", "ServerPort", ServerPortTBox.Text);
+            SettingsManager.OpenIni.Write("Settings", "HarmonyPort", HarmonyPortTBox.Text);
+            SettingsManager.OpenIni.Write("Settings", "RemotePort", RemotePortTBox.Text);
             Close();
         }
 
@@ -160,11 +161,11 @@ namespace VU.Forms
             switch (UseCustomGamePathCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomPath", "true");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomPath", "true");
                     SearchGamePathBtn.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomPath", "false");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomPath", "false");
                     SearchGamePathBtn.Enabled = false;
                     break;
             }
@@ -175,10 +176,10 @@ namespace VU.Forms
             switch (UseMiniProConCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "ProConCutDownVersion", "true");
+                    SettingsManager.OpenIni.Write("Settings", "ProConCutDownVersion", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "ProConCutDownVersion", "false");
+                    SettingsManager.OpenIni.Write("Settings", "ProConCutDownVersion", "false");
                     break;
             }
         }
@@ -188,7 +189,7 @@ namespace VU.Forms
             switch (ServerFrequency30HzRBtn.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "ServerFrequency", "1");
+                    SettingsManager.OpenIni.Write("Settings", "ServerFrequency", "1");
                     break;
             }
         }
@@ -198,7 +199,7 @@ namespace VU.Forms
             switch (ServerFrequency60HzRBtn.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "ServerFrequency", "2");
+                    SettingsManager.OpenIni.Write("Settings", "ServerFrequency", "2");
                     break;
             }
         }
@@ -208,7 +209,7 @@ namespace VU.Forms
             switch (ServerFrequency120HzRBtn.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "ServerFrequency", "3");
+                    SettingsManager.OpenIni.Write("Settings", "ServerFrequency", "3");
                     break;
             }
         }
@@ -218,10 +219,10 @@ namespace VU.Forms
             switch (DisableTerrainInterpCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "DisableTerrainInterp", "true");
+                    SettingsManager.OpenIni.Write("Settings", "DisableTerrainInterp", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "DisableTerrainInterp", "false");
+                    SettingsManager.OpenIni.Write("Settings", "DisableTerrainInterp", "false");
                     break;
             }
         }
@@ -231,10 +232,10 @@ namespace VU.Forms
             switch (HighResTerrainCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "HighResTerrain", "true");
+                    SettingsManager.OpenIni.Write("Settings", "HighResTerrain", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "HighResTerrain", "false");
+                    SettingsManager.OpenIni.Write("Settings", "HighResTerrain", "false");
                     break;
             }
         }
@@ -244,10 +245,10 @@ namespace VU.Forms
             switch (SkipChecksumCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "SkipChecksum", "true");
+                    SettingsManager.OpenIni.Write("Settings", "SkipChecksum", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "SkipChecksum", "false");
+                    SettingsManager.OpenIni.Write("Settings", "SkipChecksum", "false");
                     break;
             }
         }
@@ -257,10 +258,10 @@ namespace VU.Forms
             switch (UnlistedCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "MakeUnlisted", "true");
+                    SettingsManager.OpenIni.Write("Settings", "MakeUnlisted", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "MakeUnlisted", "false");
+                    SettingsManager.OpenIni.Write("Settings", "MakeUnlisted", "false");
                     break;
             }
         }
@@ -270,10 +271,10 @@ namespace VU.Forms
             switch (DisableAutomaticUpdatesCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "DisableAutomaticUpdates", "true");
+                    SettingsManager.OpenIni.Write("Settings", "DisableAutomaticUpdates", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "DisableAutomaticUpdates", "false");
+                    SettingsManager.OpenIni.Write("Settings", "DisableAutomaticUpdates", "false");
                     break;
             }
         }
@@ -283,10 +284,10 @@ namespace VU.Forms
             switch (WritePerfProfileCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "WritePerfProfile", "true");
+                    SettingsManager.OpenIni.Write("Settings", "WritePerfProfile", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "WritePerfProfile", "false");
+                    SettingsManager.OpenIni.Write("Settings", "WritePerfProfile", "false");
                     break;
             }
 
@@ -297,10 +298,10 @@ namespace VU.Forms
             switch (SaveLoggingOutputCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "SaveLoggingOutput", "true");
+                    SettingsManager.OpenIni.Write("Settings", "SaveLoggingOutput", "true");
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "SaveLoggingOutput", "false");
+                    SettingsManager.OpenIni.Write("Settings", "SaveLoggingOutput", "false");
                     break;
             }
         }
@@ -310,12 +311,12 @@ namespace VU.Forms
             switch (ProconWithServerStartupCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseProCon", "true");
+                    SettingsManager.OpenIni.Write("Settings", "UseProCon", "true");
                     UseMiniProConCBox.Enabled = true;
                     SearchProConPathBtn.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseProCon", "false");
+                    SettingsManager.OpenIni.Write("Settings", "UseProCon", "false");
                     UseMiniProConCBox.Enabled = false;
                     SearchProConPathBtn.Enabled = false;
                     break;
@@ -342,11 +343,11 @@ namespace VU.Forms
             switch (ServerPortCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerPort", "true");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomServerPort", "true");
                     ServerPortTBox.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomServerPort", "false");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomServerPort", "false");
                     ServerPortTBox.Enabled = false;
                     break;
             }
@@ -357,11 +358,11 @@ namespace VU.Forms
             switch (MonitoredHarmonyCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomHarmonyPort", "true");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomHarmonyPort", "true");
                     HarmonyPortTBox.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomHarmonyPort", "false");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomHarmonyPort", "false");
                     HarmonyPortTBox.Enabled = false;
                     break;
             }
@@ -372,11 +373,11 @@ namespace VU.Forms
             switch (RemoteAdminPortCBox.Checked)
             {
                 case true:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemotePort", "true");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomRemotePort", "true");
                     RemotePortTBox.Enabled = true;
                     break;
                 default:
-                    SettingsManager.OpenSettings.Write("Settings", "UseCustomRemotePort", "false");
+                    SettingsManager.OpenIni.Write("Settings", "UseCustomRemotePort", "false");
                     RemotePortTBox.Enabled = false;
                     break;
             }

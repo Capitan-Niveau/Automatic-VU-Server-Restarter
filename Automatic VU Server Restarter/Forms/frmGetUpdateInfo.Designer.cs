@@ -1,4 +1,4 @@
-﻿namespace VU
+﻿namespace VU.Forms
 {
     partial class frmGetUpdateInfo
     {
@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.AbortBtn = new System.Windows.Forms.Button();
             this.InfoProgress = new System.Windows.Forms.ProgressBar();
             this.InfoLbl = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // AbortBtn
@@ -64,6 +66,10 @@
             this.InfoLbl.TabIndex = 2;
             this.InfoLbl.Text = "Fetching update information please wait...";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // frmGetUpdateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -89,5 +95,6 @@
         private System.Windows.Forms.Button AbortBtn;
         private System.Windows.Forms.ProgressBar InfoProgress;
         private System.Windows.Forms.Label InfoLbl;
+        private System.Windows.Forms.Timer timer1;
     }
 }

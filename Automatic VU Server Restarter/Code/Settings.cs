@@ -9,7 +9,7 @@ namespace VU.Settings
 {
     class SettingsManager
     {
-        internal static INI OpenSettings = new INI { Path = Environment.CurrentDirectory + "\\settings.ini" };
+        internal static INI OpenIni = new INI { Path = Environment.CurrentDirectory + "\\settings.ini" };
         internal static string BattlefieldInstallDir = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\EA Games\Battlefield 3", "Install Dir", null);
         internal static string CustomGamePath;
         internal static string VuPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VeniceUnleashed\\client";
@@ -35,29 +35,29 @@ namespace VU.Settings
 
         internal static void LoadSettings()
         {
-            CustomGamePath = OpenSettings.Read("Settings", "CustomGamePath");
-            VuInstancePath = OpenSettings.Read("Settings", "InstancePath");
-            ProConPath = OpenSettings.Read("Settings", "ProConPath");
-            UseCustomGamePath = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomPath"));
-            UseSkipChecksumValidation = Convert.ToBoolean(OpenSettings.Read("Settings", "SkipChecksum"));
-            UseCutDownProCon = Convert.ToBoolean(OpenSettings.Read("Settings", "ProConCutDownVersion"));
-            UseSaveLoggingOutput = Convert.ToBoolean(OpenSettings.Read("Settings", "SaveLoggingOutput"));
-            UseWritePerfProfile = Convert.ToBoolean(OpenSettings.Read("Settings", "WritePerfProfile"));
-            UseAutomaticUpdates = Convert.ToBoolean(OpenSettings.Read("Settings", "DisableAutomaticUpdates"));
-            MakeUnlisted = Convert.ToBoolean(OpenSettings.Read("Settings", "MakeUnlisted"));
-            UseHighResTerrain = Convert.ToBoolean(OpenSettings.Read("Settings", "HighResTerrain"));
-            UseDisableTerrainInterp = Convert.ToBoolean(OpenSettings.Read("Settings", "DisableTerrainInterp"));
-            UseProCon = Convert.ToBoolean(OpenSettings.Read("Settings", "UseProCon"));
-            ServerFrequency = Convert.ToInt32(OpenSettings.Read("Settings", "ServerFrequency"));
-            UseCustomRemoteAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomRemotePort"));
-            UseCustomServerAdress = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomServerPort"));
-            UseCustomHarmonyPort = Convert.ToBoolean(OpenSettings.Read("Settings", "UseCustomHarmonyPort"));
-            CustomGamePath = OpenSettings.Read("Settings", "CustomGamePath");
-            VuInstancePath = OpenSettings.Read("Settings", "InstancePath");
-            ProConPath = OpenSettings.Read("Settings", "ProConPath");
-            HarmonyPort = OpenSettings.Read("Settings", "HarmonyPort");
-            ServerPort = OpenSettings.Read("Settings", "ServerPort");
-            RemoteAdminPort = OpenSettings.Read("Settings", "RemoteAdminPort");
+            CustomGamePath = OpenIni.Read("Settings", "CustomGamePath");
+            VuInstancePath = OpenIni.Read("Settings", "InstancePath");
+            ProConPath = OpenIni.Read("Settings", "ProConPath");
+            UseCustomGamePath = Convert.ToBoolean(OpenIni.Read("Settings", "UseCustomPath"));
+            UseSkipChecksumValidation = Convert.ToBoolean(OpenIni.Read("Settings", "SkipChecksum"));
+            UseCutDownProCon = Convert.ToBoolean(OpenIni.Read("Settings", "ProConCutDownVersion"));
+            UseSaveLoggingOutput = Convert.ToBoolean(OpenIni.Read("Settings", "SaveLoggingOutput"));
+            UseWritePerfProfile = Convert.ToBoolean(OpenIni.Read("Settings", "WritePerfProfile"));
+            UseAutomaticUpdates = Convert.ToBoolean(OpenIni.Read("Settings", "DisableAutomaticUpdates"));
+            MakeUnlisted = Convert.ToBoolean(OpenIni.Read("Settings", "MakeUnlisted"));
+            UseHighResTerrain = Convert.ToBoolean(OpenIni.Read("Settings", "HighResTerrain"));
+            UseDisableTerrainInterp = Convert.ToBoolean(OpenIni.Read("Settings", "DisableTerrainInterp"));
+            UseProCon = Convert.ToBoolean(OpenIni.Read("Settings", "UseProCon"));
+            ServerFrequency = Convert.ToInt32(OpenIni.Read("Settings", "ServerFrequency"));
+            UseCustomRemoteAdress = Convert.ToBoolean(OpenIni.Read("Settings", "UseCustomRemotePort"));
+            UseCustomServerAdress = Convert.ToBoolean(OpenIni.Read("Settings", "UseCustomServerPort"));
+            UseCustomHarmonyPort = Convert.ToBoolean(OpenIni.Read("Settings", "UseCustomHarmonyPort"));
+            CustomGamePath = OpenIni.Read("Settings", "CustomGamePath");
+            VuInstancePath = OpenIni.Read("Settings", "InstancePath");
+            ProConPath = OpenIni.Read("Settings", "ProConPath");
+            HarmonyPort = OpenIni.Read("Settings", "HarmonyPort");
+            ServerPort = OpenIni.Read("Settings", "ServerPort");
+            RemoteAdminPort = OpenIni.Read("Settings", "RemoteAdminPort");
         }
 
 
@@ -74,7 +74,7 @@ namespace VU.Settings
 
         internal static string GetVuInstancePath()
         {
-            return VuInstancePath;
+            return File.Exists(VuInstancePath + "\\server.key") ? VuInstancePath : null;
         }
     }
 }
