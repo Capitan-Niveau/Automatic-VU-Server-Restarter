@@ -41,7 +41,7 @@ namespace VU
                 Settings.SettingsManager.OpenIni.Write("Settings", "HarmonyPort", "7948");
                 Settings.SettingsManager.OpenIni.Write("Settings", "RemoteAdminPort", "47200");
                 Settings.SettingsManager.LoadSettings();
-                Application.Run(new frmSettings());
+                Application.Run(new FrmMain());
             }
             else
             {

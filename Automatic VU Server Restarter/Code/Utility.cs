@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using VU.Settings;
@@ -293,6 +295,70 @@ namespace VU.Server
             var tz = target ?? TimeZoneInfo.Local;
             var localTime = TimeZoneInfo.ConvertTimeFromUtc(linkTimeUtc, tz);
             return localTime;
+        }
+
+
+        private static string MakeHashString(byte[] hashBytes)
+        {
+            var sb = new StringBuilder(32);
+            foreach (byte b in hashBytes)
+                sb.Append(b.ToString("X2"));
+            return sb.ToString();
+        }
+
+        internal static string GetMd5Hash(string sFile, Label label, ProgressBar progressBar)
+        {
+            long totalyBytesRead = 0;
+            try
+            {
+                using (Stream fStream = File.OpenRead(sFile))
+                {
+                    var size = fStream.Length;
+                    using (HashAlgorithm hasher = MD5.Create())
+                    {
+                        byte[] buffer;
+                        int bytesRead;
+                        do
+                        {
+                            buffer = new byte[1024 * 8];
+                            bytesRead = fStream.Read(buffer, 0, buffer.Length);
+                            totalyBytesRead += bytesRead;
+                            hasher.TransformBlock(buffer, 0, bytesRead, null, 0);
+                            var hashProgress = (int)((double)totalyBytesRead / size * 100);
+                            if (hashProgress > 100)
+                            {
+                                void UpdateControls()
+                                    {
+                                        label.Text = @"Generate the MD5 hash... 100%";
+                                        progressBar.Value = 100;
+                                    }
+
+                                    label.Invoke((Action)UpdateControls);
+                                    progressBar.Invoke((Action)UpdateControls);
+                            }
+                            else
+                            {
+                                void UpdateControls()
+                                    {
+                                        label.Text = $@"Generate the MD5 hash... {hashProgress}%";
+                                        progressBar.Value = hashProgress;
+                                    }
+                                label.Invoke((Action)UpdateControls);
+                                    progressBar.Invoke((Action)UpdateControls);
+                            }
+                        } while (bytesRead != 0);
+
+                        hasher.TransformFinalBlock(buffer, 0, 0);
+                        return MakeHashString(hasher.Hash);
+                    }
+                }
+            }
+            catch (Exception f)
+            {
+                MessageBox.Show(f.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw;
+            }
+
         }
     }
 }

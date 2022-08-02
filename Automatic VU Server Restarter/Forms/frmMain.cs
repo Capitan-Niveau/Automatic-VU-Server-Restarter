@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.IO;
 using Rcon.Net;
-using VU.Server;
 using System.Net;
 using System.Threading.Tasks;
 using VU.Settings;
+using VU.Server;
 
 namespace VU.Forms
 {
@@ -57,34 +58,102 @@ namespace VU.Forms
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
+            Exit(e);
+        }
+
+        private void Exit(FormClosingEventArgs e = null)
+        {
             if (_serverProcess != null && !_serverProcess.HasExited)
             {
-                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?",
-                    @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
+                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?", @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 switch (stopServer)
                 {
                     case DialogResult.Yes:
-                        Stop();
                         Environment.Exit(0);
                         break;
                     case DialogResult.No:
-                        e.Cancel = true;
-                        break;
+                        if (e != null) e.Cancel = true;
+                        return;
                 }
             }
             else
             {
-                Stop();
                 Environment.Exit(0);
             }
         }
+
+        private void RestartServer()
+        {
+            Stop();
+            ServerInfoUpdater.Start();
+            if (StartVuServerBtn.Visible)
+            {
+                StartVuServerBtn.Visible = false;
+                StopVuServerBtn.Visible = true;
+            }
+
+            _serverThread = new Thread(Start)
+            {
+                Name = "Server::Logging::Thread",
+                IsBackground = true,
+            };
+            _serverThread.Start();
+
+            if (SettingsManager.UseProCon)
+                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
+        }
+
+        private void Stop()
+        {
+            _serverPid = 0;
+            _serverExitCode = 0;
+
+            if (ServerInfoUpdater.Enabled)
+                ServerInfoUpdater.Stop();
+
+            if (Utilitys.ServerKeyIsUsed)
+                Utilitys.ServerKeyIsUsed = false;
+
+            if (Utilitys.ProConProcess != null && !Utilitys.ProConProcess.HasExited)
+                Utilitys.ProConProcess.Kill();
+
+            if (_rconClient != null && _rconClient.IsOpen)
+                _rconClient.Close();
+
+            if (_serverProcess != null && !_serverProcess.HasExited)
+                _serverProcess.Kill();
+
+            if (_serverThread != null && _serverThread.IsAlive)
+                _serverThread.Abort();
+
+            ServerNameLbl.Text = $@"Server name:{_serverName}";
+            ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
+            ServerCpuUsageLbl.Text = @"CPU usage: -";
+            SlotUsageLbl.Text = @"Players online: -";
+            MapNameLbl.Text = @"Map: -";
+            ModeNameLbl.Text = @"Mode: -";
+            ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
+            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
+
+            _serverFps = 0;
+            _serverFps30SecMa = 0;
+            StartVuServerBtn.Visible = true;
+            StopVuServerBtn.Visible = false;
+            _serverThread = null;
+            _serverProcess = null;
+            Utilitys.ProConProcess = null;
+            _rconClient = null;
+            PlayerCount = 0;
+
+        }
+
 
         private void Start()
         {
             if (_serverProcess != null && !_serverProcess.HasExited)
             {
-                MessageBox.Show(@"Server is already running", @"Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(@"Server is already running", @"Server", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             else
             {
@@ -104,14 +173,16 @@ namespace VU.Forms
                                     StartVuServerBtn.Visible = true;
                                     StopVuServerBtn.Visible = false;
                                 }
+
                                 StartVuServerBtn.Invoke((Action)ShowHideBtn);
                                 StopVuServerBtn.Invoke((Action)ShowHideBtn);
                             }
+
                             return;
                         }
                     }
                 }
-                
+
                 LoadConfig();
                 _rconClient = new Client();
                 _rconClient.WordsReceived += RconClient_WordsReceived;
@@ -179,26 +250,6 @@ namespace VU.Forms
             }
         }
 
-        private void RestartServer()
-        {
-            Stop();
-            ServerInfoUpdater.Start();
-            if (StartVuServerBtn.Visible)
-            {
-                StartVuServerBtn.Visible = false;
-                StopVuServerBtn.Visible = true;
-            }
-
-            _serverThread = new Thread(Start)
-            {
-                Name = "Server::Logging::Thread"
-            };
-            _serverThread.Start();
-
-            if (SettingsManager.UseProCon)
-                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
-        }
-
         private async void ServerProcess_DataReceived(object sender, DataReceivedEventArgs e)
         {
             _line = e.Data;
@@ -215,6 +266,7 @@ namespace VU.Forms
                 {
                     ServerLogOutput.Text += Environment.NewLine + _line;
                 }
+
                 ServerLogOutput.Invoke((Action)WriteLog);
             }
 
@@ -222,49 +274,6 @@ namespace VU.Forms
             _rconClient.Open(IPAddress.Loopback, Convert.ToInt32(SettingsManager.RemoteAdminPort));
 
             await _rconClient.SendMessageAsync("login.plainText", _rconPassword);
-        }
-
-        private void Stop()
-        {
-            _serverPid = 0;
-            _serverExitCode = 0;
-
-            if (ServerInfoUpdater.Enabled)
-                ServerInfoUpdater.Stop();
-
-            if (Utilitys.ServerKeyIsUsed)
-                Utilitys.ServerKeyIsUsed = false;
-
-            if (Utilitys.ProConProcess != null && !Utilitys.ProConProcess.HasExited)
-                Utilitys.ProConProcess.Kill();
-
-            if (_rconClient != null && _rconClient.IsOpen)
-                _rconClient.Close();
-
-            if (_serverProcess != null && !_serverProcess.HasExited)
-                _serverProcess.Kill();
-
-            if (_serverThread != null && _serverThread.IsAlive)
-                _serverThread.Abort();
-
-            ServerNameLbl.Text = $@"Server name:{_serverName}";
-            ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
-            ServerCpuUsageLbl.Text = @"CPU usage: -";
-            SlotUsageLbl.Text = @"Players online: -";
-            MapNameLbl.Text = @"Map: -";
-            ModeNameLbl.Text = @"Mode: -";
-            ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
-            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
-
-            Utilitys.ProConProcess = null;
-            _serverFps = 0;
-            _serverFps30SecMa = 0;
-            StartVuServerBtn.Visible = true;
-            StopVuServerBtn.Visible = false;
-            _serverThread = null;
-            _serverProcess = null;
-            _rconClient = null;
-            PlayerCount = 0;
         }
 
         private void RconClient_WordsReceived(IList<string> words)
@@ -315,34 +324,8 @@ namespace VU.Forms
 
                 }
             }
-
             Map = _firstMapMode[0];
             Mode = _firstMapMode[1];
-        }
-
-
-        private void Exit()
-        {
-            if (_serverProcess != null && !_serverProcess.HasExited)
-            {
-                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?",
-                    @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                switch (stopServer)
-                {
-                    case DialogResult.Yes:
-                        Stop();
-                        Environment.Exit(0);
-                        break;
-                    case DialogResult.No:
-                        return;
-                }
-            }
-            else
-            {
-                Stop();
-                Environment.Exit(0);
-            }
         }
 
         private void StartServer_Click(object sender, EventArgs e)
@@ -350,7 +333,8 @@ namespace VU.Forms
             ServerInfoUpdater.Start();
             _serverThread = new Thread(Start)
             {
-                Name = "Server::Logging::Thread"
+                Name = "Server::Logging::Thread",
+                IsBackground = true
             };
             _serverThread.Start();
 
@@ -403,7 +387,6 @@ namespace VU.Forms
             catch
             {
                 //Ignored
-                return;
             }
         }
 
@@ -426,7 +409,6 @@ namespace VU.Forms
             catch
             {
                 //ignored
-                return;
             }
         }
 
@@ -437,10 +419,12 @@ namespace VU.Forms
                 case true:
                 {
                     ServerInfoUpdater.Stop();
-                    if (DialogResult.OK == MessageBox.Show(@"The provided server key is already in use. Shutting down.", @"VU Server", MessageBoxButtons.OK, MessageBoxIcon.Error))
+                    if (DialogResult.OK == MessageBox.Show(@"The provided server key is already in use. Shutting down.",
+                            @"VU Server", MessageBoxButtons.OK, MessageBoxIcon.Error))
                     {
                         Stop();
                     }
+
                     break;
                 }
             }
@@ -448,7 +432,8 @@ namespace VU.Forms
             switch (_serverExitCode > 0)
             {
                 case true:
-                    ServerLogOutput.AppendText(Environment.NewLine + $"[Local] Server crashed with exit code {_serverExitCode}... restarting...");
+                    ServerLogOutput.AppendText(Environment.NewLine +
+                                               $"[Local] Server crashed with exit code {_serverExitCode}... restarting...");
                     _restartCounter++;
                     RestartServer();
                     break;
@@ -458,14 +443,15 @@ namespace VU.Forms
                     {
                         _serverProcess.Refresh();
 
-                        ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
+                        ProcessInfoLbl.Text =
+                            $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
                         ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
                         ServerNameLbl.Text = $@"Server name: {_serverName}";
                         SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
                         MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
                         ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
                         GetServerFps(Utilitys.SplitStringBySpace("vu.Fps"));
-                        GetServerFps30SecMa(Utilitys.SplitStringBySpace("vu.FpsMa")); 
+                        GetServerFps30SecMa(Utilitys.SplitStringBySpace("vu.FpsMa"));
                         ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s): {_serverFps30SecMa}";
                         try
                         {
@@ -477,6 +463,7 @@ namespace VU.Forms
                             // ignored
                         }
                     }
+
                     break;
                 }
             }
@@ -502,7 +489,8 @@ namespace VU.Forms
                     default:
                     {
                         var responseWords = await SendCommandAsync(words);
-                        ServerLogOutput.AppendText(Environment.NewLine + $"[Server] RCON: {string.Join(" ", responseWords)}");
+                        ServerLogOutput.AppendText(Environment.NewLine +
+                                                   $"[Server] RCON: {string.Join(" ", responseWords)}");
                         break;
                     }
                 }
@@ -526,7 +514,7 @@ namespace VU.Forms
 
         private void UpdateTStrip_Click(object sender, EventArgs e)
         {
-            FormCollection.GetUpdateInfo.ShowDialog();
+            FormCollection.GetUpdateInfo.Show();
         }
 
         private void AboutBtn_Click(object sender, EventArgs e)
@@ -549,9 +537,5 @@ namespace VU.Forms
             Utilitys.HideCaret(ServerLogOutput.Handle);
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -28,18 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.AbortBtn = new System.Windows.Forms.Button();
             this.InfoProgress = new System.Windows.Forms.ProgressBar();
             this.InfoLbl = new System.Windows.Forms.Label();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // AbortBtn
             // 
             this.AbortBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AbortBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.AbortBtn.Location = new System.Drawing.Point(360, 80);
+            this.AbortBtn.Location = new System.Drawing.Point(362, 76);
             this.AbortBtn.Name = "AbortBtn";
             this.AbortBtn.Size = new System.Drawing.Size(75, 23);
             this.AbortBtn.TabIndex = 0;
@@ -49,9 +47,9 @@
             // 
             // InfoProgress
             // 
-            this.InfoProgress.Location = new System.Drawing.Point(12, 36);
+            this.InfoProgress.Location = new System.Drawing.Point(15, 30);
             this.InfoProgress.Name = "InfoProgress";
-            this.InfoProgress.Size = new System.Drawing.Size(423, 23);
+            this.InfoProgress.Size = new System.Drawing.Size(422, 23);
             this.InfoProgress.Step = 1;
             this.InfoProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.InfoProgress.TabIndex = 1;
@@ -60,21 +58,17 @@
             // InfoLbl
             // 
             this.InfoLbl.AutoSize = true;
-            this.InfoLbl.Location = new System.Drawing.Point(9, 20);
+            this.InfoLbl.Location = new System.Drawing.Point(12, 14);
             this.InfoLbl.Name = "InfoLbl";
             this.InfoLbl.Size = new System.Drawing.Size(203, 13);
             this.InfoLbl.TabIndex = 2;
             this.InfoLbl.Text = "Fetching update information please wait...";
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // frmGetUpdateInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 115);
+            this.ClientSize = new System.Drawing.Size(449, 111);
             this.Controls.Add(this.InfoLbl);
             this.Controls.Add(this.InfoProgress);
             this.Controls.Add(this.AbortBtn);
@@ -95,6 +89,5 @@
         private System.Windows.Forms.Button AbortBtn;
         private System.Windows.Forms.ProgressBar InfoProgress;
         private System.Windows.Forms.Label InfoLbl;
-        private System.Windows.Forms.Timer timer1;
     }
 }

@@ -42,14 +42,15 @@
             this.AboutBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ServerInfoUpdater = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ServerFpsLbl = new System.Windows.Forms.Label();
-            this.ModeNameLbl = new System.Windows.Forms.Label();
-            this.MapNameLbl = new System.Windows.Forms.Label();
-            this.ServerMemUsageLbl = new System.Windows.Forms.Label();
-            this.ServerCpuUsageLbl = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.ServerNameLbl = new System.Windows.Forms.Label();
-            this.SlotUsageLbl = new System.Windows.Forms.Label();
+            this.ServerFpsLbl = new System.Windows.Forms.Label();
             this.ProcessInfoLbl = new System.Windows.Forms.Label();
+            this.ModeNameLbl = new System.Windows.Forms.Label();
+            this.ServerCpuUsageLbl = new System.Windows.Forms.Label();
+            this.MapNameLbl = new System.Windows.Forms.Label();
+            this.SlotUsageLbl = new System.Windows.Forms.Label();
+            this.ServerMemUsageLbl = new System.Windows.Forms.Label();
             this.StopVuServerBtn = new System.Windows.Forms.Button();
             this.WatermarkLbl = new System.Windows.Forms.Label();
             this.SendCommandBtn = new System.Windows.Forms.Button();
@@ -57,13 +58,14 @@
             this.ServerLogOutput = new System.Windows.Forms.TextBox();
             this.MainMenu.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartVuServerBtn
             // 
             this.StartVuServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StartVuServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StartVuServerBtn.Location = new System.Drawing.Point(589, 636);
+            this.StartVuServerBtn.Location = new System.Drawing.Point(511, 492);
             this.StartVuServerBtn.Name = "StartVuServerBtn";
             this.StartVuServerBtn.Size = new System.Drawing.Size(159, 23);
             this.StartVuServerBtn.TabIndex = 7;
@@ -75,7 +77,7 @@
             // 
             this.ExitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ExitBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ExitBtn.Location = new System.Drawing.Point(777, 636);
+            this.ExitBtn.Location = new System.Drawing.Point(699, 492);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(75, 23);
             this.ExitBtn.TabIndex = 8;
@@ -91,7 +93,7 @@
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.MainMenu.Size = new System.Drawing.Size(864, 25);
+            this.MainMenu.Size = new System.Drawing.Size(786, 25);
             this.MainMenu.TabIndex = 9;
             this.MainMenu.Text = "Menu";
             // 
@@ -144,6 +146,7 @@
             this.UpdateTStrip.Name = "UpdateTStrip";
             this.UpdateTStrip.Size = new System.Drawing.Size(117, 22);
             this.UpdateTStrip.Text = "Updates";
+            this.UpdateTStrip.Visible = false;
             this.UpdateTStrip.Click += new System.EventHandler(this.UpdateTStrip_Click);
             // 
             // AboutBtn
@@ -162,107 +165,120 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.ServerFpsLbl);
-            this.groupBox1.Controls.Add(this.ModeNameLbl);
-            this.groupBox1.Controls.Add(this.MapNameLbl);
-            this.groupBox1.Controls.Add(this.ServerMemUsageLbl);
-            this.groupBox1.Controls.Add(this.ServerCpuUsageLbl);
-            this.groupBox1.Controls.Add(this.ServerNameLbl);
-            this.groupBox1.Controls.Add(this.SlotUsageLbl);
-            this.groupBox1.Controls.Add(this.ProcessInfoLbl);
+            this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBox1.Location = new System.Drawing.Point(12, 37);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(840, 124);
+            this.groupBox1.Size = new System.Drawing.Size(762, 132);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Venice Unleashed Server information";
             // 
-            // ServerFpsLbl
+            // panel1
             // 
-            this.ServerFpsLbl.AutoSize = true;
-            this.ServerFpsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerFpsLbl.Location = new System.Drawing.Point(528, 94);
-            this.ServerFpsLbl.Name = "ServerFpsLbl";
-            this.ServerFpsLbl.Size = new System.Drawing.Size(51, 15);
-            this.ServerFpsLbl.TabIndex = 16;
-            this.ServerFpsLbl.Text = "FPS: {0}";
-            // 
-            // ModeNameLbl
-            // 
-            this.ModeNameLbl.AutoSize = true;
-            this.ModeNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ModeNameLbl.Location = new System.Drawing.Point(528, 71);
-            this.ModeNameLbl.Name = "ModeNameLbl";
-            this.ModeNameLbl.Size = new System.Drawing.Size(60, 15);
-            this.ModeNameLbl.TabIndex = 15;
-            this.ModeNameLbl.Text = "Mode: {0}";
-            // 
-            // MapNameLbl
-            // 
-            this.MapNameLbl.AutoSize = true;
-            this.MapNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MapNameLbl.Location = new System.Drawing.Point(528, 48);
-            this.MapNameLbl.Name = "MapNameLbl";
-            this.MapNameLbl.Size = new System.Drawing.Size(53, 15);
-            this.MapNameLbl.TabIndex = 14;
-            this.MapNameLbl.Text = "Map: {0}";
-            // 
-            // ServerMemUsageLbl
-            // 
-            this.ServerMemUsageLbl.AutoSize = true;
-            this.ServerMemUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerMemUsageLbl.Location = new System.Drawing.Point(17, 71);
-            this.ServerMemUsageLbl.Name = "ServerMemUsageLbl";
-            this.ServerMemUsageLbl.Size = new System.Drawing.Size(32, 15);
-            this.ServerMemUsageLbl.TabIndex = 12;
-            this.ServerMemUsageLbl.Text = "NaN";
-            // 
-            // ServerCpuUsageLbl
-            // 
-            this.ServerCpuUsageLbl.AutoSize = true;
-            this.ServerCpuUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerCpuUsageLbl.Location = new System.Drawing.Point(17, 94);
-            this.ServerCpuUsageLbl.Name = "ServerCpuUsageLbl";
-            this.ServerCpuUsageLbl.Size = new System.Drawing.Size(32, 15);
-            this.ServerCpuUsageLbl.TabIndex = 13;
-            this.ServerCpuUsageLbl.Text = "NaN";
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.ServerNameLbl);
+            this.panel1.Controls.Add(this.ServerFpsLbl);
+            this.panel1.Controls.Add(this.ProcessInfoLbl);
+            this.panel1.Controls.Add(this.ModeNameLbl);
+            this.panel1.Controls.Add(this.ServerCpuUsageLbl);
+            this.panel1.Controls.Add(this.MapNameLbl);
+            this.panel1.Controls.Add(this.SlotUsageLbl);
+            this.panel1.Controls.Add(this.ServerMemUsageLbl);
+            this.panel1.Location = new System.Drawing.Point(1, 16);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(760, 113);
+            this.panel1.TabIndex = 17;
             // 
             // ServerNameLbl
             // 
             this.ServerNameLbl.AutoSize = true;
             this.ServerNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerNameLbl.Location = new System.Drawing.Point(17, 48);
+            this.ServerNameLbl.Location = new System.Drawing.Point(14, 30);
             this.ServerNameLbl.Name = "ServerNameLbl";
             this.ServerNameLbl.Size = new System.Drawing.Size(32, 15);
             this.ServerNameLbl.TabIndex = 2;
             this.ServerNameLbl.Text = "NaN";
             // 
-            // SlotUsageLbl
+            // ServerFpsLbl
             // 
-            this.SlotUsageLbl.AutoSize = true;
-            this.SlotUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SlotUsageLbl.Location = new System.Drawing.Point(528, 25);
-            this.SlotUsageLbl.Name = "SlotUsageLbl";
-            this.SlotUsageLbl.Size = new System.Drawing.Size(136, 15);
-            this.SlotUsageLbl.TabIndex = 1;
-            this.SlotUsageLbl.Text = "Players online: {0} of {1}";
+            this.ServerFpsLbl.AutoSize = true;
+            this.ServerFpsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerFpsLbl.Location = new System.Drawing.Point(490, 76);
+            this.ServerFpsLbl.Name = "ServerFpsLbl";
+            this.ServerFpsLbl.Size = new System.Drawing.Size(51, 15);
+            this.ServerFpsLbl.TabIndex = 16;
+            this.ServerFpsLbl.Text = "FPS: {0}";
             // 
             // ProcessInfoLbl
             // 
             this.ProcessInfoLbl.AutoSize = true;
             this.ProcessInfoLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ProcessInfoLbl.Location = new System.Drawing.Point(17, 25);
+            this.ProcessInfoLbl.Location = new System.Drawing.Point(14, 7);
             this.ProcessInfoLbl.Name = "ProcessInfoLbl";
             this.ProcessInfoLbl.Size = new System.Drawing.Size(119, 15);
             this.ProcessInfoLbl.TabIndex = 0;
             this.ProcessInfoLbl.Text = "Server is not running";
             // 
+            // ModeNameLbl
+            // 
+            this.ModeNameLbl.AutoSize = true;
+            this.ModeNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ModeNameLbl.Location = new System.Drawing.Point(490, 53);
+            this.ModeNameLbl.Name = "ModeNameLbl";
+            this.ModeNameLbl.Size = new System.Drawing.Size(60, 15);
+            this.ModeNameLbl.TabIndex = 15;
+            this.ModeNameLbl.Text = "Mode: {0}";
+            // 
+            // ServerCpuUsageLbl
+            // 
+            this.ServerCpuUsageLbl.AutoSize = true;
+            this.ServerCpuUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerCpuUsageLbl.Location = new System.Drawing.Point(14, 76);
+            this.ServerCpuUsageLbl.Name = "ServerCpuUsageLbl";
+            this.ServerCpuUsageLbl.Size = new System.Drawing.Size(32, 15);
+            this.ServerCpuUsageLbl.TabIndex = 13;
+            this.ServerCpuUsageLbl.Text = "NaN";
+            // 
+            // MapNameLbl
+            // 
+            this.MapNameLbl.AutoSize = true;
+            this.MapNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MapNameLbl.Location = new System.Drawing.Point(490, 30);
+            this.MapNameLbl.Name = "MapNameLbl";
+            this.MapNameLbl.Size = new System.Drawing.Size(53, 15);
+            this.MapNameLbl.TabIndex = 14;
+            this.MapNameLbl.Text = "Map: {0}";
+            // 
+            // SlotUsageLbl
+            // 
+            this.SlotUsageLbl.AutoSize = true;
+            this.SlotUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SlotUsageLbl.Location = new System.Drawing.Point(490, 7);
+            this.SlotUsageLbl.Name = "SlotUsageLbl";
+            this.SlotUsageLbl.Size = new System.Drawing.Size(136, 15);
+            this.SlotUsageLbl.TabIndex = 1;
+            this.SlotUsageLbl.Text = "Players online: {0} of {1}";
+            // 
+            // ServerMemUsageLbl
+            // 
+            this.ServerMemUsageLbl.AutoSize = true;
+            this.ServerMemUsageLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ServerMemUsageLbl.Location = new System.Drawing.Point(14, 53);
+            this.ServerMemUsageLbl.Name = "ServerMemUsageLbl";
+            this.ServerMemUsageLbl.Size = new System.Drawing.Size(32, 15);
+            this.ServerMemUsageLbl.TabIndex = 12;
+            this.ServerMemUsageLbl.Text = "NaN";
+            // 
             // StopVuServerBtn
             // 
             this.StopVuServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StopVuServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StopVuServerBtn.Location = new System.Drawing.Point(589, 636);
+            this.StopVuServerBtn.Location = new System.Drawing.Point(511, 492);
             this.StopVuServerBtn.Name = "StopVuServerBtn";
             this.StopVuServerBtn.Size = new System.Drawing.Size(159, 23);
             this.StopVuServerBtn.TabIndex = 12;
@@ -275,7 +291,7 @@
             // 
             this.WatermarkLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.WatermarkLbl.AutoSize = true;
-            this.WatermarkLbl.Location = new System.Drawing.Point(335, 163);
+            this.WatermarkLbl.Location = new System.Drawing.Point(299, 172);
             this.WatermarkLbl.Name = "WatermarkLbl";
             this.WatermarkLbl.Size = new System.Drawing.Size(161, 13);
             this.WatermarkLbl.TabIndex = 13;
@@ -285,7 +301,7 @@
             // 
             this.SendCommandBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SendCommandBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.SendCommandBtn.Location = new System.Drawing.Point(269, 635);
+            this.SendCommandBtn.Location = new System.Drawing.Point(371, 492);
             this.SendCommandBtn.Name = "SendCommandBtn";
             this.SendCommandBtn.Size = new System.Drawing.Size(75, 23);
             this.SendCommandBtn.TabIndex = 14;
@@ -312,9 +328,9 @@
             "version"});
             this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox1.Location = new System.Drawing.Point(12, 637);
+            this.textBox1.Location = new System.Drawing.Point(12, 493);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(251, 20);
+            this.textBox1.Size = new System.Drawing.Size(353, 20);
             this.textBox1.TabIndex = 15;
             // 
             // ServerLogOutput
@@ -325,12 +341,12 @@
             this.ServerLogOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ServerLogOutput.Cursor = System.Windows.Forms.Cursors.Default;
             this.ServerLogOutput.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ServerLogOutput.Location = new System.Drawing.Point(12, 179);
+            this.ServerLogOutput.Location = new System.Drawing.Point(12, 188);
             this.ServerLogOutput.Multiline = true;
             this.ServerLogOutput.Name = "ServerLogOutput";
             this.ServerLogOutput.ReadOnly = true;
             this.ServerLogOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ServerLogOutput.Size = new System.Drawing.Size(840, 442);
+            this.ServerLogOutput.Size = new System.Drawing.Size(762, 289);
             this.ServerLogOutput.TabIndex = 16;
             this.ServerLogOutput.TabStop = false;
             this.ServerLogOutput.TextChanged += new System.EventHandler(this.ServerLogOutput_TextChanged);
@@ -340,7 +356,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 671);
+            this.ClientSize = new System.Drawing.Size(786, 527);
             this.Controls.Add(this.ServerLogOutput);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.SendCommandBtn);
@@ -350,7 +366,7 @@
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.StartVuServerBtn);
             this.Controls.Add(this.StopVuServerBtn);
-            this.MinimumSize = new System.Drawing.Size(840, 710);
+            this.MinimumSize = new System.Drawing.Size(525, 475);
             this.Name = "FrmMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -360,7 +376,8 @@
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,6 +409,7 @@
         private System.Windows.Forms.ToolStripMenuItem UpdateTStrip;
         private System.Windows.Forms.TextBox ServerLogOutput;
         private System.Windows.Forms.Label ServerFpsLbl;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 

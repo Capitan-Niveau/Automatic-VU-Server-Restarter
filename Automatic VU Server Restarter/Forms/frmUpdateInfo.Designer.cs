@@ -1,4 +1,4 @@
-﻿namespace VU
+﻿namespace VU.Forms
 {
     partial class frmUpdateInfo
     {
@@ -55,6 +55,7 @@
             this.UpdateNowBtn.TabIndex = 1;
             this.UpdateNowBtn.Text = "Update";
             this.UpdateNowBtn.UseVisualStyleBackColor = true;
+            this.UpdateNowBtn.Click += new System.EventHandler(this.UpdateNowBtn_Click);
             // 
             // UpdateInfoRBox
             // 
@@ -67,7 +68,6 @@
             this.UpdateInfoRBox.Size = new System.Drawing.Size(474, 178);
             this.UpdateInfoRBox.TabIndex = 2;
             this.UpdateInfoRBox.Text = "";
-            this.UpdateInfoRBox.TextChanged += new System.EventHandler(this.UpdateInfoRBox_TextChanged);
             // 
             // frmUpdateInfo
             // 

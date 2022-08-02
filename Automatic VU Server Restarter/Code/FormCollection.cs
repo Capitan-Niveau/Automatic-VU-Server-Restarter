@@ -13,10 +13,6 @@ namespace VU.Forms
         internal static frmGetUpdateInfo GetUpdateInfo = new frmGetUpdateInfo();
         internal static frmSettings SettingsForm = new frmSettings();
         internal static frmUpdateInfo UpdateInfo = new frmUpdateInfo();
-
-        internal static void DisposeForm()
-        {
-
-        }
+        internal static frmDownloadUpdate DownloadFile = new frmDownloadUpdate();
     }
 }
