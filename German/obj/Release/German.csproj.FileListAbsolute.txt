@@ -1,6 +1,0 @@
-D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\bin\Release\German.dll
-D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\bin\Release\German.pdb
-D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Release\German.csproj.AssemblyReference.cache
-D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Release\German.csproj.CoreCompileInputs.cache
-D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Release\German.dll
-D:\Visual Studio\Open Source\Automatic VU Server Restarter\German\obj\Release\German.pdb

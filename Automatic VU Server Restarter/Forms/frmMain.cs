@@ -131,7 +131,10 @@ namespace VU.Forms
                 _serverProcess.StartInfo.Arguments += $" -mHarmonyPort {SettingsManager.HarmonyPort}";
                 _serverProcess.StartInfo.Arguments += $" -RemoteAdminPort 0.0.0.0:{SettingsManager.RemoteAdminPort}";
 
-                _serverProcess.StartInfo.Arguments += $" -serverInstancePath \"{SettingsManager.VuInstancePath}\"";
+                if (!string.IsNullOrEmpty(SettingsManager.VuInstancePath))
+                {
+                    _serverProcess.StartInfo.Arguments += $" -serverInstancePath \"{SettingsManager.VuInstancePath}\"";
+                }
 
                 switch (SettingsManager.ServerFrequency)
                 {
@@ -383,31 +386,47 @@ namespace VU.Forms
 
         private async void GetServerFps(IList<string> command)
         {
-            switch (CanSendCommands)
+            try
             {
-                case false:
-                    return;
-                default:
+                switch (CanSendCommands)
                 {
-                    var responseWords = await SendCommandAsync(command);
-                    _serverFps = int.Parse(responseWords[0]);
-                    break;
+                    case false:
+                        return;
+                    default:
+                    {
+                        var responseWords = await SendCommandAsync(command);
+                        _serverFps = int.Parse(responseWords[0]);
+                        break;
+                    }
                 }
+            }
+            catch
+            {
+                //Ignored
+                return;
             }
         }
 
         private async void GetServerFps30SecMa(IList<string> command)
         {
-            switch (CanSendCommands)
+            try
             {
-                case false:
-                    return;
-                default:
+                switch (CanSendCommands)
                 {
-                    var responseWords = await SendCommandAsync(command);
-                    _serverFps30SecMa = int.Parse(responseWords[0]);
-                    break;
+                    case false:
+                        return;
+                    default:
+                    {
+                        var responseWords = await SendCommandAsync(command);
+                        _serverFps30SecMa = int.Parse(responseWords[0]);
+                        break;
+                    }
                 }
+            }
+            catch
+            {
+                //ignored
+                return;
             }
         }
 

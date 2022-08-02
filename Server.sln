@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Automatic VU Server Restarter\Server.csproj", "{2CCAD70D-41AC-41D2-98AE-A5B15C7C541F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "German", "German\German.csproj", "{1C868EF3-8A13-4B41-AB91-6854461F629E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVUSR", "Automatic VU Server Restarter\AVUSR.csproj", "{2CCAD70D-41AC-41D2-98AE-A5B15C7C541F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{2CCAD70D-41AC-41D2-98AE-A5B15C7C541F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CCAD70D-41AC-41D2-98AE-A5B15C7C541F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CCAD70D-41AC-41D2-98AE-A5B15C7C541F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C868EF3-8A13-4B41-AB91-6854461F629E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C868EF3-8A13-4B41-AB91-6854461F629E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C868EF3-8A13-4B41-AB91-6854461F629E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C868EF3-8A13-4B41-AB91-6854461F629E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
