@@ -10,3 +10,7 @@
 *.resources
 *.cache
 *.CopyComplete
+*.vsidx
+Automatic VU Server Restarter/obj/Debug/AVUSR.csproj.FileListAbsolute.txt
+Automatic VU Server Restarter/obj/Debug/Server.csproj.FileListAbsolute.txt
+Automatic VU Server Restarter/obj/Release/Server.csproj.FileListAbsolute.txt

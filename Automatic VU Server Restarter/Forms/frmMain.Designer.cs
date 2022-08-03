@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.StartVuServerBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
@@ -40,7 +39,6 @@
             this.InfoTStrip = new System.Windows.Forms.ToolStripDropDownButton();
             this.UpdateTStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.ServerInfoUpdater = new System.Windows.Forms.Timer(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.ServerNameLbl = new System.Windows.Forms.Label();
@@ -155,11 +153,6 @@
             this.AboutBtn.Size = new System.Drawing.Size(117, 22);
             this.AboutBtn.Text = "About";
             this.AboutBtn.Click += new System.EventHandler(this.AboutBtn_Click);
-            // 
-            // ServerInfoUpdater
-            // 
-            this.ServerInfoUpdater.Interval = 1000;
-            this.ServerInfoUpdater.Tick += new System.EventHandler(this.ServerInfoUpdater_Tick);
             // 
             // groupBox1
             // 
@@ -393,7 +386,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem ExitTStrip;
         private System.Windows.Forms.ToolStripMenuItem AboutBtn;
-        private System.Windows.Forms.Timer ServerInfoUpdater;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label SlotUsageLbl;
         private System.Windows.Forms.Label ProcessInfoLbl;

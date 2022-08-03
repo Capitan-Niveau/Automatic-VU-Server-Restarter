@@ -29,6 +29,9 @@ namespace VU.Server
         [DllImport("user32.dll", EntryPoint = "HideCaret")]
         internal static extern long HideCaret(IntPtr hWnd);
 
+        [DllImport("User32.dll", CharSet = CharSet.Auto, EntryPoint = "SendMessage")]
+        static extern int SendMessage(IntPtr hWnd, uint Msg, uint wParam, uint lparam);
+
         internal static double ServerCpuUsage(int pid)
         {
             try
@@ -359,6 +362,18 @@ namespace VU.Server
                 throw;
             }
 
+        }
+
+        internal static void ScrollTextBoxEnd(TextBox tb)
+        {
+            const uint EM_LINESCROLL = 0x00B6;
+            const uint EM_GETFIRSTVISIBLELINE = 0x00CE;
+            const uint EM_GETLINECOUNT = 0x00BA;
+
+            var line = SendMessage(tb.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
+            var linecount = SendMessage(tb.Handle, EM_GETLINECOUNT, 0, 0);
+            SendMessage(tb.Handle, EM_LINESCROLL, 0, (uint)(linecount - line - 2));
+            tb.Refresh();
         }
     }
 }
