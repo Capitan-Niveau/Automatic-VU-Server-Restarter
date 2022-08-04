@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 using System.Text.RegularExpressions;
@@ -105,6 +104,7 @@ namespace VU.Forms
             {
                 Name = "Control::Updater",
                 IsBackground = true,
+                
             };
             _updateControls.Start();
 
@@ -135,34 +135,21 @@ namespace VU.Forms
             if (_updateControls != null && _updateControls.IsAlive)
                 _updateControls.Abort();
 
-            //void ResetControlsOnStop()
-            //{
-                ServerNameLbl.Text = $@"Server name: {_serverName}";
-                ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
-                ServerCpuUsageLbl.Text = @"CPU usage: -";
-                SlotUsageLbl.Text = @"Players online: -";
-                MapNameLbl.Text = @"Map: -";
-                ModeNameLbl.Text = @"Mode: -";
-                ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
-                ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
-                StartVuServerBtn.Visible = true;
-                StopVuServerBtn.Visible = false;
-            //}
-            //Invoke((Action)ResetControlsOnStop);
-
-            //ServerNameLbl.Text = $@"Server name: {_serverName}";
-            //ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
-            //ServerCpuUsageLbl.Text = @"CPU usage: -";
-            //SlotUsageLbl.Text = @"Players online: -";
-            //MapNameLbl.Text = @"Map: -";
-            //ModeNameLbl.Text = @"Mode: -";
-            //ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
-            //ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
+            ServerNameLbl.Text = $@"Server name: {_serverName}";
+            ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
+            ServerCpuUsageLbl.Text = @"CPU usage: -";
+            SlotUsageLbl.Text = @"Players online: -";
+            MapNameLbl.Text = @"Map: -";
+            ModeNameLbl.Text = @"Mode: -";
+            ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
+            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
+            StartVuServerBtn.Visible = true;
+            StopVuServerBtn.Visible = false;
 
             _serverFps = 0;
             _serverFps30SecMa = 0;
             _serverThread = null;
-            _updateControls = null; 
+            _updateControls = null;
             _serverProcess = null;
             Utilitys.ProConProcess = null;
             _rconClient = null;
@@ -174,8 +161,7 @@ namespace VU.Forms
         {
             if (_serverProcess != null && !_serverProcess.HasExited)
             {
-                MessageBox.Show(@"Server is already running", @"Server", MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                MessageBox.Show(@"Server is already running", @"Server", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -188,17 +174,16 @@ namespace VU.Forms
                                 Environment.NewLine + $@"{SettingsManager.VuInstancePath}\server.key",
                                 @"File not fount", MessageBoxButtons.OK, MessageBoxIcon.Error))
                         {
-                            if (StartVuServerBtn.InvokeRequired && StopVuServerBtn.InvokeRequired)
-                            {
-                                void ShowHideBtn()
-                                {
-                                    StartVuServerBtn.Visible = true;
-                                    StopVuServerBtn.Visible = false;
-                                }
+                            if (!StartVuServerBtn.InvokeRequired || !StopVuServerBtn.InvokeRequired) return;
 
-                                StartVuServerBtn.Invoke((Action)ShowHideBtn);
-                                StopVuServerBtn.Invoke((Action)ShowHideBtn);
+                            void ShowHideBtn()
+                            {
+                                StartVuServerBtn.Visible = true;
+                                StopVuServerBtn.Visible = false;
                             }
+
+                            StartVuServerBtn.Invoke((Action)ShowHideBtn);
+                            StopVuServerBtn.Invoke((Action)ShowHideBtn);
 
                             return;
                         }
@@ -286,9 +271,8 @@ namespace VU.Forms
             {
                 void WriteLog()
                 {
-                    ServerLogOutput.Text += Environment.NewLine + _line;
+                    ServerLogOutput.AppendText(Environment.NewLine + _line);
                 }
-
                 ServerLogOutput.Invoke((Action)WriteLog);
             }
 
@@ -346,7 +330,6 @@ namespace VU.Forms
 
                 }
             }
-
             Map = _firstMapMode[0];
             Mode = _firstMapMode[1];
         }
@@ -474,132 +457,21 @@ namespace VU.Forms
 
                     GetServerFps();
 
-                    if (ProcessInfoLbl.InvokeRequired)
+                    void Controls()
                     {
-                        void WriteProcInfo()
-                        {
-                            ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
-                        }
-                        ProcessInfoLbl.Invoke((Action)WriteProcInfo);
+                        ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
+                        ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
+                        ServerMemUsageLbl.Text = $@"Physical memory usage: {Utilitys.SizeSuffix(_serverProcess.WorkingSet64, 2)} / Peak: {Utilitys.SizeSuffix(_serverProcess.PeakWorkingSet64, 2)}";
+                        ServerNameLbl.Text = $@"Server name: {_serverName}";
+                        SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
+                        MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
+                        ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
+                        ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s): {_serverFps30SecMa}";
                     }
-
-                    if (ServerCpuUsageLbl.InvokeRequired)
-                    {
-                        void WriteCpuUsage()
-                        {
-                            ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
-                        }
-                        ServerCpuUsageLbl.Invoke((Action)WriteCpuUsage);
-                    }
-
-
-                    if (ServerMemUsageLbl.InvokeRequired && !_serverProcess.HasExited)
-                    {
-                        void WriteMemUsage()
-                        {
-                            ServerMemUsageLbl.Text = $@"Physical memory usage: {Utilitys.SizeSuffix(_serverProcess.WorkingSet64, 2)} / Peak: {Utilitys.SizeSuffix(_serverProcess.PeakWorkingSet64, 2)}";
-                        }
-                        ServerMemUsageLbl.Invoke((Action)WriteMemUsage);
-                    }
-
-                    if (ServerNameLbl.InvokeRequired)
-                    {
-                        void WriteServerName()
-                        {
-                            ServerNameLbl.Text = $@"Server name: {_serverName}";
-                        }
-                        ServerNameLbl.Invoke((Action)WriteServerName);
-                    }
-
-                    if (SlotUsageLbl.InvokeRequired)
-                    {
-                        void WriteSlotUsage()
-                        {
-                            SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
-                        }
-                        SlotUsageLbl.Invoke((Action)WriteSlotUsage);
-                    }
-
-                    if (MapNameLbl.InvokeRequired)
-                    {
-                        void WriteMapName()
-                        {
-                            MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
-                        }
-                        MapNameLbl.Invoke((Action)WriteMapName);
-                    }
-
-                    if (ModeNameLbl.InvokeRequired)
-                    {
-                        void WriteModeName()
-                        {
-                            ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
-                        }
-                        ModeNameLbl.Invoke((Action)WriteModeName);
-                    }
-
-                    if (ServerFpsLbl.InvokeRequired)
-                    {
-                        void WriteServerFps()
-                        {
-                            ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s): {_serverFps30SecMa}";
-                        }
-                        ServerFpsLbl.Invoke((Action)WriteServerFps);
-                    }
+                    Invoke((Action)Controls);
                 }
-            } while (!_serverProcess.HasExited);
+            } while (true);
         }
-
-        //private void ServerInfoUpdater_Tick(object sender, EventArgs e)
-        //{
-        //    switch (Utilitys.ServerKeyIsUsed)
-        //    {
-        //        case true:
-        //        {
-        //            ServerInfoUpdater.Stop();
-        //            if (DialogResult.OK == MessageBox.Show(@"The provided server key is already in use. Shutting down.", @"VU Server", MessageBoxButtons.OK, MessageBoxIcon.Error))
-        //            {
-        //                Stop();
-        //            }
-        //            break;
-        //        }
-        //    }
-
-        //    switch (_serverExitCode > 0)
-        //    {
-        //        case true:
-        //            ServerLogOutput.AppendText(Environment.NewLine + $"[Local] Server crashed with exit code {_serverExitCode}... restarting...");
-        //            _restartCounter++;
-        //            RestartServer();
-        //            break;
-        //        default:
-        //        {
-        //            if (_serverPid > 0)
-        //            {
-        //                _serverProcess.Refresh();
-
-        //                ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
-        //                ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
-        //                ServerNameLbl.Text = $@"Server name: {_serverName}";
-        //                SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
-        //                MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
-        //                ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
-        //                GetServerFps();
-        //                ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s): {_serverFps30SecMa}";
-        //                try
-        //                {
-        //                    ServerMemUsageLbl.Text = $@"Physical memory usage: {Utilitys.SizeSuffix(_serverProcess.WorkingSet64, 1)} / Peak: {Utilitys.SizeSuffix(_serverProcess.PeakWorkingSet64, 1)}";
-        //                }
-        //                catch (Exception)
-        //                {
-        //                    // ignored
-        //                }
-        //            }
-
-        //            break;
-        //        }
-        //    }
-        //}
 
         public async Task<IList<string>> SendCommandAsync(IList<string> words)
         {
@@ -635,7 +507,7 @@ namespace VU.Forms
 
         internal void SendCommand()
         {
-            var words = Utilitys.SplitStringBySpace(textBox1.Text);
+            var words = Utilitys.SplitStringBySpace(TestCommandTBox.Text);
             Command_SendRCONCommand(words);
         }
 
@@ -646,7 +518,8 @@ namespace VU.Forms
 
         private void UpdateTStrip_Click(object sender, EventArgs e)
         {
-            FormCollection.GetUpdateInfo.Show();
+            frmGetUpdateInfo GetUpdateInfo = new frmGetUpdateInfo();
+            GetUpdateInfo.Show();
         }
 
         private void AboutBtn_Click(object sender, EventArgs e)
@@ -656,8 +529,6 @@ namespace VU.Forms
 
         private void ServerLogOutput_TextChanged(object sender, EventArgs e)
         {
-            Utilitys.ScrollTextBoxEnd(ServerLogOutput);
-            //ServerLogOutput.ScrollToEnd;
             if (((TextBox)sender).Text.Length <= 131068) return;
             ServerLogOutput.Clear();
             ServerLogOutput.AppendText("[Local] Maximum character length reached... Clear outpud window...");

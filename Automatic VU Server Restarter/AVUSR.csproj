@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AVUSR.ico" />
+    <None Include="Resources\update.ico" />
     <None Include="Resources\about.ico" />
     <Content Include="Resources\AVUSR.ico" />
   </ItemGroup>

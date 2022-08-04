@@ -10,7 +10,6 @@ namespace VU.Forms
     internal class FormCollection
     {
         internal static frmAbout AboutForm = new frmAbout();
-        internal static frmGetUpdateInfo GetUpdateInfo = new frmGetUpdateInfo();
         internal static frmSettings SettingsForm = new frmSettings();
         internal static frmUpdateInfo UpdateInfo = new frmUpdateInfo();
         internal static frmDownloadUpdate DownloadFile = new frmDownloadUpdate();

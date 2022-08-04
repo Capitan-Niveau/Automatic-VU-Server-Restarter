@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using VU.Settings;
 
 namespace VU.Forms
@@ -36,7 +37,10 @@ namespace VU.Forms
                     ServerFrequency30HzRBtn.Checked = true;
                     break;
             }
-            
+            foreach(var Languages in SettingsManager.Languages)
+            {
+                LanguagesCoBox.Items.Add(Languages);
+            }
             DisableTerrainInterpCBox.Checked = SettingsManager.UseDisableTerrainInterp;
             HighResTerrainCBox.Checked = SettingsManager.UseHighResTerrain;
             SkipChecksumCBox.Checked = SettingsManager.UseSkipChecksumValidation;
@@ -48,6 +52,8 @@ namespace VU.Forms
             ServerPortCBox.Checked = SettingsManager.UseCustomServerAdress;
             MonitoredHarmonyCBox.Checked = SettingsManager.UseCustomHarmonyPort;
             RemoteAdminPortCBox.Checked = SettingsManager.UseCustomRemoteAdress;
+            StartWithWindowsCBox.Checked = SettingsManager.UseAutoStart;
+            AutoUpdateCheckCBox.Checked = SettingsManager.AVUSRUpdates;
             RemotePortTBox.Text = SettingsManager.RemoteAdminPort;
             HarmonyPortTBox.Text = SettingsManager.HarmonyPort;
             ServerPortTBox.Text = SettingsManager.ServerPort;
@@ -62,7 +68,10 @@ namespace VU.Forms
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+
         internal FolderBrowserDialog FolderBrowser = new FolderBrowserDialog();
+
+        internal RegistryKey OnStartup = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
         protected override void OnLoad(EventArgs e)
         {
@@ -75,7 +84,8 @@ namespace VU.Forms
             VuPathTBox.Controls.Add(SearchVuPathBtn);
 
             SearchVuInsatncePathBtn.Size = new Size(24, VuInstancePathTBox.ClientSize.Height + 1);
-            SearchVuInsatncePathBtn.Location = new Point(VuInstancePathTBox.ClientSize.Width - SearchVuInsatncePathBtn.Width, -1);
+            SearchVuInsatncePathBtn.Location =
+                new Point(VuInstancePathTBox.ClientSize.Width - SearchVuInsatncePathBtn.Width, -1);
             SearchVuInsatncePathBtn.Cursor = Cursors.Default;
             SearchVuInsatncePathBtn.FlatStyle = FlatStyle.System;
             SearchVuInsatncePathBtn.Text = "...";
@@ -83,7 +93,8 @@ namespace VU.Forms
             VuInstancePathTBox.Controls.Add(SearchVuInsatncePathBtn);
 
             SearchGamePathBtn.Size = new Size(24, BattlefieldInstallDirTBox.ClientSize.Height + 1);
-            SearchGamePathBtn.Location = new Point(BattlefieldInstallDirTBox.ClientSize.Width - SearchGamePathBtn.Width, -1);
+            SearchGamePathBtn.Location =
+                new Point(BattlefieldInstallDirTBox.ClientSize.Width - SearchGamePathBtn.Width, -1);
             SearchGamePathBtn.Cursor = Cursors.Default;
             SearchGamePathBtn.FlatStyle = FlatStyle.System;
             SearchGamePathBtn.Text = "...";
@@ -116,6 +127,7 @@ namespace VU.Forms
         {
             SearchVuPathBtn.Enabled = false;
             SearchProConPathBtn.Enabled = false;
+            LanguagesCoBox.SelectedIndex = 0;
         }
 
         private void SearchVuPath_Click(object sender, EventArgs e)
@@ -379,6 +391,21 @@ namespace VU.Forms
                 default:
                     SettingsManager.OpenIni.Write("Settings", "UseCustomRemotePort", "false");
                     RemotePortTBox.Enabled = false;
+                    break;
+            }
+        }
+
+        private void StartWithWindowsCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (StartWithWindowsCBox.Checked)
+            {
+                case true:
+                    SettingsManager.OpenIni.Write("Settings", "UseAutoStart", "true");
+                    OnStartup.SetValue(Application.ProductName, $"\"{Application.ExecutablePath}\"");
+                    break;
+                default:
+                    SettingsManager.OpenIni.Write("Settings", "UseAutoStart", "false");
+                    OnStartup.DeleteValue(Application.ProductName, false);
                     break;
             }
         }

@@ -39,8 +39,8 @@
             this.InfoTStrip = new System.Windows.Forms.ToolStripDropDownButton();
             this.UpdateTStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.ServerOverviewGBox = new System.Windows.Forms.GroupBox();
+            this.StatsContainerPanel = new System.Windows.Forms.Panel();
             this.ServerNameLbl = new System.Windows.Forms.Label();
             this.ServerFpsLbl = new System.Windows.Forms.Label();
             this.ProcessInfoLbl = new System.Windows.Forms.Label();
@@ -52,11 +52,11 @@
             this.StopVuServerBtn = new System.Windows.Forms.Button();
             this.WatermarkLbl = new System.Windows.Forms.Label();
             this.SendCommandBtn = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TestCommandTBox = new System.Windows.Forms.TextBox();
             this.ServerLogOutput = new System.Windows.Forms.TextBox();
             this.MainMenu.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.ServerOverviewGBox.SuspendLayout();
+            this.StatsContainerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // StartVuServerBtn
@@ -142,50 +142,49 @@
             // UpdateTStrip
             // 
             this.UpdateTStrip.Name = "UpdateTStrip";
-            this.UpdateTStrip.Size = new System.Drawing.Size(117, 22);
+            this.UpdateTStrip.Size = new System.Drawing.Size(180, 22);
             this.UpdateTStrip.Text = "Updates";
-            this.UpdateTStrip.Visible = false;
             this.UpdateTStrip.Click += new System.EventHandler(this.UpdateTStrip_Click);
             // 
             // AboutBtn
             // 
             this.AboutBtn.Name = "AboutBtn";
-            this.AboutBtn.Size = new System.Drawing.Size(117, 22);
+            this.AboutBtn.Size = new System.Drawing.Size(180, 22);
             this.AboutBtn.Text = "About";
             this.AboutBtn.Click += new System.EventHandler(this.AboutBtn_Click);
             // 
-            // groupBox1
+            // ServerOverviewGBox
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ServerOverviewGBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBox1.Location = new System.Drawing.Point(12, 37);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(762, 132);
-            this.groupBox1.TabIndex = 10;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Venice Unleashed Server information";
+            this.ServerOverviewGBox.Controls.Add(this.StatsContainerPanel);
+            this.ServerOverviewGBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.ServerOverviewGBox.Location = new System.Drawing.Point(12, 37);
+            this.ServerOverviewGBox.Name = "ServerOverviewGBox";
+            this.ServerOverviewGBox.Size = new System.Drawing.Size(762, 132);
+            this.ServerOverviewGBox.TabIndex = 10;
+            this.ServerOverviewGBox.TabStop = false;
+            this.ServerOverviewGBox.Text = "Venice Unleashed Server information";
             // 
-            // panel1
+            // StatsContainerPanel
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.StatsContainerPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.ServerNameLbl);
-            this.panel1.Controls.Add(this.ServerFpsLbl);
-            this.panel1.Controls.Add(this.ProcessInfoLbl);
-            this.panel1.Controls.Add(this.ModeNameLbl);
-            this.panel1.Controls.Add(this.ServerCpuUsageLbl);
-            this.panel1.Controls.Add(this.MapNameLbl);
-            this.panel1.Controls.Add(this.SlotUsageLbl);
-            this.panel1.Controls.Add(this.ServerMemUsageLbl);
-            this.panel1.Location = new System.Drawing.Point(1, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(760, 113);
-            this.panel1.TabIndex = 17;
+            this.StatsContainerPanel.AutoScroll = true;
+            this.StatsContainerPanel.BackColor = System.Drawing.Color.Transparent;
+            this.StatsContainerPanel.Controls.Add(this.ServerNameLbl);
+            this.StatsContainerPanel.Controls.Add(this.ServerFpsLbl);
+            this.StatsContainerPanel.Controls.Add(this.ProcessInfoLbl);
+            this.StatsContainerPanel.Controls.Add(this.ModeNameLbl);
+            this.StatsContainerPanel.Controls.Add(this.ServerCpuUsageLbl);
+            this.StatsContainerPanel.Controls.Add(this.MapNameLbl);
+            this.StatsContainerPanel.Controls.Add(this.SlotUsageLbl);
+            this.StatsContainerPanel.Controls.Add(this.ServerMemUsageLbl);
+            this.StatsContainerPanel.Location = new System.Drawing.Point(1, 16);
+            this.StatsContainerPanel.Name = "StatsContainerPanel";
+            this.StatsContainerPanel.Size = new System.Drawing.Size(760, 113);
+            this.StatsContainerPanel.TabIndex = 17;
             // 
             // ServerNameLbl
             // 
@@ -302,11 +301,11 @@
             this.SendCommandBtn.UseVisualStyleBackColor = true;
             this.SendCommandBtn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox1
+            // TestCommandTBox
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.TestCommandTBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.AutoCompleteCustomSource.AddRange(new string[] {
+            this.TestCommandTBox.AutoCompleteCustomSource.AddRange(new string[] {
             "admin.yell",
             "admin.say",
             "admin.kill",
@@ -319,12 +318,12 @@
             "punkBuster.activate",
             "punkBuster.isActive",
             "version"});
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox1.Location = new System.Drawing.Point(12, 493);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(353, 20);
-            this.textBox1.TabIndex = 15;
+            this.TestCommandTBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.TestCommandTBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.TestCommandTBox.Location = new System.Drawing.Point(12, 493);
+            this.TestCommandTBox.Name = "TestCommandTBox";
+            this.TestCommandTBox.Size = new System.Drawing.Size(353, 20);
+            this.TestCommandTBox.TabIndex = 15;
             // 
             // ServerLogOutput
             // 
@@ -351,10 +350,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(786, 527);
             this.Controls.Add(this.ServerLogOutput);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.TestCommandTBox);
             this.Controls.Add(this.SendCommandBtn);
             this.Controls.Add(this.WatermarkLbl);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.ServerOverviewGBox);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.StartVuServerBtn);
@@ -368,9 +367,9 @@
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.ServerOverviewGBox.ResumeLayout(false);
+            this.StatsContainerPanel.ResumeLayout(false);
+            this.StatsContainerPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -386,7 +385,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem ExitTStrip;
         private System.Windows.Forms.ToolStripMenuItem AboutBtn;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox ServerOverviewGBox;
         private System.Windows.Forms.Label SlotUsageLbl;
         private System.Windows.Forms.Label ProcessInfoLbl;
         private System.Windows.Forms.Label ServerMemUsageLbl;
@@ -397,11 +396,11 @@
         private System.Windows.Forms.Button StopVuServerBtn;
         private System.Windows.Forms.Label WatermarkLbl;
         private System.Windows.Forms.Button SendCommandBtn;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TestCommandTBox;
         private System.Windows.Forms.ToolStripMenuItem UpdateTStrip;
         private System.Windows.Forms.TextBox ServerLogOutput;
         private System.Windows.Forms.Label ServerFpsLbl;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel StatsContainerPanel;
     }
 }
 

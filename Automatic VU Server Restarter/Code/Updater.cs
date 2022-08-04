@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using VU.Forms;
 using VU.Server;
 
@@ -12,7 +13,7 @@ namespace VU.Updater
     {
         internal static WebClient _client;
         internal static readonly string InfoPath = $@"{Path.GetTempPath()}update_info.rtf";
-        internal static readonly string UpdatePath = $@"{Path.GetTempPath()}update.exe";
+        internal static readonly string UpdatePath = $@"{Application.StartupPath}\\update.exe";
         internal static readonly string CheckListPath = $"{Path.GetTempPath()}avusr_update.ini";
         internal static bool IsNewerVersion { get;  set; }
         internal static bool IsBetaVersion { get;  set; }
@@ -75,11 +76,11 @@ namespace VU.Updater
             }
         }
 
-        internal static void CheckUpdateFile(Label label = null, ProgressBar progressBar = null)
+        internal static void CheckUpdateFile(frmDownloadUpdate target, Label label = null, ProgressBar progressBar = null)
         {
             void Check()
             {
-                Md5Check(label, progressBar);
+                Md5Check(target, label, progressBar);
             }
 
             _md5Worker = new Thread(Check)
@@ -90,10 +91,25 @@ namespace VU.Updater
             _md5Worker.Start();
         }
 
-        private static void Md5Check(Label label, ProgressBar progressBar)
+        private static void Md5Check(Form target, Label label, ProgressBar progressBar)
         {
+            if (Md5Hash == Utilitys.GetMd5Hash(UpdatePath, label, progressBar))
+            {
 
-            MessageBox.Show(Utilitys.GetMd5Hash(UpdatePath, label, progressBar));
+            }
+            else
+            {
+                MessageBox.Show(@"The file has been modified or is corrupt. The update is aborted.", @"MD5 error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                File.Delete(CheckListPath);
+                File.Delete(UpdatePath);
+                File.Delete(UpdatePath);
+
+                void CloseUpdater()
+                {
+                    target.Close();
+                }
+                target.Invoke((Action)CloseUpdater);
+            }
         }
     }
 }

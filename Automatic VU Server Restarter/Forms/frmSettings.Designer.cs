@@ -66,6 +66,11 @@
             this.HighResTerrainCBox = new System.Windows.Forms.CheckBox();
             this.DisableTerrainInterpCBox = new System.Windows.Forms.CheckBox();
             this.AvusrSettingsTab = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LanguagesCoBox = new System.Windows.Forms.ComboBox();
+            this.LanguageLbl = new System.Windows.Forms.Label();
+            this.AutoUpdateCheckCBox = new System.Windows.Forms.CheckBox();
+            this.StartWithWindowsCBox = new System.Windows.Forms.CheckBox();
             this.ServerSettingsTControl.SuspendLayout();
             this.VuGamePathTab.SuspendLayout();
             this.VuServerArgsTab.SuspendLayout();
@@ -74,6 +79,8 @@
             this.MiscGBox.SuspendLayout();
             this.ServerFreqGBox.SuspendLayout();
             this.TerrainOptionsGBox.SuspendLayout();
+            this.AvusrSettingsTab.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CloseBtn
@@ -265,7 +272,7 @@
             this.NetworkSettingsGBox.Controls.Add(this.RemoteAdminPortCBox);
             this.NetworkSettingsGBox.Controls.Add(this.MonitoredHarmonyCBox);
             this.NetworkSettingsGBox.Controls.Add(this.ServerPortCBox);
-            this.NetworkSettingsGBox.Location = new System.Drawing.Point(9, 412);
+            this.NetworkSettingsGBox.Location = new System.Drawing.Point(10, 407);
             this.NetworkSettingsGBox.Name = "NetworkSettingsGBox";
             this.NetworkSettingsGBox.Size = new System.Drawing.Size(375, 121);
             this.NetworkSettingsGBox.TabIndex = 10;
@@ -343,13 +350,14 @@
             // 
             // ModsGBox
             // 
-            this.ModsGBox.Location = new System.Drawing.Point(9, 550);
+            this.ModsGBox.Location = new System.Drawing.Point(9, 545);
             this.ModsGBox.Margin = new System.Windows.Forms.Padding(6);
             this.ModsGBox.Name = "ModsGBox";
             this.ModsGBox.Size = new System.Drawing.Size(375, 154);
             this.ModsGBox.TabIndex = 9;
             this.ModsGBox.TabStop = false;
             this.ModsGBox.Text = "Mods";
+            this.ModsGBox.Visible = false;
             // 
             // MiscGBox
             // 
@@ -358,7 +366,7 @@
             this.MiscGBox.Controls.Add(this.DisableAutomaticUpdatesCBox);
             this.MiscGBox.Controls.Add(this.UnlistedCBox);
             this.MiscGBox.Controls.Add(this.SkipChecksumCBox);
-            this.MiscGBox.Location = new System.Drawing.Point(9, 236);
+            this.MiscGBox.Location = new System.Drawing.Point(10, 233);
             this.MiscGBox.Name = "MiscGBox";
             this.MiscGBox.Size = new System.Drawing.Size(375, 156);
             this.MiscGBox.TabIndex = 8;
@@ -430,9 +438,9 @@
             this.ServerFreqGBox.Controls.Add(this.ServerFrequency30HzRBtn);
             this.ServerFreqGBox.Controls.Add(this.ServerFrequency120HzRBtn);
             this.ServerFreqGBox.Controls.Add(this.ServerFrequency60HzRBtn);
-            this.ServerFreqGBox.Location = new System.Drawing.Point(9, 11);
+            this.ServerFreqGBox.Location = new System.Drawing.Point(10, 10);
             this.ServerFreqGBox.Name = "ServerFreqGBox";
-            this.ServerFreqGBox.Size = new System.Drawing.Size(375, 106);
+            this.ServerFreqGBox.Size = new System.Drawing.Size(375, 105);
             this.ServerFreqGBox.TabIndex = 6;
             this.ServerFreqGBox.TabStop = false;
             this.ServerFreqGBox.Text = "Server frequency";
@@ -477,7 +485,7 @@
             // 
             this.TerrainOptionsGBox.Controls.Add(this.HighResTerrainCBox);
             this.TerrainOptionsGBox.Controls.Add(this.DisableTerrainInterpCBox);
-            this.TerrainOptionsGBox.Location = new System.Drawing.Point(9, 135);
+            this.TerrainOptionsGBox.Location = new System.Drawing.Point(10, 132);
             this.TerrainOptionsGBox.Name = "TerrainOptionsGBox";
             this.TerrainOptionsGBox.Size = new System.Drawing.Size(375, 83);
             this.TerrainOptionsGBox.TabIndex = 7;
@@ -510,6 +518,7 @@
             // 
             // AvusrSettingsTab
             // 
+            this.AvusrSettingsTab.Controls.Add(this.groupBox1);
             this.AvusrSettingsTab.Location = new System.Drawing.Point(4, 22);
             this.AvusrSettingsTab.Name = "AvusrSettingsTab";
             this.AvusrSettingsTab.Padding = new System.Windows.Forms.Padding(3);
@@ -518,7 +527,64 @@
             this.AvusrSettingsTab.Text = "Settings";
             this.AvusrSettingsTab.UseVisualStyleBackColor = true;
             // 
-            // FrmSettings
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.LanguagesCoBox);
+            this.groupBox1.Controls.Add(this.LanguageLbl);
+            this.groupBox1.Controls.Add(this.AutoUpdateCheckCBox);
+            this.groupBox1.Controls.Add(this.StartWithWindowsCBox);
+            this.groupBox1.Location = new System.Drawing.Point(10, 10);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(390, 145);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "AVUSR Settings";
+            // 
+            // LanguagesCoBox
+            // 
+            this.LanguagesCoBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.LanguagesCoBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.LanguagesCoBox.FormattingEnabled = true;
+            this.LanguagesCoBox.Items.AddRange(new object[] {
+            "Available Soon"});
+            this.LanguagesCoBox.Location = new System.Drawing.Point(16, 104);
+            this.LanguagesCoBox.Name = "LanguagesCoBox";
+            this.LanguagesCoBox.Size = new System.Drawing.Size(221, 21);
+            this.LanguagesCoBox.TabIndex = 3;
+            // 
+            // LanguageLbl
+            // 
+            this.LanguageLbl.AutoSize = true;
+            this.LanguageLbl.Location = new System.Drawing.Point(13, 88);
+            this.LanguageLbl.Name = "LanguageLbl";
+            this.LanguageLbl.Size = new System.Drawing.Size(58, 13);
+            this.LanguageLbl.TabIndex = 2;
+            this.LanguageLbl.Text = "Language:";
+            // 
+            // AutoUpdateCheckCBox
+            // 
+            this.AutoUpdateCheckCBox.AutoSize = true;
+            this.AutoUpdateCheckCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.AutoUpdateCheckCBox.Location = new System.Drawing.Point(16, 49);
+            this.AutoUpdateCheckCBox.Name = "AutoUpdateCheckCBox";
+            this.AutoUpdateCheckCBox.Size = new System.Drawing.Size(189, 18);
+            this.AutoUpdateCheckCBox.TabIndex = 1;
+            this.AutoUpdateCheckCBox.Text = "Automatically check for updates?";
+            this.AutoUpdateCheckCBox.UseVisualStyleBackColor = true;
+            // 
+            // StartWithWindowsCBox
+            // 
+            this.StartWithWindowsCBox.AutoSize = true;
+            this.StartWithWindowsCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.StartWithWindowsCBox.Location = new System.Drawing.Point(16, 25);
+            this.StartWithWindowsCBox.Name = "StartWithWindowsCBox";
+            this.StartWithWindowsCBox.Size = new System.Drawing.Size(221, 18);
+            this.StartWithWindowsCBox.TabIndex = 0;
+            this.StartWithWindowsCBox.Text = "Start the server together with Windows?";
+            this.StartWithWindowsCBox.UseVisualStyleBackColor = true;
+            this.StartWithWindowsCBox.CheckedChanged += new System.EventHandler(this.StartWithWindowsCBox_CheckedChanged);
+            // 
+            // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -527,7 +593,7 @@
             this.Controls.Add(this.CloseBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MinimumSize = new System.Drawing.Size(460, 525);
-            this.Name = "FrmSettings";
+            this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.frmSettings_Load);
@@ -544,6 +610,9 @@
             this.ServerFreqGBox.PerformLayout();
             this.TerrainOptionsGBox.ResumeLayout(false);
             this.TerrainOptionsGBox.PerformLayout();
+            this.AvusrSettingsTab.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -588,5 +657,10 @@
         private System.Windows.Forms.CheckBox ServerPortCBox;
         private System.Windows.Forms.TextBox ServerPortTBox;
         private System.Windows.Forms.TextBox RemotePortTBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox StartWithWindowsCBox;
+        private System.Windows.Forms.CheckBox AutoUpdateCheckCBox;
+        private System.Windows.Forms.ComboBox LanguagesCoBox;
+        private System.Windows.Forms.Label LanguageLbl;
     }
 }

@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using VU.Settings;
 using INIReader;
+using Microsoft.Win32;
 
 namespace VU.Server
 {
@@ -28,9 +29,6 @@ namespace VU.Server
 
         [DllImport("user32.dll", EntryPoint = "HideCaret")]
         internal static extern long HideCaret(IntPtr hWnd);
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto, EntryPoint = "SendMessage")]
-        static extern int SendMessage(IntPtr hWnd, uint Msg, uint wParam, uint lparam);
 
         internal static double ServerCpuUsage(int pid)
         {
@@ -331,23 +329,24 @@ namespace VU.Server
                             if (hashProgress > 100)
                             {
                                 void UpdateControls()
-                                    {
-                                        label.Text = @"Generate the MD5 hash... 100%";
-                                        progressBar.Value = 100;
-                                    }
+                                {
+                                    label.Text = @"Generate the MD5 hash... 100%";
+                                    progressBar.Value = 100;
+                                }
 
-                                    label.Invoke((Action)UpdateControls);
-                                    progressBar.Invoke((Action)UpdateControls);
+                                label.Invoke((Action)UpdateControls);
+                                progressBar.Invoke((Action)UpdateControls);
                             }
                             else
                             {
                                 void UpdateControls()
-                                    {
-                                        label.Text = $@"Generate the MD5 hash... {hashProgress}%";
-                                        progressBar.Value = hashProgress;
-                                    }
+                                {
+                                    label.Text = $@"Generate the MD5 hash... {hashProgress}%";
+                                    progressBar.Value = hashProgress;
+                                }
+
                                 label.Invoke((Action)UpdateControls);
-                                    progressBar.Invoke((Action)UpdateControls);
+                                progressBar.Invoke((Action)UpdateControls);
                             }
                         } while (bytesRead != 0);
 
@@ -361,19 +360,6 @@ namespace VU.Server
                 MessageBox.Show(f.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
             }
-
-        }
-
-        internal static void ScrollTextBoxEnd(TextBox tb)
-        {
-            const uint EM_LINESCROLL = 0x00B6;
-            const uint EM_GETFIRSTVISIBLELINE = 0x00CE;
-            const uint EM_GETLINECOUNT = 0x00BA;
-
-            var line = SendMessage(tb.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
-            var linecount = SendMessage(tb.Handle, EM_GETLINECOUNT, 0, 0);
-            SendMessage(tb.Handle, EM_LINESCROLL, 0, (uint)(linecount - line - 2));
-            tb.Refresh();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Win32;
 using INIReader;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ namespace VU.Settings
 {
     class SettingsManager
     {
-        internal static INI OpenIni = new INI { Path = Environment.CurrentDirectory + "\\settings.ini" };
+        internal static INI OpenIni = new INI { Path = Application.StartupPath + "\\" + "settings.ini" };
         internal static string BattlefieldInstallDir = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\EA Games\Battlefield 3", "Install Dir", null);
         internal static string CustomGamePath;
         internal static string VuPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VeniceUnleashed\\client";
@@ -28,10 +29,13 @@ namespace VU.Settings
         internal static bool UseCustomRemoteAdress;
         internal static bool UseCustomServerAdress;
         internal static bool UseCustomHarmonyPort;
+        internal static bool UseAutoStart;
+        internal static bool AVUSRUpdates;
         internal static int ServerFrequency;
         internal static string HarmonyPort;
         internal static string ServerPort;
         internal static string RemoteAdminPort;
+        internal static List<string> Languages = new List<string>();
 
         internal static void LoadSettings()
         {
@@ -57,7 +61,9 @@ namespace VU.Settings
             ProConPath = OpenIni.Read("Settings", "ProConPath");
             HarmonyPort = OpenIni.Read("Settings", "HarmonyPort");
             ServerPort = OpenIni.Read("Settings", "ServerPort");
-            RemoteAdminPort = OpenIni.Read("Settings", "RemoteAdminPort");
+            RemoteAdminPort = OpenIni.Read("Settings", "RemotePort");
+            UseAutoStart = Convert.ToBoolean(OpenIni.Read("Settings", "UseAutoStart"));
+            AVUSRUpdates = Convert.ToBoolean(OpenIni.Read("Settings", "AVUSRUpdates"));
         }
 
 

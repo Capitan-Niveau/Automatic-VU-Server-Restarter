@@ -49,11 +49,11 @@
             // 
             this.UpdateNowBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.UpdateNowBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.UpdateNowBtn.Location = new System.Drawing.Point(300, 232);
+            this.UpdateNowBtn.Location = new System.Drawing.Point(240, 232);
             this.UpdateNowBtn.Name = "UpdateNowBtn";
-            this.UpdateNowBtn.Size = new System.Drawing.Size(75, 23);
+            this.UpdateNowBtn.Size = new System.Drawing.Size(135, 23);
             this.UpdateNowBtn.TabIndex = 1;
-            this.UpdateNowBtn.Text = "Update";
+            this.UpdateNowBtn.Text = "Download and install";
             this.UpdateNowBtn.UseVisualStyleBackColor = true;
             this.UpdateNowBtn.Click += new System.EventHandler(this.UpdateNowBtn_Click);
             // 

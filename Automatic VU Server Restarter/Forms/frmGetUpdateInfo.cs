@@ -16,6 +16,8 @@ namespace VU.Forms
 
         private void AbortBtn_Click(object sender, EventArgs e)
         {
+            File.Delete(CheckUpdate.CheckListPath);
+            File.Delete(CheckUpdate.UpdatePath);
             Close();
         }
 
@@ -23,7 +25,7 @@ namespace VU.Forms
         {
             InfoProgress.MarqueeAnimationSpeed = 40;
             CheckUpdate.CheckForUpdate(this);
-   
+            Icon = Properties.Resources.Update;
         }
 
         internal void WC_GetCheckList_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
@@ -44,12 +46,14 @@ namespace VU.Forms
             {
                 MessageBox.Show(@"No new updates could be found.", @"No new Updates", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Close();
+                
             }
         }
 
         internal void WC_GetFile_DownloadInfoFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            FormCollection.UpdateInfo.Show();
+            frmUpdateInfo ShowInfo = new frmUpdateInfo();
+            ShowInfo.Show();
             Close();
         }
     }

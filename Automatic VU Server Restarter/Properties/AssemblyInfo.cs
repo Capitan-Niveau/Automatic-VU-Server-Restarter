@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("Automatic server restarter")]
+[assembly: AssemblyTitle("Automatic VU server restarter")]
 [assembly: AssemblyDescription("Automatically restarts the VU Server if it crashes")]
 [assembly: AssemblyConfiguration("Debug")]
 [assembly: AssemblyCompany("Capitan Niveau / Shooting Club")]
-[assembly: AssemblyProduct("Automatic server restarter")]
+[assembly: AssemblyProduct("Automatic VU server restarter")]
 [assembly: AssemblyCopyright("Copyright © Capitan Niveau / Shooting Club 2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

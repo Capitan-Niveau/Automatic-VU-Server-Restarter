@@ -22,6 +22,7 @@ namespace VU.Forms
         {
             CheckUpdate.DownloadFile(this);
             DownloadProgressProgBar.Maximum = CheckUpdate.FileSize;
+            Icon = Properties.Resources.Update;
             _sw.Start();
         }
 
@@ -31,7 +32,7 @@ namespace VU.Forms
             DownloadProgressProgBar.Maximum = 100;
             DownloadSpeedLbl.Text = null;
             _sw.Stop();
-            CheckUpdate.CheckUpdateFile(DownloadProgressLbl, DownloadProgressProgBar);
+            CheckUpdate.CheckUpdateFile(this, DownloadProgressLbl, DownloadProgressProgBar);
         }
 
         internal void WC_GetFile_ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
