@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Windows.Forms;
-using VU.Server;
+using VU.Tools;
 using VU.Updater;
 
 namespace VU.Forms

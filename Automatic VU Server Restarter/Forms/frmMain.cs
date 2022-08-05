@@ -9,7 +9,7 @@ using Rcon.Net;
 using System.Net;
 using System.Threading.Tasks;
 using VU.Settings;
-using VU.Server;
+using VU.Tools;
 
 namespace VU.Forms
 {
@@ -47,12 +47,12 @@ namespace VU.Forms
         private void frmMain_Load(object sender, EventArgs e)
         {
             ProcessInfoLbl.Text = @"Server is not running";
+            ServerNameLbl.Text = $@"Server name: -";
             ServerCpuUsageLbl.Text = @"CPU usage: -";
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
             ModeNameLbl.Text = @"Mode: -";
             ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
-            ServerNameLbl.Text = $@"Server name: -";
             ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
         }
 
@@ -374,9 +374,12 @@ namespace VU.Forms
 
         private void SettingsTStrip_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == FormCollection.SettingsForm.ShowDialog())
+            using (frmSettings shwSettings= new frmSettings())
             {
-                SettingsManager.LoadSettings();
+                if (DialogResult.OK == shwSettings.ShowDialog())
+                {
+                    SettingsManager.LoadSettings();
+                }
             }
         }
 
@@ -412,11 +415,11 @@ namespace VU.Forms
         }
 
 
-        internal async void GetServerFps()
+        internal void GetServerFps()
         {
             if (!CanSendCommands) return;
-            await GetServerFps(Utilitys.SplitStringBySpace("vu.Fps")).ConfigureAwait(false);
-            await GetServerFps30SecMa(Utilitys.SplitStringBySpace("vu.FpsMa")).ConfigureAwait(false);
+            GetServerFps(Utilitys.SplitStringBySpace("vu.Fps")).ConfigureAwait(false);
+            GetServerFps30SecMa(Utilitys.SplitStringBySpace("vu.FpsMa")).ConfigureAwait(false);
         }
 
 
@@ -436,7 +439,6 @@ namespace VU.Forms
                         break;
                     }
                 }
-
                 if (_serverExitCode > 0)
                 {
                     if (ServerLogOutput.InvokeRequired)
@@ -445,10 +447,10 @@ namespace VU.Forms
                         {
                             ServerLogOutput.AppendText(Environment.NewLine + $"[Local] Server crashed with exit code {_serverExitCode}... restarting...");
                             RestartServer();
+                            _restartCounter++;
                         }
                         Invoke((Action)WriteCrashLog);
                     }
-                    _restartCounter++;
                 }
                 else
                 {
@@ -493,8 +495,7 @@ namespace VU.Forms
                     default:
                     {
                         var responseWords = await SendCommandAsync(words);
-                        ServerLogOutput.AppendText(Environment.NewLine +
-                                                   $"[Server] RCON: {string.Join(" ", responseWords)}");
+                        ServerLogOutput.AppendText(Environment.NewLine + $"[Server] RCON: {string.Join(" ", responseWords)}");
                         break;
                     }
                 }
@@ -518,13 +519,18 @@ namespace VU.Forms
 
         private void UpdateTStrip_Click(object sender, EventArgs e)
         {
-            frmGetUpdateInfo GetUpdateInfo = new frmGetUpdateInfo();
-            GetUpdateInfo.Show();
+            using (frmGetUpdateInfo showGetUpdateInfo = new frmGetUpdateInfo())
+            {
+                showGetUpdateInfo.Show();
+            }
         }
 
         private void AboutBtn_Click(object sender, EventArgs e)
         {
-            FormCollection.AboutForm.ShowDialog();
+            using (frmAbout showAbout = new frmAbout())
+            {
+                showAbout.ShowDialog();
+            }
         }
 
         private void ServerLogOutput_TextChanged(object sender, EventArgs e)
@@ -539,6 +545,5 @@ namespace VU.Forms
         {
             Utilitys.HideCaret(ServerLogOutput.Handle);
         }
-
     }
 }

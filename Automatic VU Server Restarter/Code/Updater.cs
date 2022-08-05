@@ -5,7 +5,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using VU.Forms;
-using VU.Server;
+using VU.Tools;
 
 namespace VU.Updater
 {

@@ -26,28 +26,27 @@ namespace Rcon.Net
         private Thread _readThread;
 
         private uint _sequence;
-        private bool _isOpen;
         private readonly List<Request> _requests;
 
-        public bool IsOpen => _isOpen;
+        public bool IsOpen { get; private set; }
 
         public event WordEventDelegate WordsReceived;
 
         public Client()
         {
             _sequence = 1;
-            _isOpen = false;
+            IsOpen = false;
             _requests = new List<Request>();
         }
 
         public void Open(IPAddress address, int port)
         {
-            if (_isOpen)
+            if (IsOpen)
                 throw new InvalidOperationException("Already open");
 
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _socket.Connect(address, port);
-            _isOpen = true;
+            IsOpen = true;
 
             _readThread = new Thread(ReadThreadWorker);
             _readThread.Name = "RCON Read Thread";
@@ -56,14 +55,14 @@ namespace Rcon.Net
 
         public void Close()
         {
-            if (!_isOpen)
+            if (!IsOpen)
                 throw new InvalidOperationException("Not open");
 
             _socket.Close();
 
             // Reset state
             _sequence = 1;
-            _isOpen = false;
+            IsOpen = false;
             _requests.Clear();
         }
 
@@ -80,7 +79,7 @@ namespace Rcon.Net
                 uint size = 0;
                 uint numWords = 0;
 
-                while (_isOpen)
+                while (IsOpen)
                 {
                     if (bufferSize < HeaderSize)
                     {
@@ -148,14 +147,14 @@ namespace Rcon.Net
             {
                 // Set connection as not open and reset state
                 _sequence = 1;
-                _isOpen = false;
+                IsOpen = false;
                 _requests.Clear();
             }
         }
 
         public async Task<IList<string>> SendMessageAsync(IList<string> words)
         {
-            if (!_isOpen)
+            if (!IsOpen)
                 throw new InvalidOperationException("Not open");
 
             var packet = new Packet { Type = PacketType.Request, Words = words, FromServer = false, Sequence = _sequence, Size = 0 };
@@ -191,7 +190,7 @@ namespace Rcon.Net
             _socket.Send(buffer, size, SocketFlags.None);
 
             // Wait for response
-            request.ResetEvent.WaitOne();
+            request.ResetEvent.WaitOne(1000, false);
             var response = request.Packet;
             var status = response.Words[0];
             if (status != "OK")

@@ -13,7 +13,7 @@ using VU.Settings;
 using INIReader;
 using Microsoft.Win32;
 
-namespace VU.Server
+namespace VU.Tools
 {
     internal class Utilitys
     {
