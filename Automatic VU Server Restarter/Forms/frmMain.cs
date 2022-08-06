@@ -46,14 +46,10 @@ namespace VU.Forms
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            ProcessInfoLbl.Text = @"Server is not running";
             ServerNameLbl.Text = $@"Server name: -";
-            ServerCpuUsageLbl.Text = @"CPU usage: -";
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
             ModeNameLbl.Text = @"Mode: -";
-            ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
-            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -70,7 +66,7 @@ namespace VU.Forms
                 switch (stopServer)
                 {
                     case DialogResult.Yes:
-                        Stop();
+                        DisposeProcess();
                         Environment.Exit(0);
                         break;
                     case DialogResult.No:
@@ -86,6 +82,7 @@ namespace VU.Forms
 
         private void RestartServer()
         {
+            _restartCounter++;
             Stop();
             if (StartVuServerBtn.Visible)
             {
@@ -104,12 +101,21 @@ namespace VU.Forms
             {
                 Name = "Control::Updater",
                 IsBackground = true,
-                
             };
             _updateControls.Start();
 
             if (SettingsManager.UseProCon)
                 Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
+
+            RestartsSTLbl.Text = $@"Restarts: {_restartCounter}";
+            ServerConStateSTLbl.Text = @"Server: Restarting...";
+            MemUsageSTLbl.Visible = true;
+            MemUsageProcBar.Visible = true;
+            ServerCpuUsageProcBar.Visible = true;
+            ServerFpsSTLbl.Visible = true;
+            ServerCpuUsageSTLbl.Visible = true;
+            ServerVersionSTLbl.Visible = true;
+            
         }
 
         private void Stop()
@@ -135,16 +141,20 @@ namespace VU.Forms
             if (_updateControls != null && _updateControls.IsAlive)
                 _updateControls.Abort();
 
+            ServerConStateSTLbl.Text = @"Server: Offline";
             ServerNameLbl.Text = $@"Server name: {_serverName}";
-            ProcessInfoLbl.Text = $@"Server is not running - Restarts since first execution: {_restartCounter}";
-            ServerCpuUsageLbl.Text = @"CPU usage: -";
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
             ModeNameLbl.Text = @"Mode: -";
-            ServerMemUsageLbl.Text = @"Physical memory usage: - / Peak: -";
-            ServerFpsLbl.Text = $@"FPS: - / Moving average (30s): -";
             StartVuServerBtn.Visible = true;
             StopVuServerBtn.Visible = false;
+            MemUsageSTLbl.Visible = false;
+            MemUsageProcBar.Visible = false;
+            ServerCpuUsageProcBar.Value = 0;
+            ServerCpuUsageProcBar.Visible = false;
+            ServerVersionSTLbl.Visible = false;
+            ServerCpuUsageSTLbl.Visible = false;
+            ServerFpsSTLbl.Visible = false;
 
             _serverFps = 0;
             _serverFps30SecMa = 0;
@@ -156,6 +166,14 @@ namespace VU.Forms
             PlayerCount = 0;
         }
 
+        private void DisposeProcess()
+        {
+            if (_serverProcess != null && !_serverProcess.HasExited)
+                _serverProcess.Kill();
+
+            if (Utilitys.ProConProcess != null && !Utilitys.ProConProcess.HasExited)
+                Utilitys.ProConProcess.Kill();
+        }
 
         private void Start()
         {
@@ -277,9 +295,15 @@ namespace VU.Forms
             }
 
             if (!Regex.Match(_line, @"\[.+\] \[.+\] Monitored Harmony server listening on 0.0.0.0:\d+").Success) return;
+          
             _rconClient.Open(IPAddress.Loopback, Convert.ToInt32(SettingsManager.RemoteAdminPort));
-
             await _rconClient.SendMessageAsync("login.plainText", _rconPassword);
+
+            void ConnectionState()
+            {
+                ServerConStateSTLbl.Text = @"Server: Online";
+            }
+            Invoke((Action)ConnectionState);
         }
 
         private void RconClient_WordsReceived(IList<string> words)
@@ -352,8 +376,17 @@ namespace VU.Forms
 
             if (SettingsManager.UseProCon)
                 Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
+
+            ServerConStateSTLbl.Text = @"Server: Starting...";
             StartVuServerBtn.Visible = false;
             StopVuServerBtn.Visible = true;
+            MemUsageSTLbl.Visible = true;
+            MemUsageProcBar.Visible = true;
+            RestartsSTLbl.Visible = true;
+            ServerCpuUsageProcBar.Visible = true;
+            ServerVersionSTLbl.Visible = true;
+            ServerFpsSTLbl.Visible = true;
+            ServerCpuUsageSTLbl.Visible = true;
         }
 
         private void StopVuServerBtn_Click(object sender, EventArgs e)
@@ -399,27 +432,10 @@ namespace VU.Forms
 
         }
 
-        private async Task GetServerFps30SecMa(IList<string> command)
-        {
-            switch (CanSendCommands)
-            {
-                case false:
-                    return;
-                default:
-                {
-                    var responseWords = await SendCommandAsync(command);
-                    _serverFps30SecMa = int.Parse(responseWords[0]);
-                    break;
-                }
-            }
-        }
-
-
         internal void GetServerFps()
         {
             if (!CanSendCommands) return;
             GetServerFps(Utilitys.SplitStringBySpace("vu.Fps")).ConfigureAwait(false);
-            GetServerFps30SecMa(Utilitys.SplitStringBySpace("vu.FpsMa")).ConfigureAwait(false);
         }
 
 
@@ -439,6 +455,7 @@ namespace VU.Forms
                         break;
                     }
                 }
+
                 if (_serverExitCode > 0)
                 {
                     if (ServerLogOutput.InvokeRequired)
@@ -447,13 +464,15 @@ namespace VU.Forms
                         {
                             ServerLogOutput.AppendText(Environment.NewLine + $"[Local] Server crashed with exit code {_serverExitCode}... restarting...");
                             RestartServer();
-                            _restartCounter++;
                         }
                         Invoke((Action)WriteCrashLog);
                     }
                 }
                 else
                 {
+                    double cpuUsage = Utilitys.ServerCpuUsage(_serverPid);
+                    int memUsage = _serverProcess.WorkingSet;
+
                     if (_serverPid < 0) return;
                     _serverProcess?.Refresh();
 
@@ -461,14 +480,19 @@ namespace VU.Forms
 
                     void Controls()
                     {
-                        ProcessInfoLbl.Text = $@"Server with PID {_serverPid} is running - Restarts since first execution: {_restartCounter} / Version: {Utilitys.ServerVersion}";
-                        ServerCpuUsageLbl.Text = $@"CPU usage: {Utilitys.ServerCpuUsage(_serverPid):0.0}%";
-                        ServerMemUsageLbl.Text = $@"Physical memory usage: {Utilitys.SizeSuffix(_serverProcess.WorkingSet64, 2)} / Peak: {Utilitys.SizeSuffix(_serverProcess.PeakWorkingSet64, 2)}";
+                        ServerCpuUsageSTLbl.Text = $@"CPU: {cpuUsage:0.0}%";
+                        if (cpuUsage > 0)
+                        {
+                            ServerCpuUsageProcBar.Value = (int)Math.Round(cpuUsage);
+                        }
+                        MemUsageSTLbl.Text = $@"Memory: {Utilitys.SizeSuffix(memUsage, 2)}";
+                        MemUsageProcBar.Value = memUsage;
+                        ServerVersionSTLbl.Text = $@"Server Version: {Utilitys.ServerVersion}";
+                        ServerFpsSTLbl.Text = $@"FPS: {_serverFps}";
                         ServerNameLbl.Text = $@"Server name: {_serverName}";
                         SlotUsageLbl.Text = $@"Players online: {PlayerCount} of {_maxPlayerCount}";
                         MapNameLbl.Text = $@"Map: {Utilitys.RealMapName(Map)}";
                         ModeNameLbl.Text = $@"Mode: {Utilitys.RealModeName(Mode)}";
-                        ServerFpsLbl.Text = $@"FPS: {_serverFps} / Moving average (30s): {_serverFps30SecMa}";
                     }
                     Invoke((Action)Controls);
                 }
