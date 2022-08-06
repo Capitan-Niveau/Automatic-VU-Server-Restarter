@@ -99,9 +99,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Rcon\BufferStream.cs" />
-    <Compile Include="Rcon\Client.cs" />
-    <Compile Include="Rcon\Packet.cs" />
     <Compile Include="Code\Settings.cs" />
     <Compile Include="Code\Utility.cs" />
     <Compile Include="Code\Updater.cs" />
@@ -146,6 +143,15 @@
     <None Include="Resources\update.ico" />
     <None Include="Resources\about.ico" />
     <Content Include="Resources\AVUSR.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rcon\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rcon.Net\Rcon.Net\Rcon.Net.csproj">
+      <Project>{7e3aa931-934c-4a37-9871-ecf35c49b67f}</Project>
+      <Name>Rcon.Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

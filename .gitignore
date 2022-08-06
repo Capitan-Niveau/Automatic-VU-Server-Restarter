@@ -14,3 +14,9 @@
 Automatic VU Server Restarter/obj/Debug/AVUSR.csproj.FileListAbsolute.txt
 Automatic VU Server Restarter/obj/Debug/Server.csproj.FileListAbsolute.txt
 Automatic VU Server Restarter/obj/Release/Server.csproj.FileListAbsolute.txt
+*.json
+*.props
+*.targets
+*.txt
+*.v2
+*.v1

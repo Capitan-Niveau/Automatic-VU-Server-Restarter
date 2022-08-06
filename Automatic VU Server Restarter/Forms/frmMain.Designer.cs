@@ -42,8 +42,8 @@
             this.ServerOverviewGBox = new System.Windows.Forms.GroupBox();
             this.ServerNameLbl = new System.Windows.Forms.Label();
             this.ModeNameLbl = new System.Windows.Forms.Label();
-            this.MapNameLbl = new System.Windows.Forms.Label();
             this.SlotUsageLbl = new System.Windows.Forms.Label();
+            this.MapNameLbl = new System.Windows.Forms.Label();
             this.StopVuServerBtn = new System.Windows.Forms.Button();
             this.WatermarkLbl = new System.Windows.Forms.Label();
             this.SendCommandBtn = new System.Windows.Forms.Button();
@@ -51,13 +51,13 @@
             this.ServerLogOutput = new System.Windows.Forms.TextBox();
             this.ServerUsageSStrip = new System.Windows.Forms.StatusStrip();
             this.ServerConStateSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ServerCpuUsageSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.ServerCpuUsageProcBar = new System.Windows.Forms.ToolStripProgressBar();
             this.MemUsageSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.MemUsageProcBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.RestartsSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ServerVersionSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.ServerFpsSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ServerCpuUsageSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ServerVersionSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.RestartsSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.MainMenu.SuspendLayout();
             this.ServerOverviewGBox.SuspendLayout();
             this.ServerUsageSStrip.SuspendLayout();
@@ -193,16 +193,6 @@
             this.ModeNameLbl.TabIndex = 15;
             this.ModeNameLbl.Text = "Mode: -";
             // 
-            // MapNameLbl
-            // 
-            this.MapNameLbl.AutoSize = true;
-            this.MapNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MapNameLbl.Location = new System.Drawing.Point(11, 65);
-            this.MapNameLbl.Name = "MapNameLbl";
-            this.MapNameLbl.Size = new System.Drawing.Size(42, 15);
-            this.MapNameLbl.TabIndex = 14;
-            this.MapNameLbl.Text = "Map: -";
-            // 
             // SlotUsageLbl
             // 
             this.SlotUsageLbl.AutoSize = true;
@@ -212,6 +202,16 @@
             this.SlotUsageLbl.Size = new System.Drawing.Size(94, 15);
             this.SlotUsageLbl.TabIndex = 1;
             this.SlotUsageLbl.Text = "Players online: -";
+            // 
+            // MapNameLbl
+            // 
+            this.MapNameLbl.AutoSize = true;
+            this.MapNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MapNameLbl.Location = new System.Drawing.Point(11, 65);
+            this.MapNameLbl.Name = "MapNameLbl";
+            this.MapNameLbl.Size = new System.Drawing.Size(42, 15);
+            this.MapNameLbl.TabIndex = 14;
+            this.MapNameLbl.Text = "Map: -";
             // 
             // StopVuServerBtn
             // 
@@ -318,6 +318,15 @@
             this.ServerConStateSTLbl.Text = "Server: Offline";
             this.ServerConStateSTLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // ServerCpuUsageSTLbl
+            // 
+            this.ServerCpuUsageSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.ServerCpuUsageSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.ServerCpuUsageSTLbl.Name = "ServerCpuUsageSTLbl";
+            this.ServerCpuUsageSTLbl.Size = new System.Drawing.Size(45, 19);
+            this.ServerCpuUsageSTLbl.Text = "CPU: -";
+            this.ServerCpuUsageSTLbl.Visible = false;
+            // 
             // ServerCpuUsageProcBar
             // 
             this.ServerCpuUsageProcBar.MarqueeAnimationSpeed = 0;
@@ -344,23 +353,6 @@
             this.MemUsageProcBar.Step = 1;
             this.MemUsageProcBar.Visible = false;
             // 
-            // RestartsSTLbl
-            // 
-            this.RestartsSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.RestartsSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.RestartsSTLbl.Name = "RestartsSTLbl";
-            this.RestartsSTLbl.Size = new System.Drawing.Size(64, 19);
-            this.RestartsSTLbl.Text = "Restarts: 0";
-            this.RestartsSTLbl.Visible = false;
-            // 
-            // ServerVersionSTLbl
-            // 
-            this.ServerVersionSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.ServerVersionSTLbl.Name = "ServerVersionSTLbl";
-            this.ServerVersionSTLbl.Size = new System.Drawing.Size(83, 19);
-            this.ServerVersionSTLbl.Text = "Server version:";
-            this.ServerVersionSTLbl.Visible = false;
-            // 
             // ServerFpsSTLbl
             // 
             this.ServerFpsSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
@@ -370,14 +362,22 @@
             this.ServerFpsSTLbl.Text = "FPS: -";
             this.ServerFpsSTLbl.Visible = false;
             // 
-            // ServerCpuUsageSTLbl
+            // ServerVersionSTLbl
             // 
-            this.ServerCpuUsageSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.ServerCpuUsageSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
-            this.ServerCpuUsageSTLbl.Name = "ServerCpuUsageSTLbl";
-            this.ServerCpuUsageSTLbl.Size = new System.Drawing.Size(45, 21);
-            this.ServerCpuUsageSTLbl.Text = "CPU: -";
-            this.ServerCpuUsageSTLbl.Visible = false;
+            this.ServerVersionSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.ServerVersionSTLbl.Name = "ServerVersionSTLbl";
+            this.ServerVersionSTLbl.Size = new System.Drawing.Size(83, 19);
+            this.ServerVersionSTLbl.Text = "Server version:";
+            this.ServerVersionSTLbl.Visible = false;
+            // 
+            // RestartsSTLbl
+            // 
+            this.RestartsSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.RestartsSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.RestartsSTLbl.Name = "RestartsSTLbl";
+            this.RestartsSTLbl.Size = new System.Drawing.Size(64, 19);
+            this.RestartsSTLbl.Text = "Restarts: 0";
+            this.RestartsSTLbl.Visible = false;
             // 
             // FrmMain
             // 
