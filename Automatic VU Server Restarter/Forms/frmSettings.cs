@@ -37,10 +37,7 @@ namespace VU.Forms
                     ServerFrequency30HzRBtn.Checked = true;
                     break;
             }
-            foreach(var Languages in SettingsManager.Languages)
-            {
-                LanguagesCoBox.Items.Add(Languages);
-            }
+
             DisableTerrainInterpCBox.Checked = SettingsManager.UseDisableTerrainInterp;
             HighResTerrainCBox.Checked = SettingsManager.UseHighResTerrain;
             SkipChecksumCBox.Checked = SettingsManager.UseSkipChecksumValidation;
@@ -64,7 +61,7 @@ namespace VU.Forms
         internal Button SearchGamePathBtn = new Button();
         internal Button SearchProConPathBtn = new Button();
 
-        internal readonly FolderBrowserDialog _browseFolder = new FolderBrowserDialog();
+        internal readonly FolderBrowserDialog BrowseFolder = new FolderBrowserDialog();
 
         [DllImport("user32.dll")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
@@ -125,6 +122,7 @@ namespace VU.Forms
 
         private void frmSettings_Load(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.Settings;
             SearchVuPathBtn.Enabled = false;
             SearchProConPathBtn.Enabled = false;
             LanguagesCoBox.SelectedIndex = 0;
@@ -132,30 +130,30 @@ namespace VU.Forms
 
         private void SearchVuPath_Click(object sender, EventArgs e)
         {
-            _browseFolder.SelectedPath = SettingsManager.VuPath;
-            if (DialogResult.OK == _browseFolder.ShowDialog())
-                VuPathTBox.Text = _browseFolder.SelectedPath;
+            BrowseFolder.SelectedPath = SettingsManager.VuPath;
+            if (DialogResult.OK == BrowseFolder.ShowDialog())
+                VuPathTBox.Text = BrowseFolder.SelectedPath;
         }
 
         private void SearchVuInsatncePath_Click(object sender, EventArgs e)
         {
-            _browseFolder.SelectedPath = SettingsManager.VuInstancePath;
-            if (DialogResult.OK == _browseFolder.ShowDialog())
-                VuInstancePathTBox.Text = _browseFolder.SelectedPath;
+            BrowseFolder.SelectedPath = SettingsManager.VuInstancePath;
+            if (DialogResult.OK == BrowseFolder.ShowDialog())
+                VuInstancePathTBox.Text = BrowseFolder.SelectedPath;
         }
 
         private void SearchGamePath_Click(object sender, EventArgs e)
         {
-            _browseFolder.SelectedPath = SettingsManager.BattlefieldInstallDir;
-            if (DialogResult.OK == _browseFolder.ShowDialog())
-                BattlefieldInstallDirTBox.Text = _browseFolder.SelectedPath;
+            BrowseFolder.SelectedPath = SettingsManager.BattlefieldInstallDir;
+            if (DialogResult.OK == BrowseFolder.ShowDialog())
+                BattlefieldInstallDirTBox.Text = BrowseFolder.SelectedPath;
         }
 
         private void SearchProConPat_Click(object sender, EventArgs e)
         {
-            _browseFolder.SelectedPath = SettingsManager.ProConPath;
-            if (DialogResult.OK == _browseFolder.ShowDialog())
-                ProConPathTBox.Text = _browseFolder.SelectedPath;
+            BrowseFolder.SelectedPath = SettingsManager.ProConPath;
+            if (DialogResult.OK == BrowseFolder.ShowDialog())
+                ProConPathTBox.Text = BrowseFolder.SelectedPath;
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
@@ -406,6 +404,19 @@ namespace VU.Forms
                 default:
                     SettingsManager.OpenIni.Write("Settings", "UseAutoStart", "false");
                     OnStartup.DeleteValue(Application.ProductName, false);
+                    break;
+            }
+        }
+
+        private void AutoUpdateCheckCBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (AutoUpdateCheckCBox.Checked)
+            {
+                case true:
+                    SettingsManager.OpenIni.Write("Settings", "AVUSRUpdates", "true");
+                    break;
+                default:
+                    SettingsManager.OpenIni.Write("Settings", "AVUSRUpdates", "false");
                     break;
             }
         }

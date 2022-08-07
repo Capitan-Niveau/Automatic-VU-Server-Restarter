@@ -115,13 +115,9 @@ namespace VU.Tools
             }
         }
 
-        internal static void CheckIfKeyIsInUse(string line)
+        internal static bool CheckIfKeyIsInUse(string line)
         {
-            if (!Regex.Match(line, @"\[.+\] \[.+\] The provided server key is already in use. Shutting down.")
-                    .Success) return;
-            {
-                ServerKeyIsUsed = true;
-            }
+            return !Regex.Match(line, @"\[.+\] \[.+\] The provided server key is already in use. Shutting down.").Success;
         }
 
         internal static string AssemblyCopyright

@@ -37,7 +37,7 @@
             // 
             this.AbortBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.AbortBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.AbortBtn.Location = new System.Drawing.Point(411, 232);
+            this.AbortBtn.Location = new System.Drawing.Point(410, 333);
             this.AbortBtn.Name = "AbortBtn";
             this.AbortBtn.Size = new System.Drawing.Size(75, 23);
             this.AbortBtn.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             this.UpdateNowBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.UpdateNowBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.UpdateNowBtn.Location = new System.Drawing.Point(240, 232);
+            this.UpdateNowBtn.Location = new System.Drawing.Point(239, 333);
             this.UpdateNowBtn.Name = "UpdateNowBtn";
             this.UpdateNowBtn.Size = new System.Drawing.Size(135, 23);
             this.UpdateNowBtn.TabIndex = 1;
@@ -65,7 +65,7 @@
             this.UpdateInfoRBox.Location = new System.Drawing.Point(12, 12);
             this.UpdateInfoRBox.Name = "UpdateInfoRBox";
             this.UpdateInfoRBox.ReadOnly = true;
-            this.UpdateInfoRBox.Size = new System.Drawing.Size(474, 178);
+            this.UpdateInfoRBox.Size = new System.Drawing.Size(473, 279);
             this.UpdateInfoRBox.TabIndex = 2;
             this.UpdateInfoRBox.Text = "";
             // 
@@ -73,10 +73,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 267);
+            this.ClientSize = new System.Drawing.Size(497, 368);
             this.Controls.Add(this.UpdateInfoRBox);
             this.Controls.Add(this.UpdateNowBtn);
             this.Controls.Add(this.AbortBtn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmUpdateInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Updater";

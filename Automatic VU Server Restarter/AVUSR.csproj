@@ -102,6 +102,7 @@
     <Compile Include="Code\Settings.cs" />
     <Compile Include="Code\Utility.cs" />
     <Compile Include="Code\Updater.cs" />
+    <Compile Include="Code\Server.cs" />
     <EmbeddedResource Include="Forms\frmAbout.resx">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,12 +141,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AVUSR.ico" />
+    <None Include="Resources\settings.ico" />
     <None Include="Resources\update.ico" />
     <None Include="Resources\about.ico" />
     <Content Include="Resources\AVUSR.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Rcon\" />
+    <Folder Include="Server\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rcon.Net\Rcon.Net\Rcon.Net.csproj">

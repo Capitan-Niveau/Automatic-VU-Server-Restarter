@@ -448,9 +448,10 @@
             // ServerFrequency30HzRBtn
             // 
             this.ServerFrequency30HzRBtn.AutoSize = true;
+            this.ServerFrequency30HzRBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ServerFrequency30HzRBtn.Location = new System.Drawing.Point(16, 25);
             this.ServerFrequency30HzRBtn.Name = "ServerFrequency30HzRBtn";
-            this.ServerFrequency30HzRBtn.Size = new System.Drawing.Size(154, 17);
+            this.ServerFrequency30HzRBtn.Size = new System.Drawing.Size(160, 18);
             this.ServerFrequency30HzRBtn.TabIndex = 5;
             this.ServerFrequency30HzRBtn.TabStop = true;
             this.ServerFrequency30HzRBtn.Text = "30Hz Server mode (default)";
@@ -460,9 +461,10 @@
             // ServerFrequency120HzRBtn
             // 
             this.ServerFrequency120HzRBtn.AutoSize = true;
+            this.ServerFrequency120HzRBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ServerFrequency120HzRBtn.Location = new System.Drawing.Point(16, 71);
             this.ServerFrequency120HzRBtn.Name = "ServerFrequency120HzRBtn";
-            this.ServerFrequency120HzRBtn.Size = new System.Drawing.Size(119, 17);
+            this.ServerFrequency120HzRBtn.Size = new System.Drawing.Size(125, 18);
             this.ServerFrequency120HzRBtn.TabIndex = 4;
             this.ServerFrequency120HzRBtn.TabStop = true;
             this.ServerFrequency120HzRBtn.Text = "120Hz Server mode";
@@ -472,9 +474,10 @@
             // ServerFrequency60HzRBtn
             // 
             this.ServerFrequency60HzRBtn.AutoSize = true;
+            this.ServerFrequency60HzRBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ServerFrequency60HzRBtn.Location = new System.Drawing.Point(16, 48);
             this.ServerFrequency60HzRBtn.Name = "ServerFrequency60HzRBtn";
-            this.ServerFrequency60HzRBtn.Size = new System.Drawing.Size(113, 17);
+            this.ServerFrequency60HzRBtn.Size = new System.Drawing.Size(119, 18);
             this.ServerFrequency60HzRBtn.TabIndex = 3;
             this.ServerFrequency60HzRBtn.TabStop = true;
             this.ServerFrequency60HzRBtn.Text = "60Hz Server mode";
@@ -571,6 +574,7 @@
             this.AutoUpdateCheckCBox.TabIndex = 1;
             this.AutoUpdateCheckCBox.Text = "Automatically check for updates?";
             this.AutoUpdateCheckCBox.UseVisualStyleBackColor = true;
+            this.AutoUpdateCheckCBox.CheckedChanged += new System.EventHandler(this.AutoUpdateCheckCBox_CheckedChanged);
             // 
             // StartWithWindowsCBox
             // 

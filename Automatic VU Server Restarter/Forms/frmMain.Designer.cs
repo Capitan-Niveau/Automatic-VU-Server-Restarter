@@ -58,6 +58,7 @@
             this.ServerFpsSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.ServerVersionSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.RestartsSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
+            this.BgUpdateSearchSTLbl = new System.Windows.Forms.ToolStripStatusLabel();
             this.MainMenu.SuspendLayout();
             this.ServerOverviewGBox.SuspendLayout();
             this.ServerUsageSStrip.SuspendLayout();
@@ -79,7 +80,7 @@
             // 
             this.ExitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ExitBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ExitBtn.Location = new System.Drawing.Point(793, 637);
+            this.ExitBtn.Location = new System.Drawing.Point(794, 636);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(75, 23);
             this.ExitBtn.TabIndex = 8;
@@ -240,7 +241,7 @@
             // 
             this.SendCommandBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SendCommandBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.SendCommandBtn.Location = new System.Drawing.Point(465, 637);
+            this.SendCommandBtn.Location = new System.Drawing.Point(465, 636);
             this.SendCommandBtn.Name = "SendCommandBtn";
             this.SendCommandBtn.Size = new System.Drawing.Size(75, 23);
             this.SendCommandBtn.TabIndex = 14;
@@ -267,7 +268,7 @@
             "version"});
             this.TestCommandTBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.TestCommandTBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.TestCommandTBox.Location = new System.Drawing.Point(12, 638);
+            this.TestCommandTBox.Location = new System.Drawing.Point(13, 638);
             this.TestCommandTBox.Name = "TestCommandTBox";
             this.TestCommandTBox.Size = new System.Drawing.Size(447, 20);
             this.TestCommandTBox.TabIndex = 15;
@@ -301,11 +302,12 @@
             this.MemUsageProcBar,
             this.ServerFpsSTLbl,
             this.ServerVersionSTLbl,
-            this.RestartsSTLbl});
-            this.ServerUsageSStrip.Location = new System.Drawing.Point(0, 672);
+            this.RestartsSTLbl,
+            this.BgUpdateSearchSTLbl});
+            this.ServerUsageSStrip.Location = new System.Drawing.Point(0, 670);
             this.ServerUsageSStrip.Name = "ServerUsageSStrip";
             this.ServerUsageSStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
-            this.ServerUsageSStrip.Size = new System.Drawing.Size(880, 22);
+            this.ServerUsageSStrip.Size = new System.Drawing.Size(880, 24);
             this.ServerUsageSStrip.SizingGrip = false;
             this.ServerUsageSStrip.TabIndex = 17;
             this.ServerUsageSStrip.Text = "Server status";
@@ -314,7 +316,7 @@
             // 
             this.ServerConStateSTLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ServerConStateSTLbl.Name = "ServerConStateSTLbl";
-            this.ServerConStateSTLbl.Size = new System.Drawing.Size(81, 17);
+            this.ServerConStateSTLbl.Size = new System.Drawing.Size(81, 19);
             this.ServerConStateSTLbl.Text = "Server: Offline";
             this.ServerConStateSTLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -379,6 +381,21 @@
             this.RestartsSTLbl.Text = "Restarts: 0";
             this.RestartsSTLbl.Visible = false;
             // 
+            // BgUpdateSearchSTLbl
+            // 
+            this.BgUpdateSearchSTLbl.ActiveLinkColor = System.Drawing.Color.Black;
+            this.BgUpdateSearchSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.BgUpdateSearchSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.BgUpdateSearchSTLbl.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.BgUpdateSearchSTLbl.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.BgUpdateSearchSTLbl.LinkColor = System.Drawing.Color.Black;
+            this.BgUpdateSearchSTLbl.Name = "BgUpdateSearchSTLbl";
+            this.BgUpdateSearchSTLbl.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.BgUpdateSearchSTLbl.Size = new System.Drawing.Size(112, 19);
+            this.BgUpdateSearchSTLbl.Text = "Searching update...";
+            this.BgUpdateSearchSTLbl.VisitedLinkColor = System.Drawing.Color.Black;
+            this.BgUpdateSearchSTLbl.Click += new System.EventHandler(this.BgUpdateSearchSTLbl_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -428,7 +445,6 @@
         private System.Windows.Forms.Button SendCommandBtn;
         private System.Windows.Forms.TextBox TestCommandTBox;
         private System.Windows.Forms.ToolStripMenuItem UpdateTStrip;
-        private System.Windows.Forms.TextBox ServerLogOutput;
         internal System.Windows.Forms.Label SlotUsageLbl;
         internal System.Windows.Forms.Label ServerNameLbl;
         internal System.Windows.Forms.Label ModeNameLbl;
@@ -442,6 +458,8 @@
         private System.Windows.Forms.ToolStripStatusLabel ServerVersionSTLbl;
         private System.Windows.Forms.ToolStripStatusLabel ServerFpsSTLbl;
         private System.Windows.Forms.ToolStripStatusLabel ServerCpuUsageSTLbl;
+        private System.Windows.Forms.ToolStripStatusLabel BgUpdateSearchSTLbl;
+        internal System.Windows.Forms.TextBox ServerLogOutput;
     }
 }
 
