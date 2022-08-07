@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rcon.Net;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,7 +7,6 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Rcon.Net;
 using VU.Settings;
 using VU.Tools;
 
@@ -265,40 +265,20 @@ namespace VU.Server
                 {
                     case false:
 
-                        if (OutPudBox.InvokeRequired)
-                        {
-                            void LogOutPudWindow()
-                            {
-                                OutPudBox.AppendText(Environment.NewLine + "[Local] RCON unavailable!");
-                            }
-                            OutPudBox.Invoke((Action)LogOutPudWindow);
-                        }
+                        OutPudBox.BeginInvoke(new Action(() => OutPudBox.AppendText(Environment.NewLine + "[Local] RCON unavailable!")));
                         return;
                     default:
                     {
                         var responseWords = await SendCommandAsync(words);
-                        if (OutPudBox.InvokeRequired)
-                        {
-                            void LogOutPudWindow()
-                            {
-                                OutPudBox.AppendText(Environment.NewLine + $"[Server] RCON: {string.Join(" ", responseWords)}");
-                                }
-                            OutPudBox.Invoke((Action)LogOutPudWindow);
-                        }
+
+                        OutPudBox.BeginInvoke(new Action(() => OutPudBox.AppendText(Environment.NewLine + $"[Server] RCON: {string.Join(" ", responseWords)}")));
                         break;
                     }
                 }
             }
             catch (Exception ex)
             {
-                if (OutPudBox.InvokeRequired)
-                {
-                    void LogOutPudWindow()
-                    {
-                        OutPudBox.AppendText(Environment.NewLine + $"[Local] RCON: {ex.InnerException}");
-                    }
-                    OutPudBox.Invoke((Action)LogOutPudWindow);
-                }
+                OutPudBox.BeginInvoke(new Action(() => OutPudBox.AppendText(Environment.NewLine + $"[Local] RCON: {ex.InnerException}")));
             }
         }
 
