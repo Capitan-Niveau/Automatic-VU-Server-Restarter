@@ -20,7 +20,7 @@ namespace VU
                 Environment.Exit(1);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
+            OnStartUpCheck();
             if (File.Exists(Application.StartupPath + "\\" + "settings.ini") == false)
             {
                 File.Create(Application.StartupPath + "\\" + "settings.ini").Close();
@@ -51,25 +51,7 @@ namespace VU
             }
             else
             {
-                if (!Utilitys.CheckIfVuInstalled())
-                {
-                    var VuNotInstalled = MessageBox.Show(@"Venice Unleashed is not installed, do you want to download it now?", @"Missing VU", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    switch (VuNotInstalled)
-                    {
-                        case DialogResult.Yes:
-                            Process.Start("https://veniceunleashed.net/");
-                            Environment.Exit(0);
-                            break;
-                        case DialogResult.No:
-                            Environment.Exit(0);
-                            return;
-                    }
-                }
-
-                if (!Utilitys.CheckIfBfInstalled())
-                {
-                    MessageBox.Show(@"The battlefield 3 installation could not be found. Please select the path to the installation in the settings.", @"Missing BF3", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                OnStartUpCheck();
                 SettingsManager.LoadSettings();
                 Application.Run(new FrmMain());
             }
@@ -95,6 +77,31 @@ namespace VU
             if (!IsFileAvailable("ini.dll"))
                 return false;
             return true;
+        }
+
+        private static void OnStartUpCheck()
+        {
+            if (!Utilitys.CheckIfVuInstalled())
+            {
+                var vuNotInstalled = MessageBox.Show(@"Venice Unleashed is not installed, do you want to download it now?", @"Missing VU", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                switch (vuNotInstalled)
+                {
+                    case DialogResult.Yes:
+                        Process.Start("https://veniceunleashed.net/");
+                        Environment.Exit(0);
+                        break;
+                    case DialogResult.No:
+                        Environment.Exit(0);
+                        return;
+                }
+            }
+
+            if (!Utilitys.CheckIfBfInstalled())
+            {
+                MessageBox.Show(@"The battlefield 3 installation could not be found. Please select the path to the installation in the settings.", @"Missing BF3", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            SettingsManager.LoadSettings();
+            Application.Run(new FrmMain());
         }
     }
 }
