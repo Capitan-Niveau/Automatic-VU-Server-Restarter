@@ -41,11 +41,11 @@ namespace VU.Updater
             }
         }
 
-        internal static void CheckForUpdateBg(FrmMain SiletForm)
+        internal static void CheckForUpdateBg(FrmMain siletForm)
         {
             using (Client = new WebClient())
             {
-                Client.DownloadFileCompleted += SiletForm.WC_GetCheckList_DownloadFileCompleted;
+                Client.DownloadFileCompleted += siletForm.WC_GetCheckList_DownloadFileCompleted;
                 try
                 {
                     Client.DownloadFileAsync(new Uri("https://drive.google.com/uc?export=download&id=1R4JEuCdxT1_fgH4epeiWSLDtFpXsY0r-"), CheckListPath);
@@ -96,36 +96,35 @@ namespace VU.Updater
         {
             void Check()
             {
-                Md5Check(target, label, progressBar);
+                InstallUpdate(target, label, progressBar);
             }
 
             Md5Worker = new Thread(Check)
             {
-                Name = "MD5::Checker",
+                Name = "Updater",
                 IsBackground = true,
             };
             Md5Worker.Start();
         }
 
-        private static void Md5Check(Form target, Label label, ProgressBar progressBar)
+        private static void InstallUpdate(Form target, Label label, ProgressBar progressBar)
         {
-            if (Md5Hash == Utilitys.GetMd5Hash(UpdatePath, label, progressBar))
-            {
-
-            }
-            else
+            if (!string.Equals(Md5Hash,  Utilitys.GetMd5Hash(UpdatePath, label, progressBar)))
             {
                 MessageBox.Show(@"The file has been modified or is corrupt. The update is aborted.", @"MD5 error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 File.Delete(CheckListPath);
                 File.Delete(UpdatePath);
                 File.Delete(UpdatePath);
 
-                void CloseUpdater()
+                void CloseUpdaterAborted()
                 {
                     target.Close();
                 }
-                target.Invoke((Action)CloseUpdater);
+                target.Invoke((Action)CloseUpdaterAborted);
+                return;
             }
+            MessageBox.Show(@"The update will be applied when exiting the application.", @"Updater", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            target.BeginInvoke(new Action(() => target.Close()));
         }
     }
 }

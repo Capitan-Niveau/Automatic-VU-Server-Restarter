@@ -5,15 +5,14 @@ using INIReader;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using VU.Tools;
 
 namespace VU.Settings
 {
     class SettingsManager
     {
         internal static INI OpenIni = new INI { Path = Application.StartupPath + "\\" + "settings.ini" };
-        internal static string BattlefieldInstallDir = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\EA Games\Battlefield 3", "Install Dir", null);
         internal static string CustomGamePath;
-        internal static string VuPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VeniceUnleashed\\client";
         internal static string VuInstancePath;
         internal static string ProConPath;
         internal static bool UseCustomGamePath;
@@ -35,7 +34,6 @@ namespace VU.Settings
         internal static string HarmonyPort;
         internal static string ServerPort;
         internal static string RemoteAdminPort;
-        internal static List<string> Languages = new List<string>();
 
         internal static void LoadSettings()
         {
@@ -66,21 +64,9 @@ namespace VU.Settings
             AVUSRUpdates = Convert.ToBoolean(OpenIni.Read("Settings", "AVUSRUpdates"));
         }
 
-
-        internal static string GetGamePath()
+        internal static string IfCustomGamePath()
         {
-            return UseCustomGamePath ? File.Exists(CustomGamePath + "\\bf3.exe") ? CustomGamePath : null :
-                File.Exists(BattlefieldInstallDir + "\\bf3.exe") ? BattlefieldInstallDir : null;
-        }
-
-        internal static string GetVuPath()
-        {
-            return File.Exists(VuPath + "\\vu.exe") ? VuPath : null;
-        }
-
-        internal static string GetVuInstancePath()
-        {
-            return File.Exists(VuInstancePath + "\\server.key") ? VuInstancePath : null;
+            return UseCustomGamePath ? CustomGamePath : Utilitys.BattlefieldInstallDir;
         }
     }
 }

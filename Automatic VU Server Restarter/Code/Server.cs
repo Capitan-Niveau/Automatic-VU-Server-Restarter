@@ -16,7 +16,6 @@ namespace VU.Server
     {
 
         internal TextBox OutPudBox;
-        internal Form MainForm;
         private Process _serverProcess;
         private Client _rconClient;
         private Dictionary<string, string> _serverPassword;
@@ -103,8 +102,8 @@ namespace VU.Server
                 MaxPlayerCount = _serverMaxPlayerCount["vars.maxPlayers"];
                 ServerName = _gameServerName["vars.serverName"];
                 _serverProcess = new Process();
-                _serverProcess.StartInfo.FileName = SettingsManager.VuPath + "\\vu.exe";
-                _serverProcess.StartInfo.WorkingDirectory = SettingsManager.VuPath;
+                _serverProcess.StartInfo.FileName = Utilitys.VuPath + "\\vu.exe";
+                _serverProcess.StartInfo.WorkingDirectory = Utilitys.VuPath;
                 _serverProcess.StartInfo.CreateNoWindow = false;
                 _serverProcess.StartInfo.RedirectStandardOutput = true;
                 _serverProcess.StartInfo.RedirectStandardError = true;
@@ -137,7 +136,7 @@ namespace VU.Server
                 }
 
                 if (SettingsManager.UseCustomGamePath)
-                    _serverProcess.StartInfo.Arguments += $" -gamepath {SettingsManager.CustomGamePath}";
+                    _serverProcess.StartInfo.Arguments += $" -gamepath {SettingsManager.IfCustomGamePath()}";
                 if (SettingsManager.MakeUnlisted)
                     _serverProcess.StartInfo.Arguments += " -unlisted";
                 if (SettingsManager.UseAutomaticUpdates)
@@ -167,13 +166,12 @@ namespace VU.Server
         {
             if (_serverProcess.HasExited)
             {
+                DisposeServer();
                 return;
             }
             _serverProcess.Refresh();
             MemUsage = _serverProcess.WorkingSet;
         }
-
-
 
         private async void ServerProcess_DataReceived(object sender, DataReceivedEventArgs e)
         {

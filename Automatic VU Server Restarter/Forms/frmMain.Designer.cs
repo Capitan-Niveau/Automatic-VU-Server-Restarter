@@ -68,7 +68,7 @@
             // 
             this.StartVuServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StartVuServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StartVuServerBtn.Location = new System.Drawing.Point(605, 637);
+            this.StartVuServerBtn.Location = new System.Drawing.Point(507, 553);
             this.StartVuServerBtn.Name = "StartVuServerBtn";
             this.StartVuServerBtn.Size = new System.Drawing.Size(159, 23);
             this.StartVuServerBtn.TabIndex = 7;
@@ -80,7 +80,7 @@
             // 
             this.ExitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ExitBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ExitBtn.Location = new System.Drawing.Point(794, 636);
+            this.ExitBtn.Location = new System.Drawing.Point(696, 552);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(75, 23);
             this.ExitBtn.TabIndex = 8;
@@ -96,9 +96,10 @@
             this.InfoTStrip});
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(880, 25);
+            this.MainMenu.Size = new System.Drawing.Size(782, 25);
             this.MainMenu.TabIndex = 9;
             this.MainMenu.Text = "Menu";
+            this.MainMenu.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MainMenu_ItemClicked);
             // 
             // FileTStrip
             // 
@@ -167,9 +168,9 @@
             this.ServerOverviewGBox.Controls.Add(this.SlotUsageLbl);
             this.ServerOverviewGBox.Controls.Add(this.MapNameLbl);
             this.ServerOverviewGBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ServerOverviewGBox.Location = new System.Drawing.Point(13, 509);
+            this.ServerOverviewGBox.Location = new System.Drawing.Point(13, 425);
             this.ServerOverviewGBox.Name = "ServerOverviewGBox";
-            this.ServerOverviewGBox.Size = new System.Drawing.Size(856, 116);
+            this.ServerOverviewGBox.Size = new System.Drawing.Size(758, 116);
             this.ServerOverviewGBox.TabIndex = 10;
             this.ServerOverviewGBox.TabStop = false;
             this.ServerOverviewGBox.Text = "Venice Unleashed Server information";
@@ -218,7 +219,7 @@
             // 
             this.StopVuServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StopVuServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StopVuServerBtn.Location = new System.Drawing.Point(605, 637);
+            this.StopVuServerBtn.Location = new System.Drawing.Point(507, 553);
             this.StopVuServerBtn.Name = "StopVuServerBtn";
             this.StopVuServerBtn.Size = new System.Drawing.Size(159, 23);
             this.StopVuServerBtn.TabIndex = 12;
@@ -231,7 +232,7 @@
             // 
             this.WatermarkLbl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.WatermarkLbl.AutoSize = true;
-            this.WatermarkLbl.Location = new System.Drawing.Point(363, 495);
+            this.WatermarkLbl.Location = new System.Drawing.Point(314, 411);
             this.WatermarkLbl.Name = "WatermarkLbl";
             this.WatermarkLbl.Size = new System.Drawing.Size(161, 13);
             this.WatermarkLbl.TabIndex = 13;
@@ -241,7 +242,7 @@
             // 
             this.SendCommandBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SendCommandBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.SendCommandBtn.Location = new System.Drawing.Point(465, 636);
+            this.SendCommandBtn.Location = new System.Drawing.Point(367, 552);
             this.SendCommandBtn.Name = "SendCommandBtn";
             this.SendCommandBtn.Size = new System.Drawing.Size(75, 23);
             this.SendCommandBtn.TabIndex = 14;
@@ -268,9 +269,9 @@
             "version"});
             this.TestCommandTBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.TestCommandTBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.TestCommandTBox.Location = new System.Drawing.Point(13, 638);
+            this.TestCommandTBox.Location = new System.Drawing.Point(13, 554);
             this.TestCommandTBox.Name = "TestCommandTBox";
-            this.TestCommandTBox.Size = new System.Drawing.Size(447, 20);
+            this.TestCommandTBox.Size = new System.Drawing.Size(349, 20);
             this.TestCommandTBox.TabIndex = 15;
             // 
             // ServerLogOutput
@@ -286,7 +287,7 @@
             this.ServerLogOutput.Name = "ServerLogOutput";
             this.ServerLogOutput.ReadOnly = true;
             this.ServerLogOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ServerLogOutput.Size = new System.Drawing.Size(855, 451);
+            this.ServerLogOutput.Size = new System.Drawing.Size(757, 367);
             this.ServerLogOutput.TabIndex = 16;
             this.ServerLogOutput.TabStop = false;
             this.ServerLogOutput.TextChanged += new System.EventHandler(this.ServerLogOutput_TextChanged);
@@ -304,10 +305,10 @@
             this.ServerVersionSTLbl,
             this.RestartsSTLbl,
             this.BgUpdateSearchSTLbl});
-            this.ServerUsageSStrip.Location = new System.Drawing.Point(0, 670);
+            this.ServerUsageSStrip.Location = new System.Drawing.Point(0, 588);
             this.ServerUsageSStrip.Name = "ServerUsageSStrip";
             this.ServerUsageSStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.ManagerRenderMode;
-            this.ServerUsageSStrip.Size = new System.Drawing.Size(880, 24);
+            this.ServerUsageSStrip.Size = new System.Drawing.Size(782, 22);
             this.ServerUsageSStrip.SizingGrip = false;
             this.ServerUsageSStrip.TabIndex = 17;
             this.ServerUsageSStrip.Text = "Server status";
@@ -315,8 +316,9 @@
             // ServerConStateSTLbl
             // 
             this.ServerConStateSTLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.ServerConStateSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerConStateSTLbl.Name = "ServerConStateSTLbl";
-            this.ServerConStateSTLbl.Size = new System.Drawing.Size(81, 19);
+            this.ServerConStateSTLbl.Size = new System.Drawing.Size(81, 17);
             this.ServerConStateSTLbl.Text = "Server: Offline";
             this.ServerConStateSTLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -324,6 +326,7 @@
             // 
             this.ServerCpuUsageSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.ServerCpuUsageSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.ServerCpuUsageSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerCpuUsageSTLbl.Name = "ServerCpuUsageSTLbl";
             this.ServerCpuUsageSTLbl.Size = new System.Drawing.Size(45, 19);
             this.ServerCpuUsageSTLbl.Text = "CPU: -";
@@ -341,6 +344,7 @@
             // 
             this.MemUsageSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
             this.MemUsageSTLbl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.MemUsageSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MemUsageSTLbl.Name = "MemUsageSTLbl";
             this.MemUsageSTLbl.Size = new System.Drawing.Size(55, 19);
             this.MemUsageSTLbl.Text = "Memory:";
@@ -359,6 +363,7 @@
             // 
             this.ServerFpsSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.ServerFpsSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.ServerFpsSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerFpsSTLbl.Name = "ServerFpsSTLbl";
             this.ServerFpsSTLbl.Size = new System.Drawing.Size(41, 19);
             this.ServerFpsSTLbl.Text = "FPS: -";
@@ -367,6 +372,7 @@
             // ServerVersionSTLbl
             // 
             this.ServerVersionSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.ServerVersionSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerVersionSTLbl.Name = "ServerVersionSTLbl";
             this.ServerVersionSTLbl.Size = new System.Drawing.Size(83, 19);
             this.ServerVersionSTLbl.Text = "Server version:";
@@ -376,6 +382,7 @@
             // 
             this.RestartsSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.RestartsSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.RestartsSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RestartsSTLbl.Name = "RestartsSTLbl";
             this.RestartsSTLbl.Size = new System.Drawing.Size(64, 19);
             this.RestartsSTLbl.Text = "Restarts: 0";
@@ -386,6 +393,7 @@
             this.BgUpdateSearchSTLbl.ActiveLinkColor = System.Drawing.Color.Black;
             this.BgUpdateSearchSTLbl.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.BgUpdateSearchSTLbl.BorderStyle = System.Windows.Forms.Border3DStyle.Etched;
+            this.BgUpdateSearchSTLbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BgUpdateSearchSTLbl.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BgUpdateSearchSTLbl.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.BgUpdateSearchSTLbl.LinkColor = System.Drawing.Color.Black;
@@ -393,6 +401,7 @@
             this.BgUpdateSearchSTLbl.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.BgUpdateSearchSTLbl.Size = new System.Drawing.Size(112, 19);
             this.BgUpdateSearchSTLbl.Text = "Searching update...";
+            this.BgUpdateSearchSTLbl.Visible = false;
             this.BgUpdateSearchSTLbl.VisitedLinkColor = System.Drawing.Color.Black;
             this.BgUpdateSearchSTLbl.Click += new System.EventHandler(this.BgUpdateSearchSTLbl_Click);
             // 
@@ -400,7 +409,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(880, 694);
+            this.ClientSize = new System.Drawing.Size(782, 610);
             this.Controls.Add(this.ServerUsageSStrip);
             this.Controls.Add(this.ServerLogOutput);
             this.Controls.Add(this.TestCommandTBox);

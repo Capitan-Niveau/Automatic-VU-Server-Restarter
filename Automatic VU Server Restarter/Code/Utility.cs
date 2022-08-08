@@ -9,9 +9,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using VU.Settings;
-using INIReader;
 using Microsoft.Win32;
+using VU.Settings;
 
 namespace VU.Tools
 {
@@ -22,8 +21,10 @@ namespace VU.Tools
         private static DateTime _curTime;
         private static TimeSpan _curTotalProcessorTime;
         private static readonly Regex GetBuildNumber = new Regex(@"\(.*\)");
+
+        internal static string BattlefieldInstallDir = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\EA Games\Battlefield 3", "Install Dir", null);
+        internal static string VuPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VeniceUnleashed\\client";
         internal static string ServerVersion { get; set; }
-        internal static bool ServerKeyIsUsed { get; set; }
 
         internal static Process ProConProcess;
 
@@ -356,6 +357,16 @@ namespace VU.Tools
                 MessageBox.Show(f.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 throw;
             }
+        }
+
+        internal static bool CheckIfVuInstalled()
+        {
+            return File.Exists(BattlefieldInstallDir + "\\bf3.exe");
+        }
+
+        internal static bool CheckIfBfInstalled()
+        {
+            return File.Exists(VuPath + "\\vu.exe");
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using VU.Settings;
+using VU.Tools;
 
 namespace VU.Forms
 {
@@ -15,9 +16,9 @@ namespace VU.Forms
 
             SettingsManager.LoadSettings();
 
-            VuInstancePathTBox.Text = SettingsManager.GetVuInstancePath();
-            BattlefieldInstallDirTBox.Text = SettingsManager.GetGamePath();
-            VuPathTBox.Text = SettingsManager.GetVuPath();
+            VuInstancePathTBox.Text = SettingsManager.VuInstancePath;
+            BattlefieldInstallDirTBox.Text = SettingsManager.IfCustomGamePath();
+            VuPathTBox.Text = Utilitys.VuPath;
             UseCustomGamePathCBox.Checked = SettingsManager.UseCustomGamePath;
             UseMiniProConCBox.Checked = SettingsManager.UseCutDownProCon;
             ProConPathTBox.Text = SettingsManager.ProConPath;
@@ -130,7 +131,7 @@ namespace VU.Forms
 
         private void SearchVuPath_Click(object sender, EventArgs e)
         {
-            BrowseFolder.SelectedPath = SettingsManager.VuPath;
+            BrowseFolder.SelectedPath = Utilitys.VuPath;
             if (DialogResult.OK == BrowseFolder.ShowDialog())
                 VuPathTBox.Text = BrowseFolder.SelectedPath;
         }
@@ -144,7 +145,7 @@ namespace VU.Forms
 
         private void SearchGamePath_Click(object sender, EventArgs e)
         {
-            BrowseFolder.SelectedPath = SettingsManager.BattlefieldInstallDir;
+            BrowseFolder.SelectedPath = Utilitys.BattlefieldInstallDir;
             if (DialogResult.OK == BrowseFolder.ShowDialog())
                 BattlefieldInstallDirTBox.Text = BrowseFolder.SelectedPath;
         }

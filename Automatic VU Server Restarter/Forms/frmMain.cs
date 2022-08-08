@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
@@ -30,7 +31,11 @@ namespace VU.Forms
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            CheckUpdate.CheckForUpdateBg(this);
+            if (SettingsManager.AVUSRUpdates)
+            {
+                BgUpdateSearchSTLbl.Visible = true;
+                CheckUpdate.CheckForUpdateBg(this);
+            }
             Icon updateImg = new Icon(Properties.Resources.Update, new Size(16, 16));
             Icon aboutImg = new Icon(Properties.Resources.About, new Size(16, 16));
             Icon settingsImg = new Icon(Properties.Resources.Settings, new Size(16, 16));
@@ -63,15 +68,22 @@ namespace VU.Forms
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Exit(e);
+            if (File.Exists(CheckUpdate.UpdatePath))
+            {
+                Process.Start(CheckUpdate.UpdatePath);
+                Exit(e);
+            }
+            else
+            {
+                Exit(e);
+            }
         }
 
         private void Exit(FormClosingEventArgs e = null)
         {
             if (_server.IsRunning())
             {
-                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?",
-                    @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var stopServer = MessageBox.Show(@"The server is still running, do you want to shut it down?", @"Server", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 switch (stopServer)
                 {
                     case DialogResult.Yes:
@@ -334,6 +346,11 @@ namespace VU.Forms
             {
                 infoForm.ShowDialog();
             }
+        }
+
+        private void MainMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
