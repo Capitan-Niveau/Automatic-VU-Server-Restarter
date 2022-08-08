@@ -100,8 +100,6 @@ namespace VU
             {
                 MessageBox.Show(@"The battlefield 3 installation could not be found. Please select the path to the installation in the settings.", @"Missing BF3", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            SettingsManager.LoadSettings();
-            Application.Run(new FrmMain());
         }
     }
 }
