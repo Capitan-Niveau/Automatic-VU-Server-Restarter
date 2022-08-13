@@ -567,6 +567,7 @@
             // AutoUpdateCheckCBox
             // 
             this.AutoUpdateCheckCBox.AutoSize = true;
+            this.AutoUpdateCheckCBox.Enabled = false;
             this.AutoUpdateCheckCBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.AutoUpdateCheckCBox.Location = new System.Drawing.Point(16, 49);
             this.AutoUpdateCheckCBox.Name = "AutoUpdateCheckCBox";

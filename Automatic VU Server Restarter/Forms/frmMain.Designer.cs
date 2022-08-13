@@ -44,7 +44,6 @@
             this.ModeNameLbl = new System.Windows.Forms.Label();
             this.SlotUsageLbl = new System.Windows.Forms.Label();
             this.MapNameLbl = new System.Windows.Forms.Label();
-            this.StopVuServerBtn = new System.Windows.Forms.Button();
             this.WatermarkLbl = new System.Windows.Forms.Label();
             this.SendCommandBtn = new System.Windows.Forms.Button();
             this.TestCommandTBox = new System.Windows.Forms.TextBox();
@@ -68,7 +67,7 @@
             // 
             this.StartVuServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.StartVuServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StartVuServerBtn.Location = new System.Drawing.Point(507, 553);
+            this.StartVuServerBtn.Location = new System.Drawing.Point(504, 555);
             this.StartVuServerBtn.Name = "StartVuServerBtn";
             this.StartVuServerBtn.Size = new System.Drawing.Size(159, 23);
             this.StartVuServerBtn.TabIndex = 7;
@@ -80,7 +79,7 @@
             // 
             this.ExitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.ExitBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ExitBtn.Location = new System.Drawing.Point(696, 552);
+            this.ExitBtn.Location = new System.Drawing.Point(698, 555);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(75, 23);
             this.ExitBtn.TabIndex = 8;
@@ -150,6 +149,7 @@
             this.UpdateTStrip.Name = "UpdateTStrip";
             this.UpdateTStrip.Size = new System.Drawing.Size(117, 22);
             this.UpdateTStrip.Text = "Updates";
+            this.UpdateTStrip.Visible = false;
             this.UpdateTStrip.Click += new System.EventHandler(this.UpdateTStrip_Click);
             // 
             // AboutBtn
@@ -215,19 +215,6 @@
             this.MapNameLbl.TabIndex = 14;
             this.MapNameLbl.Text = "Map: -";
             // 
-            // StopVuServerBtn
-            // 
-            this.StopVuServerBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.StopVuServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StopVuServerBtn.Location = new System.Drawing.Point(507, 553);
-            this.StopVuServerBtn.Name = "StopVuServerBtn";
-            this.StopVuServerBtn.Size = new System.Drawing.Size(159, 23);
-            this.StopVuServerBtn.TabIndex = 12;
-            this.StopVuServerBtn.Text = "Stop Server";
-            this.StopVuServerBtn.UseVisualStyleBackColor = true;
-            this.StopVuServerBtn.Visible = false;
-            this.StopVuServerBtn.Click += new System.EventHandler(this.StopVuServerBtn_Click);
-            // 
             // WatermarkLbl
             // 
             this.WatermarkLbl.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -242,12 +229,13 @@
             // 
             this.SendCommandBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.SendCommandBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.SendCommandBtn.Location = new System.Drawing.Point(367, 552);
+            this.SendCommandBtn.Location = new System.Drawing.Point(380, 555);
             this.SendCommandBtn.Name = "SendCommandBtn";
             this.SendCommandBtn.Size = new System.Drawing.Size(75, 23);
             this.SendCommandBtn.TabIndex = 14;
             this.SendCommandBtn.Text = "Send";
             this.SendCommandBtn.UseVisualStyleBackColor = true;
+            this.SendCommandBtn.Visible = false;
             this.SendCommandBtn.Click += new System.EventHandler(this.button1_Click);
             // 
             // TestCommandTBox
@@ -269,10 +257,11 @@
             "version"});
             this.TestCommandTBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.TestCommandTBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.TestCommandTBox.Location = new System.Drawing.Point(13, 554);
+            this.TestCommandTBox.Location = new System.Drawing.Point(13, 556);
             this.TestCommandTBox.Name = "TestCommandTBox";
-            this.TestCommandTBox.Size = new System.Drawing.Size(349, 20);
+            this.TestCommandTBox.Size = new System.Drawing.Size(361, 20);
             this.TestCommandTBox.TabIndex = 15;
+            this.TestCommandTBox.Visible = false;
             // 
             // ServerLogOutput
             // 
@@ -414,19 +403,18 @@
             this.Controls.Add(this.ServerLogOutput);
             this.Controls.Add(this.TestCommandTBox);
             this.Controls.Add(this.SendCommandBtn);
+            this.Controls.Add(this.StartVuServerBtn);
             this.Controls.Add(this.WatermarkLbl);
             this.Controls.Add(this.ServerOverviewGBox);
             this.Controls.Add(this.MainMenu);
             this.Controls.Add(this.ExitBtn);
-            this.Controls.Add(this.StartVuServerBtn);
-            this.Controls.Add(this.StopVuServerBtn);
             this.MinimumSize = new System.Drawing.Size(525, 475);
             this.Name = "FrmMain";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "{0} - {1}";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
             this.ServerOverviewGBox.ResumeLayout(false);
@@ -449,7 +437,6 @@
         private System.Windows.Forms.ToolStripMenuItem ExitTStrip;
         private System.Windows.Forms.ToolStripMenuItem AboutBtn;
         private System.Windows.Forms.GroupBox ServerOverviewGBox;
-        private System.Windows.Forms.Button StopVuServerBtn;
         private System.Windows.Forms.Label WatermarkLbl;
         private System.Windows.Forms.Button SendCommandBtn;
         private System.Windows.Forms.TextBox TestCommandTBox;

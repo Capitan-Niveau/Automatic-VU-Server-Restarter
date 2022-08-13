@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Win32;
 using INIReader;
 using System.Windows.Forms;
-using System.IO;
-using System.Text.RegularExpressions;
 using VU.Tools;
 
 namespace VU.Settings

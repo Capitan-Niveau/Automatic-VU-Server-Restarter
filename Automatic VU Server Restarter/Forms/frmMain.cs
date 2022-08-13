@@ -29,7 +29,7 @@ namespace VU.Forms
             _server.OutPudBox = ServerLogOutput;
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void FrmMain_Load(object sender, EventArgs e)
         {
             if (SettingsManager.AVUSRUpdates)
             {
@@ -66,7 +66,7 @@ namespace VU.Forms
             }
         }
 
-        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (File.Exists(CheckUpdate.UpdatePath))
             {
@@ -105,10 +105,10 @@ namespace VU.Forms
         {
             _restartCounter++;
             Stop();
-            if (StartVuServerBtn.Visible)
+
+            if (!string.Equals(StartVuServerBtn.Text, "Stop Server"))
             {
-                StartVuServerBtn.Visible = false;
-                StopVuServerBtn.Visible = true;
+                StartVuServerBtn.Text = @"Stop Server";
             }
 
             _serverThread = new Thread(_server.Start)
@@ -136,16 +136,16 @@ namespace VU.Forms
             ServerFpsSTLbl.Visible = true;
             ServerCpuUsageSTLbl.Visible = true;
             ServerVersionSTLbl.Visible = true;
-            
+            _server.ServerCrashd = false;
         }
 
-        internal void Stop()
+        private void Stop()
         {
-            _server.ServerPid = 0;
             _server.ServerExitCode = 0;
             _server.PlayerCount = 0;
             _server.MemUsage = 0;
             _server.ServerKeyInUse = false;
+            _server.ServerCrashd = false;
 
             _server.DisposeServer();
 
@@ -160,8 +160,8 @@ namespace VU.Forms
             SlotUsageLbl.Text = @"Players online: -";
             MapNameLbl.Text = @"Map: -";
             ModeNameLbl.Text = @"Mode: -";
-            StartVuServerBtn.Visible = true;
-            StopVuServerBtn.Visible = false;
+            StartVuServerBtn.Text = @"Start Server";
+            //StartVuServerBtn.Visible = true;
             MemUsageSTLbl.Visible = false;
             MemUsageProcBar.Visible = false;
             ServerCpuUsageProcBar.Value = 0;
@@ -178,56 +178,57 @@ namespace VU.Forms
 
         private void StartServer_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(SettingsManager.VuInstancePath))
+            //if (!string.IsNullOrEmpty(SettingsManager.VuInstancePath))
+            //{
+            //    if (!File.Exists(SettingsManager.VuInstancePath + "\\server.key"))
+            //    {
+            //        if (DialogResult.OK == MessageBox.Show(
+            //                $@"The server key file could not be found in the specified path:" + Environment.NewLine +
+            //                $@"{SettingsManager.VuInstancePath}\server.key", @"File not fount", MessageBoxButtons.OK,
+            //                MessageBoxIcon.Error))
+            //        {
+
+            //            StartVuServerBtn.Visible = true;
+            //            StopVuServerBtn.Visible = false;
+            //            return;
+            //        }
+            //    }
+            //}
+            if (!_server.IsRunning())
             {
-                if (!File.Exists(SettingsManager.VuInstancePath + "\\server.key"))
+                _serverThread = new Thread(_server.Start)
                 {
-                    if (DialogResult.OK == MessageBox.Show(
-                            $@"The server key file could not be found in the specified path:" + Environment.NewLine +
-                            $@"{SettingsManager.VuInstancePath}\server.key", @"File not fount", MessageBoxButtons.OK,
-                            MessageBoxIcon.Error))
-                    {
+                    Name = "Server::Logging",
+                    IsBackground = true
+                };
+                _serverThread.Start();
 
-                        StartVuServerBtn.Visible = true;
-                        StopVuServerBtn.Visible = false;
-                        return;
-                    }
-                }
+                _updateControls = new Thread(UpdateControls)
+                {
+                    Name = "Control::CUpdater",
+                    IsBackground = true,
+                };
+                _updateControls.Start();
+
+                if (SettingsManager.UseProCon)
+                    Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
+
+                StartVuServerBtn.Text = @"Stop Server";
+                _server.ServerStatus = "Server: Starting...";
+                //StartVuServerBtn.Visible = false;
+                MemUsageSTLbl.Visible = true;
+                MemUsageProcBar.Visible = true;
+                RestartsSTLbl.Visible = true;
+                ServerCpuUsageProcBar.Visible = true;
+                ServerVersionSTLbl.Visible = true;
+                ServerFpsSTLbl.Visible = true;
+                ServerCpuUsageSTLbl.Visible = true;
             }
-
-            _serverThread = new Thread(_server.Start)
+            else
             {
-                Name = "Server::Logging",
-                IsBackground = true
-            };
-            _serverThread.Start();
-
-            _updateControls = new Thread(UpdateControls)
-            {
-                Name = "Control::CUpdater",
-                IsBackground = true,
-            };
-            _updateControls.Start();
-
-            if (SettingsManager.UseProCon)
-                Utilitys.StartProCon(SettingsManager.UseCutDownProCon);
-
-            _server.ServerStatus = "Server: Starting...";
-            StartVuServerBtn.Visible = false;
-            StopVuServerBtn.Visible = true;
-            MemUsageSTLbl.Visible = true;
-            MemUsageProcBar.Visible = true;
-            RestartsSTLbl.Visible = true;
-            ServerCpuUsageProcBar.Visible = true;
-            ServerVersionSTLbl.Visible = true;
-            ServerFpsSTLbl.Visible = true;
-            ServerCpuUsageSTLbl.Visible = true;
-        }
-
-        private void StopVuServerBtn_Click(object sender, EventArgs e)
-        {
-            Stop();
-            ServerLogOutput.AppendText(Environment.NewLine + "[Local] Server has been stopped...");
+                Stop();
+                ServerLogOutput.AppendText(Environment.NewLine + "[Local] Server has been stopped...");
+            }
         }
 
         private void ExitBtn_Click(object sender, EventArgs e)
@@ -260,23 +261,25 @@ namespace VU.Forms
                 {
                     Invoke((Action)Stop);
                 }
-                if (_server.ServerExitCode > 0)
-                {
-                    if (!ServerLogOutput.InvokeRequired) continue;
 
+                _server.RefreshProcessStats();
+
+                if (_server.ServerCrashd)
+                {
+
+                    //if (!ServerLogOutput.InvokeRequired) continue;
                     void WriteCrashLog()
                     {
                         ServerLogOutput.AppendText(Environment.NewLine + $"[Local] Server crashed with exit code {_server.ServerExitCode}... restarting...");
-                        RestartServer();
                     }
                     Invoke((Action)WriteCrashLog);
+                    Invoke((Action)RestartServer);
                 }
                 else
                 {
                     if (_server.ServerPid < 0) return;
                     double cpuUsage = Utilitys.ServerCpuUsage(_server.ServerPid);
                     _server.GetServerFps();
-                    _server.RefreshMemUsage();
 
                     void Controls()
                     {
@@ -299,6 +302,11 @@ namespace VU.Forms
                         SlotUsageLbl.Text = $@"Players online: {_server.PlayerCount} of {_server.MaxPlayerCount}";
                         MapNameLbl.Text = $@"Map: {_server.MapName}";
                         ModeNameLbl.Text = $@"Mode: {_server.ModeName}";
+                        if (!string.IsNullOrEmpty(_server.WinningTeam))
+                        {
+                            ServerLogOutput.AppendText(Environment.NewLine + $@"[Server] Round is over, winning team is: {_server.WinningTeam}");
+                            _server.WinningTeam = string.Empty;
+                        }
                     }
                     Invoke((Action)Controls);
                 }

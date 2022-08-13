@@ -22,8 +22,8 @@ namespace VU.Tools
         private static TimeSpan _curTotalProcessorTime;
         private static readonly Regex GetBuildNumber = new Regex(@"\(.*\)");
 
-        internal static string BattlefieldInstallDir = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\EA Games\Battlefield 3", "Install Dir", null);
-        internal static string VuPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VeniceUnleashed\\client";
+        internal static readonly string BattlefieldInstallDir = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\EA Games\Battlefield 3", "Install Dir", null);
+        internal static readonly string VuPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\VeniceUnleashed\\client";
         internal static string ServerVersion { get; set; }
 
         internal static Process ProConProcess;
@@ -233,8 +233,7 @@ namespace VU.Tools
                     return "Kiasar Railroad";
                 case "XP5_04":
                     return "Sabalan Pipeline";
-                default:
-                    return null;
+                default: return null;
             }
         }
 
@@ -274,8 +273,19 @@ namespace VU.Tools
                     return "Capture The Flag";
                 case "AirSuperiority0":
                     return "Air Superiority";
-                default:
-                    return null;
+                default: return null;
+            }
+        }
+
+        internal static string TeamNames(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    return "American armed forces";
+                case 2:
+                    return "Russian armed forces";
+                default: return null;
             }
         }
 

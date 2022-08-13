@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -36,7 +37,9 @@ namespace VU.Server
         internal string MapName { get; private set; }
         internal string ModeName { get; private set; }
         internal string ServerStatus { get; set; }
+        internal string WinningTeam { get; set; }
         internal bool ServerKeyInUse { get; set; }
+        internal bool ServerCrashd { get; set; }
 
         internal bool IsRunning()
         {
@@ -162,11 +165,17 @@ namespace VU.Server
             }
         }
 
-        internal void RefreshMemUsage()
+        private bool ProcessExists(int id)
         {
-            if (_serverProcess.HasExited)
+            return Process.GetProcesses().Any(x => x.Id == id);
+        }
+
+        internal void RefreshProcessStats()
+        {
+            if (!ProcessExists(ServerPid))
             {
-                DisposeServer();
+                ServerPid = 0;
+                ServerCrashd = true;
                 return;
             }
             _serverProcess.Refresh();
@@ -220,6 +229,9 @@ namespace VU.Server
                     MapName = Utilitys.RealMapName(words[1]);
                     ModeName = Utilitys.RealModeName(words[2]);
                     break;
+                case "server.onRoundOver":
+                    WinningTeam = Utilitys.TeamNames(int.Parse(words[1]));
+                    break;
                 default:
                     break;
             }
@@ -247,7 +259,7 @@ namespace VU.Server
             await GetServerFps(Utilitys.SplitStringBySpace("vu.Fps")).ConfigureAwait(false);
         }
 
-        public async Task<IList<string>> SendCommandAsync(IList<string> words)
+        private async Task<IList<string>> SendCommandAsync(IList<string> words)
         {
             if (_rconClient == null || !_rconClient.IsOpen)
                 return null;

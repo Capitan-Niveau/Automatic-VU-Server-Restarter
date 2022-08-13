@@ -76,6 +76,8 @@ namespace VU
         {
             if (!IsFileAvailable("ini.dll"))
                 return false;
+            if (!IsFileAvailable("Rcon.Net.dll"))
+                return false;
             return true;
         }
 
@@ -103,5 +105,3 @@ namespace VU
         }
     }
 }
-
-

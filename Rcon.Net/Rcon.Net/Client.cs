@@ -48,8 +48,10 @@ namespace Rcon.Net
             _socket.Connect(address, port);
             IsOpen = true;
 
-            _readThread = new Thread(ReadThreadWorker);
-            _readThread.Name = "RCON Read Thread";
+            _readThread = new Thread(ReadThreadWorker)
+            {
+                Name = "RCON Read Thread"
+            };
             _readThread.Start();
         }
 
@@ -157,7 +159,8 @@ namespace Rcon.Net
             if (!IsOpen)
                 throw new InvalidOperationException("Not open");
 
-            var packet = new Packet { Type = PacketType.Request, Words = words, FromServer = false, Sequence = _sequence, Size = 0 };
+            var packet = new Packet
+                { Type = PacketType.Request, Words = words, FromServer = false, Sequence = _sequence, Size = 0 };
             var request = new Request { Sequence = _sequence, ResetEvent = new ManualResetEvent(false) };
             _requests.Add(request);
             _sequence++;
@@ -175,8 +178,8 @@ namespace Rcon.Net
 
             // Calculate length of data
             int size = HeaderSize // Header length
-                + packet.Words.Count * sizeof(uint) // Number of lengths for each word
-                + packet.Words.Select(w => w.Length + 1).Sum(); // Sum of lengths of all words
+                       + packet.Words.Count * sizeof(uint) // Number of lengths for each word
+                       + packet.Words.Select(w => w.Length + 1).Sum(); // Sum of lengths of all words
 
             // Write to stream
             await stream.WriteUInt32Async(encodedSequence);
@@ -191,12 +194,15 @@ namespace Rcon.Net
 
             // Wait for response
             request.ResetEvent.WaitOne(1000, false);
-            var response = request.Packet;
-            var status = response.Words[0];
-            if (status != "OK")
-                throw new ArgumentException(status);
 
-            return response.Words.Skip(1).ToList();
+            var response = request.Packet;
+            if (response.Words != null)
+            {
+                var status = response.Words[0];
+                if (status != "OK")
+                    throw new ArgumentException(status);
+            }
+            return response.Words?.Skip(1).ToList();
         }
 
         public async Task<IList<string>> SendMessageAsync(params string[] words)

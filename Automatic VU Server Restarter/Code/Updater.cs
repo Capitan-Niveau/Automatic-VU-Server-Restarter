@@ -10,7 +10,7 @@ namespace VU.Updater
 {
     internal class CheckUpdate
     {
-        internal static WebClient Client;
+        private static WebClient Client;
         internal static readonly string InfoPath = $@"{Path.GetTempPath()}update_info.rtf";
         internal static readonly string UpdatePath = $@"{Application.StartupPath}\\update.exe";
         internal static readonly string CheckListPath = $"{Path.GetTempPath()}avusr_update.ini";
